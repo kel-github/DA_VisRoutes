@@ -13,57 +13,64 @@ get_data <- function(fpth, sub_num, ses){
   } else {
     sub_str <- paste(sub_num)
   }
-  trials <- read.table(sprintf(paste(fpth, 'sub-%s/ses-%d/beh/sub-%s_ses-%d_task-iforage-v1_trls.tsv', sep=""), sub_str, ses, sub_str, ses), header = TRUE)
-  resps <- read.table(sprintf(paste(fpth, 'sub-%s/ses-%d/beh/sub-%s_ses-%d_task-iforage-v1_beh.tsv', sep=""), sub_str, ses, sub_str, ses), header = TRUE)
-  # remove all practice trials
-  trials = trials %>% filter(t != 999) 
+  trials_here <- file.exists(sprintf(paste(fpth, 'sub-%s/ses-%d/beh/sub-%s_ses-%d_task-iforage-v1_trls.tsv', sep=""), sub_str, ses, sub_str, ses))
+  resps_here <- file.exists(sprintf(paste(fpth, 'sub-%s/ses-%d/beh/sub-%s_ses-%d_task-iforage-v1_beh.tsv', sep=""), sub_str, ses, sub_str, ses))
   
-  # remove the practice trials and the times where participants were not looking at a door,
-  # then select the last of the multiple entries for each door, for when there were greater than
-  # 100 msec spent on any door
-  resps  = resps  %>% filter(cond != 3 & door > 0) 
-  resps$t = resps$t - 5 # correct trial numbers (as 1 = first practice trial)
-  
-  # now, for each set of door presses, compute the total number of samples
-  # the door was selected for, if it was greater than 10, then put a 1
-  # also create a t column and compute, using the onset column,
-  # the ongoing time spent on that door (as recording of depress_dur turned 
-  # out to be a bit flakey)
-  
-  # for counting responses
-  count <- 1
-  resps$idx <- NA
-  resps$idx[1] <- count 
-  
-  # for getting the timings
-  onsets <- resps$onset # for indexing with ease
-  rt <- vector(mode="numeric", length=length(onsets))
-  
-  # get variables
-  for (i in 2:length(resps$door)){
-    if (resps$door[i] == resps$door[i-1]){
+  if (trials_here & resps_here){
+    trials <- read.table(sprintf(paste(fpth, 'sub-%s/ses-%d/beh/sub-%s_ses-%d_task-iforage-v1_trls.tsv', sep=""), sub_str, ses, sub_str, ses), header = TRUE)
+    resps <- read.table(sprintf(paste(fpth, 'sub-%s/ses-%d/beh/sub-%s_ses-%d_task-iforage-v1_beh.tsv', sep=""), sub_str, ses, sub_str, ses), header = TRUE)
+    # remove all practice trials
+    trials = trials %>% filter(t != 999) 
+    
+    # remove the practice trials and the times where participants were not looking at a door,
+    # then select the last of the multiple entries for each door, for when there were greater than
+    # 100 msec spent on any door
+    resps  = resps  %>% filter(cond != 3 & door > 0) 
+    resps$t = resps$t - 5 # correct trial numbers (as 1 = first practice trial)
+    
+    # now, for each set of door presses, compute the total number of samples
+    # the door was selected for, if it was greater than 10, then put a 1
+    # also create a t column and compute, using the onset column,
+    # the ongoing time spent on that door (as recording of depress_dur turned 
+    # out to be a bit flakey)
+    
+    # for counting responses
+    count <- 1
+    resps$idx <- NA
+    resps$idx[1] <- count 
+    
+    # for getting the timings
+    onsets <- resps$onset # for indexing with ease
+    rt <- vector(mode="numeric", length=length(onsets))
+    
+    # get variables
+    for (i in 2:length(resps$door)){
+      if (resps$door[i] == resps$door[i-1]){
         count <- count + 1
         rt[i] <- rt[i-1] + diff(c(onsets[i-1], onsets[i]))
-    } else {
-      count <- 1
-      rt[i] <- 0
+      } else {
+        count <- 1
+        rt[i] <- 0
+      }
+      resps$idx[i] <- count
     }
-    resps$idx[i] <- count
+    resps$rt <- rt
+    
+    # now, keep only those with > 17 entries as 17 * .017 ~ 300 ms
+    resps <- resps %>% filter(idx > 17)
+    # and now, keep the last of each door switch
+    resps <- resps %>% filter(lead(door,1) != door | lead(onset,1) < onset) 
+    # also remove the target door from each trial - i.e. the 'fixed' one
+#    resps <- resps %>% filter(onset != 999)
+    ### assign probability of location label
+    names(trials)[names(trials)=="prob"] = "tgt_prob" # rename to make life easier
+    
+    ### now combine the two by sub and t
+    sub.dat = inner_join(resps, trials, by=c("sub", "t", "sess", "cond"))
+    sub.dat
+  } else {
+    warning(sprintf('check data for sub-%s ses-%d', sub_str, ses))
   }
-  resps$rt <- rt
-  
-  # now, keep only those with > 17 entries as 17 * .017 ~ 300 ms
-  resps <- resps %>% filter(idx > 17)
-  # and now, keep the last of each door switch
-  resps <- resps %>% filter(lead(door,1) != door | lead(onset,1) < onset) 
-  # also remove the target door from each trial - i.e. the 'fixed' one
-  resps <- resps %>% filter(onset != 999)
-  ### assign probability of location label
-  names(trials)[names(trials)=="prob"] = "tgt_prob" # rename to make life easier
-  
-  ### now combine the two by sub and t
-  sub.dat = inner_join(resps, trials, by=c("sub", "t", "sess", "cond"))
-  sub.dat
 }
 
 summarise_data_for_ps <- function(data){
@@ -149,6 +156,41 @@ apply_insert_block_Ns <- function(data, subN, sessN, condN, block_n = 10, ntrial
   blocks_fin <- c(blocks_begin[(blocks_begin-1)>0]-1, length(t)) # and now I subtract 1 from the blocks_begin transitions,
   # remove the first element which is now 0 and add the index for the final entry. This tells me the index for where each block ends
   tmp$b <- insert_block_ns(block_n, ntrials, t, blocks_begin, blocks_fin)
+  tmp
+}
+
+assign_door_types <- function(tmp){
+  # given data from one subject, and session, return the same data with
+  # an added variable called 'door_type' coded cc: door was a target door 
+  # for current context, oc: door was a target for other context and
+  # n: door was a target for neither
+  # -- tmp - data produced by apply_insert_block_Ns (or same format)
+  # -- RETURNS: tmp - same data with door_type variable added
+  tmp$door_type <- NA
+  tmp$door_type[tmp$door_p > 0] <- "cc"
+  doors <- unique(tmp$door)
+  contexts <- unique(tmp$cond)
+  
+  doors_from_other_context <- function(tmp, this_context){
+    # given a context (condition), get the doors that 
+    # were relevant for the other context
+    # NOTE: this should only be applied to 1 subject 
+    # and one session at a time
+    
+    unique(tmp$door[tmp$cond != this_context & 
+                      tmp$door_p > 0
+    ])
+  }
+  
+  other_context_door_labels <- lapply(contexts, doors_from_other_context, tmp=tmp)
+  names(other_context_door_labels) <- contexts
+  
+  for (j in names(other_context_door_labels)){
+    for(i in other_context_door_labels[[j]]) 
+      tmp$door_type[tmp$door == i &
+                      tmp$cond == as.numeric(j)] <- 'oc'
+  }
+  tmp$door_type[is.na(tmp$door_type)] <- "n"
   tmp
 }
 ##########################################################################################################################################
