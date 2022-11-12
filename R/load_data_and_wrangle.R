@@ -109,9 +109,10 @@ door_rts <- blocked_dat %>% group_by(sub, sess, drug, cond, b, door_type) %>%
                                         sku = (mu_rt - med_rt)/sqrt(var(rt)) )
 
 ###-------------------------------------------------------
-## NOTE: exclude people who scored < .65 at the final block
+## NOTE: exclude people who scored < .65 on any of their final blocks
 ###-------------------------------------------------------
 acc_4_excl <- blocked_dat %>% group_by(sub, sess) %>% filter(b==8) %>%
                               summarise(acc = length(door[door_type == "cc"|
                                                           door_type == "oc"])/
-                                                     length(door))
+                                                     length(door)) %>%
+                              group_by(sub) %>% filter(acc == max(acc))
