@@ -2,8 +2,8 @@
 #### This code comes as is, with no guarantees
 ####------------------------------------------------------
 # use this code to load and prepare data from the
-# DA_VisRoutes study for the analysis as specified
-# here: https://osf.io/2y6pk
+# DA_VisRoutes study for the analysis of accuracy
+# as specified here: https://osf.io/2y6pk
 # 
 #
 # assumes following folder structure:
@@ -16,7 +16,7 @@
 library(tidyverse)
 source('variability_exp_behav_data_wrangling_functions.R')
 
-not_new <- F # if T then load existing RData file with data
+not_new <- T # if T then load existing RData file with data
 ###-------------------------------------------------------
 ## LOAD DATA
 ###-------------------------------------------------------
@@ -34,13 +34,12 @@ if (!not_new){
   # load the RData file instead
   dat <- readRDS('../data/derivatives/raw.Rds')
 }
+dat <- do.call(rbind, dat)
 
 ###-------------------------------------------------------
 ## ADD DRUG INFO
 ###-------------------------------------------------------
-dat <- do.call(rbind, dat)
 drug_info <- read_csv('../data/derivatives/drug-assignment.csv', col_names=T) 
-
 drug_info <- drug_info %>%
               pivot_longer(cols=starts_with('S_'), names_to = 'sess', 
                            names_prefix='S_', values_to = 'drug')
@@ -99,20 +98,34 @@ door_acc_sum <- blocked_dat %>% group_by(sub, sess, drug, cond, b) %>%
                                 acc = tt/td) %>% # total on a target door
                 ungroup()
 
-# TO-DO: remove rts where the target appeared
-blocked_dat <- blocked_dat %>% filter(onset != 999)
-
-door_rts <- blocked_dat %>% group_by(sub, sess, drug, cond, b, door_type) %>%
-                              summarise(mu_rt = mean(rt),
-                                        med_rt = median(rt),
-                                        var_rt = var(rt),
-                                        sku = (mu_rt - med_rt)/sqrt(var(rt)) )
+# NOTE: ISSUE w RT EXTRACTION AS IS. AMEND THIS IF YOU DECIDE TO USE IT!
+# remove rts where the target appeared
+# blocked_dat <- blocked_dat %>% filter(onset != 999)
+# 
+# door_rts <- blocked_dat %>% group_by(sub, sess, drug, cond, b, door_type) %>%
+#                               summarise(mu_rt = mean(rt),
+#                                         med_rt = median(rt),
+#                                         var_rt = var(rt),
+#                                         sku = (mu_rt - med_rt)/sqrt(var(rt)) )
 
 ###-------------------------------------------------------
-## NOTE: exclude people who scored < .65 on any of their final blocks
+## NOTE: create regressor for those who scored < .65 at the final block
 ###-------------------------------------------------------
 acc_4_excl <- blocked_dat %>% group_by(sub, sess) %>% filter(b==8) %>%
                               summarise(acc = length(door[door_type == "cc"|
                                                           door_type == "oc"])/
                                                      length(door)) %>%
                               group_by(sub) %>% filter(acc == max(acc))
+                                                     
+subs_l65 <- unique(acc_4_excl$sub[acc_4_excl$acc < .65])
+
+door_acc_sum$excl <- 0
+for (i in subs_l65) door_acc_sum$excl[door_acc_sum$sub == i] <- 1  
+
+door_rts$excl <- 0
+for (i in subs_l65) door_rts$excl[door_rts$sub == i] <- 1
+
+###-------------------------------------------------------
+## NOTE: Save 
+###-------------------------------------------------------
+save(door_acc_sum, door_rts, file='../data/derivatives/accuracy.Rda')
