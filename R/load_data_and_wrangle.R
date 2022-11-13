@@ -122,10 +122,10 @@ subs_l65 <- unique(acc_4_excl$sub[acc_4_excl$acc < .65])
 door_acc_sum$excl <- 0
 for (i in subs_l65) door_acc_sum$excl[door_acc_sum$sub == i] <- 1  
 
-door_rts$excl <- 0
-for (i in subs_l65) door_rts$excl[door_rts$sub == i] <- 1
+# door_rts$excl <- 0
+# for (i in subs_l65) door_rts$excl[door_rts$sub == i] <- 1
 
 ###-------------------------------------------------------
 ## NOTE: Save 
 ###-------------------------------------------------------
-save(door_acc_sum, door_rts, file='../data/derivatives/accuracy.Rda')
+save(door_acc_sum, file='../data/derivatives/accuracy.Rda')
