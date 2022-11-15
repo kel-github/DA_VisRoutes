@@ -79,26 +79,42 @@ b_only <- brm(formula = tt | trials(td) ~  b + (b|sub),
                       warmup = 2000, iter = 10000,
                       family = binomial,
                       save_pars = save_pars(all=TRUE)) # for model comparisons 
+
+  # now save!
+  save.image(file = '../data/derivatives/acc_dat_mod-bonly/acc_dat_mod-bonly.Rda')
+  # I think these residuals are broadly ok
+} else {
+  
+  load(file = '../data/derivatives/acc_dat_mod-bonly/acc_dat_mod-bonly.Rda')
+  
+}
+
 prior_summary(b_only)
 # see https://paul-buerkner.github.io/brms/reference/set_prior.html
 # for derails on the class etc
 # see https://pubmed.ncbi.nlm.nih.gov/31082309/
 # for a guide on how to set priors etc
 # also need to check how I can do dic comparisons between these models
+pdf(file='../data/derivatives/acc_dat_mod-bonly/ps_and_chains.pdf')
 plot(b_only)
+dev.off()
+
 summary(b_only)
 b_only <- add_criterion(b_only, "waic")
 
 # now look at some posterior predictive checks
+pdf(file='../data/derivatives/acc_dat_mod-bonly/pp_check.pdf')
 pp_check(b_only)
+dev.off()
 
 # now predict each data point and plot the real over the fitted data
 est <- coef(b_only)$sub[, "Estimate", ] %>% as.data.frame() %>%
-          mutate(sub = unique(acc_dat$sub))
+  mutate(sub = unique(acc_dat$sub))
 check_dat <- inner_join(acc_dat, est, by = "sub")
 check_dat <- check_dat %>% mutate(fit_p = plogis(Intercept + b.y * b.x))
 check_dat <- check_dat %>% mutate(obs = tt/td)
 
+pdf(file='../data/derivatives/acc_dat_mod-bonly/predobs_resid.pdf')
 check_dat %>% ggplot(aes(x=b.x, y=obs, group=sess, colour=sess)) +
   geom_point() + geom_line(aes(x=b.x, y=fit_p), inherit.aes = FALSE) +
   facet_wrap(~sub)
@@ -107,8 +123,5 @@ check_dat %>% ggplot(aes(x=b.x, y=obs, group=sess, colour=sess)) +
 check_dat %>% mutate(resid=fit_p-obs) %>% 
   ggplot(aes(x=b.x, y=resid, group=sess, colour=sess)) +
   geom_point()
+dev.off()
 
-# I think these residuals are broadly ok
-
-# now save!
-save.image(file = '../data/derivatives/acc_dat_mod-bonly.Rda')

@@ -6,16 +6,15 @@
 
 rm(list=ls())
 
-###### statistical model
-# tt | trials(td) ~  Binom(p, N) 
-# logit(p) ~ beta*b + (1 + sub) + (b|sub)
-
 # get what you need
 library(tidyverse)
 library(MASS)
 library(ellipse)
 set.seed(42)
 
+###### statistical model
+# tt | trials(td) ~  Binom(p, N) 
+# logit(p) ~ beta*b + (1 + sub) + (b|sub)
 # set params
 alpha <- 0.4 # intercept
 b <- scale(c(1:8))
