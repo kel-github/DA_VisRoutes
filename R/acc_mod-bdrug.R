@@ -48,6 +48,7 @@ if (new){
   acc_dat$b <- scale(acc_dat$b)
   acc_dat$sub <- as.factor(acc_dat$sub)
   acc_dat$sess <- as.factor(acc_dat$sess)
+  acc_dat$drug <- as.factor(acc_dat$drug)
   
   ###------------------------------------------------------
   # define accuracy models
@@ -57,55 +58,55 @@ if (new){
     prior(normal(0, 10), class = Intercept),
     prior(normal(0, 10), class = b), #,
     prior(cauchy(0, 10), class = sd) #, 
-   # prior(lkj(2), class=cor)
+    # prior(lkj(2), class=cor)
   )
   
-  b_sess <- brm(formula = tt | trials(td) ~  b + sess + (1|sub),
-                data = acc_dat,
-                prior = priors,
-                warmup = 2000, iter = 10000,
-                family = binomial,
-                save_pars = save_pars(all=TRUE)) # for model comparisons 
+  b_drug <- brm(formula = tt | trials(td) ~  b + drug + (1|sub),
+                  data = acc_dat,
+                  prior = priors,
+                  warmup = 2000, iter = 10000,
+                  family = binomial,
+                  save_pars = save_pars(all=TRUE)) # for model comparisons 
   
   # now save!
-  save.image(file = '../data/derivatives/acc_mod-bsess/acc_mod-bsess.Rda')
-
+  save.image(file = '../data/derivatives/acc_mod-bdrug/acc_mod-bdrug.Rda')
+  
 } else {
   
-  load(file = '../data/derivatives/acc_mod-bsess/acc_mod-bsess.Rda')
+  load(file = '../data/derivatives/acc_mod-bdrug/acc_mod-bdrug.Rda')
 }
 
 # info
-prior_summary(b_sess)
+prior_summary(b_drug)
 
-pdf(file='../data/derivatives/acc_mod-bsess/ps_and_chains.pdf')
-plot(b_sess)
+pdf(file='../data/derivatives/acc_mod-bdrug/ps_and_chains.pdf')
+plot(b_drug)
 dev.off()
 
-summary(b_sess)
-b_sess <- add_criterion(b_sess, "waic")
+summary(b_drug)
 
 # now look at some posterior predictive checks
-pdf(file='../data/derivatives/acc_mod-bsess/pp_check.pdf')
-pp_check(b_sess)
+pdf(file='../data/derivatives/acc_mod-bdrug/pp_check.pdf')
+pp_check(b_drug)
 dev.off()
 
 # now predict each data point and plot the real over the fitted data
-est <- coef(b_sess)$sub[, "Estimate", ] %>% as.data.frame() %>%
+est <- coef(b_drug)$sub[, "Estimate", ] %>% as.data.frame() %>%
   mutate(sub = unique(acc_dat$sub))
 check_dat <- inner_join(acc_dat, est, by = "sub")
-check_dat <- rbind(check_dat %>% filter(sess == "1") %>% mutate(fit_p = plogis(Intercept + b.y * b.x)),
-                   check_dat %>% filter(sess == "2") %>% mutate(fit_p = plogis(Intercept + sess2 + b.y*b.x)))
+check_dat <- rbind(check_dat %>% filter(drug == "levodopa") %>% 
+                                  mutate(fit_p = plogis(Intercept + b.y * b.x)),
+                   check_dat %>% filter(drug == "placebo") %>%
+                                  mutate(fit_p = plogis(Intercept + drugplacebo + b.y*b.x)))
 check_dat <- check_dat %>% mutate(obs = tt/td)
 
-pdf(file='../data/derivatives/acc_mod-bsess/predobs_resid.pdf')
-check_dat %>% ggplot(aes(x=b.x, y=obs, group=sess, colour=sess)) +
-  geom_point() + geom_line(aes(x=b.x, y=fit_p, group=sess, colour=sess), inherit.aes = FALSE) +
+pdf(file='../data/derivatives/acc_mod-bdrug/predobs_resid.pdf')
+check_dat %>% ggplot(aes(x=b.x, y=obs, group=drug, colour=drug)) +
+  geom_point() + geom_line(aes(x=b.x, y=fit_p, group=drug, colour=drug), inherit.aes = FALSE) +
   facet_wrap(~sub)
 
 # plot the residuals to check nowt too crazy is happening
 check_dat %>% mutate(resid=fit_p-obs) %>% 
-  ggplot(aes(x=b.x, y=resid, group=sess, colour=sess)) +
+  ggplot(aes(x=b.x, y=resid, group=drug, colour=drug)) +
   geom_point()
 dev.off()
-
