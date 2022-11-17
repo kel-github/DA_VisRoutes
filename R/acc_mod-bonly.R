@@ -22,18 +22,19 @@
 #
 # convergence problems:
 # https://m-clark.github.io/posts/2020-03-16-convergence/
-# https://psyarxiv.com/xmhfr/
+# https://psyarxiv.com/xmhfr/ - this paper suggests that backing off to random intercepts only
+# is a suboptimal strategy
 # https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
 # https://betanalpha.github.io/assets/case_studies/identifiability.html
 # https://www.martinmodrak.cz/2018/02/19/taming-divergences-in-stan-models/
+# main overview of what is happening when there are divergences
 # https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html
 # https://arxiv.org/abs/2011.01808
 # 
-# main questions:
-# how to code interactions? as usual
-# does adding a term constitute an interaction in probability space? sometimes it will, and sometimes
+# Q. does adding a term constitute an interaction in probability space? sometimes it will, and sometimes
 # the inverse is true (adding a multiplicative term may not be significant in log odds space but may be present
 # in probability space)
+#
 # assumes following folder structure:
 # -- top/
 #      R/code is here
@@ -58,6 +59,7 @@ library(tidyverse)
 # have you run this model before?
 ###-----------------------------------------------------
 new <- TRUE
+verbal <- TRUE
 
 if (new){
   ###------------------------------------------------------
@@ -78,37 +80,51 @@ if (new){
   acc_dat$sub <- as.factor(acc_dat$sub)
   acc_dat$sess <- as.factor(acc_dat$sess)
   
+  ###-----------------------------------------------------
+  # first, generate some data to check the model covers
+  # the correct parameters
+  ###-----------------------------------------------------
+  nsubs <- 40
+  intercept <- 2
+  b <- scale(1:8)
+  nb <- 8
+  b <- rep(b, times=nsubs)
+  betab <- .5
+  sub_int <- rep(rnorm(nsubs, mean=.2, sd=.4), each=nb)
+  log_odds <- intercept + betab*b + sub_int
+  # now turn mu into p
+  p <- 1/(1+exp(-log_odds))
+  # now sample binomial distribution
+  trials <- sample(acc_dat$td, size=length(b))
+  tt <- mapply(function(x,y) rbinom(1,size=x,prob=y), trials, p)
+  faux_dat <- tibble(sub = as.factor(rep(1:nsubs, each=nb)),
+                     b = b,
+                     tt = tt, 
+                     td = trials)
   ###------------------------------------------------------
-  # define accuracy models
+  # define test accuracy model on faux data
   ###-----------------------------------------------------
   # start with an effect of block and a subject intercept
-  priors <- c(
-    prior(normal(0, 10), class = Intercept),
-    prior(normal(0, 10), class = b), #,
-    prior(cauchy(0, 10), class = sd) #, 
-    #prior(lkj(2), class=cor)
-  )
-  
-  # NOTE: first time I ran was with these priors
-  # prior     class      coef group resp dpar nlpar lb ub       source
-  # normal(0, 10)         b                                               user
-  # normal(0, 10)         b         b                             (vectorized)
-  # normal(0, 10) Intercept                                               user
-  # lkj_corr_cholesky(1)         L                                            default
-  # lkj_corr_cholesky(1)         L             sub                       (vectorized)
-  # student_t(3, 0, 2.5)        sd                                  0         default
-  # student_t(3, 0, 2.5)        sd             sub                  0    (vectorized)
-  # student_t(3, 0, 2.5)        sd         b   sub                  0    (vectorized)
-  # student_t(3, 0, 2.5)        sd Intercept   sub                  0    (vectorized)
+  # NOTE: using default priors from: https://www.jstatsoft.org/article/view/v080i01
   # 
   # models
-  b_only <- brm(formula = tt | trials(td) ~  b + (1|sub),
-                data = acc_dat,
-                prior = priors,
+  faux_b <- brm(formula = tt | trials(td) ~  b + (1|sub),
+                data = faux_dat,
                 warmup = 2000, iter = 10000,
                 family = binomial,
                 save_pars = save_pars(all=TRUE)) # for model comparisons 
   
+  plot(faux_b)
+  # the model roughly retrieves the parameters, so we're happy
+  
+  ###------------------------------------------------------
+  # now run on true data
+  ###-----------------------------------------------------
+  b_subint <- brm(formula = tt | trials(td) ~  b + (1|sub),
+                  data = acc_dat,
+                  warmup = 2000, iter = 10000,
+                  family = binomial,
+                  save_pars = save_pars(all=TRUE)) # for model comparisons 
   # now save!
   save.image(file = '../data/derivatives/acc_mod-bonly/acc_mod-bonly.Rda')
   # I think these residuals are broadly ok
@@ -117,39 +133,40 @@ if (new){
   load(file = '../data/derivatives/acc_mod-bonly/acc_mod-bonly.Rda')
 }
 
-prior_summary(b_only)
-# see https://paul-buerkner.github.io/brms/reference/set_prior.html
-# for derails on the class etc
-# see https://pubmed.ncbi.nlm.nih.gov/31082309/
-# for a guide on how to set priors etc
-# also need to check how I can do dic comparisons between these models
-pdf(file='../data/derivatives/acc_mod-bonly/ps_and_chains.pdf')
-plot(b_only)
-dev.off()
-
-summary(b_only)
-b_only <- add_criterion(b_only, "waic")
-
-# now look at some posterior predictive checks
-pdf(file='../data/derivatives/acc_mod-bonly/pp_check.pdf')
-pp_check(b_only)
-dev.off()
-
-# now predict each data point and plot the real over the fitted data
-est <- coef(b_only)$sub[, "Estimate", ] %>% as.data.frame() %>%
-  mutate(sub = unique(acc_dat$sub))
-check_dat <- inner_join(acc_dat, est, by = "sub")
-check_dat <- check_dat %>% mutate(fit_p = plogis(Intercept + b.y * b.x))
-check_dat <- check_dat %>% mutate(obs = tt/td)
-
-pdf(file='../data/derivatives/acc_mod-bonly/predobs_resid.pdf')
-check_dat %>% ggplot(aes(x=b.x, y=obs, group=sess, colour=sess)) +
-  geom_point() + geom_line(aes(x=b.x, y=fit_p), inherit.aes = FALSE) +
-  facet_wrap(~sub)
-
-# plot the residuals to check nowt too crazy is happening
-check_dat %>% mutate(resid=fit_p-obs) %>% 
-  ggplot(aes(x=b.x, y=resid, group=sess, colour=sess)) +
-  geom_point()
-dev.off()
-
+if (verbal){
+  prior_summary(b)
+  # see https://paul-buerkner.github.io/brms/reference/set_prior.html
+  # for derails on the class etc
+  # see https://pubmed.ncbi.nlm.nih.gov/31082309/
+  # for a guide on how to set priors etc
+  # also need to check how I can do dic comparisons between these models
+  pdf(file='../data/derivatives/acc_mod-bonly/ps_and_chains.pdf')
+  plot(b)
+  dev.off()
+  
+  summary(b)
+  
+  # now look at some posterior predictive checks
+  pdf(file='../data/derivatives/acc_mod-bonly/pp_check.pdf')
+  pp_check(b)
+  dev.off()
+  
+  # now predict each data point and plot the real over the fitted data
+  est <- coef(b)$sub[, "Estimate", ] %>% as.data.frame() %>%
+    mutate(sub = unique(acc_dat$sub))
+  check_dat <- inner_join(acc_dat, est, by = "sub")
+  check_dat <- check_dat %>% mutate(log_odds = Intercept + b.y*b.x) %>% 
+                        mutate(p= 1/(1+exp(-log_odds))) %>%
+                        mutate(obs = tt/td)
+  
+  pdf(file='../data/derivatives/acc_mod-bonly/predobs_resid.pdf')
+  check_dat %>% ggplot(aes(x=b.x, y=obs, group=sess, colour=sess)) +
+    geom_point() + geom_point(aes(x=b.x, y=p), shape=2, inherit.aes = FALSE) +
+    facet_wrap(~sub)
+  
+  # plot the residuals to check nowt too crazy is happening
+  check_dat %>% mutate(resid=p-obs) %>% 
+    ggplot(aes(x=b.x, y=resid, group=sess, colour=sess)) +
+    geom_point()
+  dev.off()
+}
