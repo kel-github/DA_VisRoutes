@@ -29,7 +29,7 @@ library(tidyverse)
 # have you run this model before?
 ###-----------------------------------------------------
 # new <- TRUE
-# verbal <- FALSE
+# verbal <- TRUE
 
 if (new){
   ###------------------------------------------------------
@@ -52,7 +52,7 @@ if (new){
   acc_dat$drug <- as.factor(acc_dat$drug)
   
   ###------------------------------------------------------
-  # generate data for a ffx of drug, and an b*sub rfx
+  # generate data for a ffx of drug, b and an b*sub rfx
   ###-----------------------------------------------------
   nsubs <- 40
   intercept = 0.5
@@ -61,81 +61,83 @@ if (new){
   drug_levels <- 2
   drug_reg <- rep(c(0,1), each=nsubs*nb)
   drug_fx <- .2
+  b_fx <- .5
   b <- rep(b, times=nsubs*drug_levels) # adding drug manipulation
-  betab <- rnorm(nsubs*nb, mean=.5, sd=.2)
-  betab <- c(betab, betab)
-  sub_int <- rep(rnorm(nsubs, mean=.2, sd=.4), each=nb)
-  sub_int <- c(sub_int, sub_int)
-  log_odds <- intercept + betab*b + drug_fx*drug_reg + sub_int
+  betab <- rnorm(nsubs, mean=.5, sd=.2)
+  betab <- rep(betab, each=nb, times=drug_levels)
+  drugrfx <- rnorm(nsubs, mean=.07, sd=.1)
+  drugrfx <- rep(drugrfx, each=nb, times=drug_levels)
+  sub_int <- rep(rnorm(nsubs, mean=.2, sd=.4), each=nb, times=drug_levels)
+  log_odds <- intercept + b_fx*b + betab*b + drug_fx*drug_reg + drugrfx*drug_reg + sub_int
   # now turn mu into p
   p <- 1/(1+exp(-log_odds))
   # now sample binomial distribution
   trials <- sample(acc_dat$td, size=length(b))
   tt <- mapply(function(x,y) rbinom(1,size=x,prob=y), trials, p)
-  faux_dat <- tibble(sub = as.factor(rep(1:nsubs, each=nb, times=2)),
+  faux_dat <- tibble(sub = as.factor(rep(1:nsubs, each=nb, times=drug_levels)),
                      drug = drug_reg,
                      b = b,
                      tt = tt, 
                      td = trials)
   
-  faux_fxdrg_bsubrfx <- brm(formula = tt | trials(td) ~ drug + (b|sub),
-                      data = faux_dat,
-                      warmup = 2000, iter = 10000,
-                      family = binomial,
-                      save_pars = save_pars(all=TRUE)) # for model comparisons 
+  faux_fxbdrg_rfxbdrug <- brm(formula = tt | trials(td) ~ b + drug + (drug:b|sub),
+                                data = faux_dat,
+                                warmup = 2000, iter = 10000,
+                                family = binomial,
+                                save_pars = save_pars(all=TRUE)) # for model comparisons 
   
-  summary(faux_fxdrg_bsubrfx) # model recovers parameters (and Rhat ok), but ESS is small
-  # may need to up the samples for the data
+  summary(faux_fxbdrg_rfxbdrug) # model recovers parameters okaaaay 
+  # but is a tad biased on the fx of b 
   
   ###------------------------------------------------------
   # define accuracy models
   ###-----------------------------------------------------
   # start with an effect of block and a subject intercept
 
-  fxdrg_bsubrfx <- brm(formula = tt | trials(td) ~  drug + (b|sub),
-                        data = acc_dat,
-                        warmup = 2000, iter = 10000,
-                        family = binomial,
-                        save_pars = save_pars(all=TRUE)) # for model comparisons 
+  fxbdrg_rfxbdrg <- brm(formula = tt | trials(td) ~ b + drug + (b:drug|sub),
+                          data = acc_dat,
+                          warmup = 2000, iter = 10000,
+                          family = binomial,
+                          save_pars = save_pars(all=TRUE)) # for model comparisons 
   
   # now save!
-  save.image(file = '../data/derivatives/acc_model-fxdrg-bsubrfx/aacc_model-fxdrg-bsubrfx.Rda')
+  save.image(file = '../data/derivatives/acc_mod-fxbdrg-bdrgsubrfx/acc_mod-fxbdrg-bdrgsubrfx.Rda')
   
 } else {
   
-  load(file = '../data/derivatives/acc_model-fxdrg-bsubrfx/acc_model-fxdrg-bsubrfx.Rda')
+  load(file = '../data/derivatives/acc_mod-fxbdrg-bdrgsubrfx/acc_mod-fxbdrg-bdrgsubrfx.Rda')
 }
 
 if (verbal){
   # info
-  prior_summary(fxdrg_bsubrfx)
+  prior_summary(fxbdrg_rfxbdrg)
 
-  pdf(file='../data/derivatives/acc_model-fxdrg-bsubrfx/ps_and_chains.pdf')
-    plot(fxdrg_bsubrfx)
+  pdf(file='../data/derivatives/acc_mod-fxbdrg-bdrgsubrfx/ps_and_chains.pdf')
+    plot(fxbdrg_rfxbdrg)
   dev.off()
 
-  summary(fxdrg_bsubrfx)
+  summary(fxbdrg_rfxbdrg) # looks healthy
 
   # now look at some posterior predictive checks
-  pdf(file='../data/derivatives/acc_model-fxdrg-bsubrfx/pp_check.pdf')
-    pp_check(fxdrg_bsubrfx)
+  pdf(file='../data/derivatives/acc_mod-fxbdrg-bdrgsubrfx/pp_check.pdf')
+    pp_check(fxbdrg_rfxbdrg)
   dev.off()
 
 # visualising data using:
 # https://bookdown.org/ajkurz/DBDA_recoded/dichotomous-predicted-variable.html#interpreting-the-regression-coefficients
 # see end of section 22.2.1
-  est <- coef(fxdrg_bsubrfx)$sub[, "Estimate", ] %>% as.data.frame() %>%
+  est <- coef(fxbdrg_rfxbdrg)$sub[, "Estimate", ] %>% as.data.frame() %>%
               mutate(sub = unique(acc_dat$sub))
   check_dat <- inner_join(acc_dat, est, by = "sub")
 
   check_dat <- rbind(check_dat %>% filter(drug == "levodopa") %>% 
-                       mutate(log_odds = Intercept + b.y * b.x),
+                       mutate(log_odds = Intercept + b.y * b.x + b.x*`b:druglevodopa`),
                        check_dat %>% filter(drug == "placebo") %>%
-                       mutate(log_odds = Intercept + drugplacebo + b.y*b.x)) %>% 
+                       mutate(log_odds = Intercept + drugplacebo + b.y*b.x + b.x*`b:drugplacebo`)) %>% 
                        mutate(p= 1/(1+exp(-log_odds))) %>%
                        mutate(obs = tt/td)
 
-  pdf(file='../data/derivatives/acc_model-fxdrg-bsubrfx/predobs_resid.pdf')
+  pdf(file='../data/derivatives/acc_mod-fxbdrg-bdrgsubrfx/predobs_resid.pdf')
     check_dat %>% ggplot(aes(x=b.x, y=obs, group=drug, colour=drug)) +
       geom_point() + geom_point(aes(x=b.x, y=p, group=drug, colour=drug), shape=2, inherit.aes = FALSE) +
       facet_wrap(~sub)
