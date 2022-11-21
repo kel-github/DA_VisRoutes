@@ -21,9 +21,9 @@
 
 ###------------------------------------------------------
 # load packages
-###-----------------------------------------------------
-library(brms)
-library(tidyverse)
+# ###-----------------------------------------------------
+# library(brms)
+# library(tidyverse)
 
 ###------------------------------------------------------
 # have you run this model before?
@@ -31,62 +31,54 @@ library(tidyverse)
 # new <- TRUE
 # verbal <- FALSE
 
+# make a directory for results if required
+dir_name <- 'acc_model-fxdrg-bsubrfx'
+dir.create(sprintf('../data/derivatives/%s', dir_name), showWarnings=FALSE)
+mod_name <- dir_name
+
 if (new){
   ###------------------------------------------------------
   # load data
   ###-----------------------------------------------------
-  load('../data/derivatives/accuracy.Rda')
-  
-  ###------------------------------------------------------
-  # sum over context, as initial peruse of data showed
-  # no information in this variable, for accuracy
-  ###-----------------------------------------------------
-  acc_dat <- door_acc_sum %>% group_by(sub, sess, drug, b) %>%
-    summarise(tt = sum(tt),
-              td = sum(td))
-  acc_dat <- acc_dat[!is.na(acc_dat$b),]
-  # scale the block factor
-  acc_dat$b <- scale(acc_dat$b)
-  acc_dat$sub <- as.factor(acc_dat$sub)
-  acc_dat$sess <- as.factor(acc_dat$sess)
-  acc_dat$drug <- as.factor(acc_dat$drug)
+  load('../data/derivatives/acc_dat4_model.Rda')
   
   ###------------------------------------------------------
   # generate data for a ffx of drug, and an b*sub rfx
   ###-----------------------------------------------------
-  nsubs <- 40
-  intercept = 0.5
-  b <- scale(1:8)
-  nb <- 8
-  drug_levels <- 2
-  drug_reg <- rep(c(0,1), each=nsubs*nb)
-  drug_fx <- .2
-  b <- rep(b, times=nsubs*drug_levels) # adding drug manipulation
-  betab <- rnorm(nsubs*nb, mean=.5, sd=.2)
-  betab <- c(betab, betab)
-  sub_int <- rep(rnorm(nsubs, mean=.2, sd=.4), each=nb)
-  sub_int <- c(sub_int, sub_int)
-  log_odds <- intercept + betab*b + drug_fx*drug_reg + sub_int
-  # now turn mu into p
-  p <- 1/(1+exp(-log_odds))
-  # now sample binomial distribution
-  trials <- sample(acc_dat$td, size=length(b))
-  tt <- mapply(function(x,y) rbinom(1,size=x,prob=y), trials, p)
-  faux_dat <- tibble(sub = as.factor(rep(1:nsubs, each=nb, times=2)),
-                     drug = drug_reg,
-                     b = b,
-                     tt = tt, 
-                     td = trials)
-  
-  faux_fxdrg_bsubrfx <- brm(formula = tt | trials(td) ~ drug + (b|sub),
-                      data = faux_dat,
-                      warmup = 2000, iter = 10000,
-                      family = binomial,
-                      save_pars = save_pars(all=TRUE)) # for model comparisons 
-  
-  summary(faux_fxdrg_bsubrfx) # model recovers parameters (and Rhat ok), but ESS is small
-  # may need to up the samples for the data
-  
+  if (faux){
+    nsubs <- 40
+    intercept = 0.5
+    b <- scale(1:8)
+    nb <- 8
+    drug_levels <- 2
+    drug_reg <- rep(c(0,1), each=nsubs*nb)
+    drug_fx <- .2
+    b <- rep(b, times=nsubs*drug_levels) # adding drug manipulation
+    betab <- rnorm(nsubs*nb, mean=.5, sd=.2)
+    betab <- c(betab, betab)
+    sub_int <- rep(rnorm(nsubs, mean=.2, sd=.4), each=nb)
+    sub_int <- c(sub_int, sub_int)
+    log_odds <- intercept + betab*b + drug_fx*drug_reg + sub_int
+    # now turn mu into p
+    p <- 1/(1+exp(-log_odds))
+    # now sample binomial distribution
+    trials <- sample(acc_dat$td, size=length(b))
+    tt <- mapply(function(x,y) rbinom(1,size=x,prob=y), trials, p)
+    faux_dat <- tibble(sub = as.factor(rep(1:nsubs, each=nb, times=2)),
+                       drug = drug_reg,
+                       b = b,
+                       tt = tt,
+                       td = trials)
+    
+    faux_fxdrg_bsubrfx <- brm(formula = tt | trials(td) ~ drug + (b|sub),
+                              data = faux_dat,
+                              warmup = 2000, iter = 10000,
+                              family = binomial,
+                              save_pars = save_pars(all=TRUE)) # for model comparisons
+    
+    summary(faux_fxdrg_bsubrfx) # model recovers parameters (and Rhat ok), but ESS is small
+    #  may need to up the samples for the data
+  }
   ###------------------------------------------------------
   # define accuracy models
   ###-----------------------------------------------------
@@ -99,25 +91,25 @@ if (new){
                         save_pars = save_pars(all=TRUE)) # for model comparisons 
   
   # now save!
-  save.image(file = '../data/derivatives/acc_model-fxdrg-bsubrfx/aacc_model-fxdrg-bsubrfx.Rda')
+  save(fxdrg_bsubrfx, file = sprintf('../data/derivatives/%s/%s', dir_name, mod_name))
   
 } else {
   
-  load(file = '../data/derivatives/acc_model-fxdrg-bsubrfx/acc_model-fxdrg-bsubrfx.Rda')
+  load(file = sprintf('../data/derivatives/%s/%s', dir_name, mod_name))
 }
 
 if (verbal){
   # info
-  prior_summary(fxdrg_bsubrfx)
+  #prior_summary(fxdrg_bsubrfx)
 
-  pdf(file='../data/derivatives/acc_model-fxdrg-bsubrfx/ps_and_chains.pdf')
+  pdf(file=sprintf('../data/derivatives/%s/ps_and_chains.pdf', dir_name))
     plot(fxdrg_bsubrfx)
   dev.off()
 
-  summary(fxdrg_bsubrfx)
+  #summary(fxdrg_bsubrfx)
 
   # now look at some posterior predictive checks
-  pdf(file='../data/derivatives/acc_model-fxdrg-bsubrfx/pp_check.pdf')
+  pdf(file=sprintf('../data/derivatives/%s/pp_check.pdf', dir_name))
     pp_check(fxdrg_bsubrfx)
   dev.off()
 
@@ -135,7 +127,7 @@ if (verbal){
                        mutate(p= 1/(1+exp(-log_odds))) %>%
                        mutate(obs = tt/td)
 
-  pdf(file='../data/derivatives/acc_model-fxdrg-bsubrfx/predobs_resid.pdf')
+  pdf(file=sprintf('../data/derivatives/%s/predobs_resid.pdf', dir_name))
     check_dat %>% ggplot(aes(x=b.x, y=obs, group=drug, colour=drug)) +
       geom_point() + geom_point(aes(x=b.x, y=p, group=drug, colour=drug), shape=2, inherit.aes = FALSE) +
       facet_wrap(~sub)
@@ -146,3 +138,5 @@ if (verbal){
     geom_point()
   dev.off()
 }
+
+rm(fxdrg_bsubrfx, check_dat, est)

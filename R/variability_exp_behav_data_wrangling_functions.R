@@ -25,7 +25,8 @@ get_data <- function(fpth, sub_num, ses){
     # remove the practice trials and the times where participants were not looking at a door,
     # then select the last of the multiple entries for each door, for when there were greater than
     # 100 msec spent on any door
-    resps  = resps  %>% filter(cond != 3 & door > 0) 
+    resps  = resps  %>% filter(cond != 3 & door > 0) # start with practice trials and when no
+    # door was registered at all
     resps$t = resps$t - 5 # correct trial numbers (as 1 = first practice trial)
     
     # now, for each set of door presses, compute the total number of samples
@@ -58,8 +59,14 @@ get_data <- function(fpth, sub_num, ses){
     
     # now, keep only those with > 17 entries as 17 * .017 ~ 300 ms
     resps <- resps %>% filter(idx > 17)
-    # and now, keep the last of each door switch
-    resps <- resps %>% filter(lead(door,1) != door | lead(onset,1) < onset) 
+    # and now, keep the last of each door switch, as long as the door was marked as open at the time
+    # this latter conditions removes times where participants skipped to a door that was 
+    # accidentally marked as open
+    resps <- resps %>% filter(lead(door,1) != door & open_d == 1 | lead(onset,1) < onset & open_d == 1 | tgt_found == 1) 
+    # now I re-do removing times where two doors were selected in a row, as filtering by open_d
+    # above would have created some double door selections, as in times a door was open, eyes skipped 
+    # somewhere else and then went back to the original door
+    resps <- resps %>% filter(lead(door,1) != door | tgt_found == 1)
     # also remove the target door from each trial - i.e. the 'fixed' one
 #    resps <- resps %>% filter(onset != 999)
     ### assign probability of location label

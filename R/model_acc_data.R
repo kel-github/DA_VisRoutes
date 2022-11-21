@@ -1,3 +1,4 @@
+
 ## K. Garner, 2022
 ## perform modelling of accuracy data as specified in 
 ## https://osf.io/2y6pk
@@ -5,6 +6,27 @@
 # use this code to apply the bayesian multi-level modelling
 # of the accuracy data
 # 
+# Notes on modelling:
+# here is a useful reference to GLMMs: 
+# https://stats.oarc.ucla.edu/other/mult-pkg/introduction-to-generalized-linear-mixed-models/
+# take aways:
+# rfx's are modelled as a deviation from the fxd effect, therefore
+# we are only estimating the variance parameter (and not a mean parameter)
+# all rfxs will go into the Z matrix, but the main intercept will be the average of the rfx
+# intercepts
+# 
+# for data-wrangling/pulling data out of the brms object
+# https://bookdown.org/ajkurz/DBDA_recoded/dichotomous-predicted-variable.html
+# 
+# this page is useful for definitions:
+# https://stats.oarc.ucla.edu/stata/seminars/deciphering-interactions-in-logistic-regression/
+# main questions:
+# how to code interactions? as usual
+# does adding a term constitute an interaction in probability space? sometimes it will, and sometimes
+# the inverse is true (adding a multiplicative term may not be significant in log odds space but may be present
+# in probability space)
+#
+# at this point, I think I want to keep models and rfx as simple as possible
 # assumes following folder structure:
 # -- top/
 #      R/code is here
@@ -85,6 +107,10 @@ prior_summary(b_only)
 # see https://pubmed.ncbi.nlm.nih.gov/31082309/
 # for a guide on how to set priors etc
 # also need to check how I can do dic comparisons between these models
+} else {
+  # load here
+}
+
 plot(b_only)
 summary(b_only)
 b_only <- add_criterion(b_only, "waic")

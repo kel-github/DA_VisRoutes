@@ -110,6 +110,7 @@ door_acc_sum <- blocked_dat %>% group_by(sub, sess, drug, cond, b) %>%
 
 ###-------------------------------------------------------
 ## NOTE: create regressor for those who scored < .65 at the final block
+# probably not going to use this as the criteria is too strict
 ###-------------------------------------------------------
 acc_4_excl <- blocked_dat %>% group_by(sub, sess) %>% filter(b==8) %>%
                               summarise(acc = length(door[door_type == "cc"|
@@ -129,3 +130,33 @@ for (i in subs_l65) door_acc_sum$excl[door_acc_sum$sub == i] <- 1
 ## NOTE: Save 
 ###-------------------------------------------------------
 save(door_acc_sum, file='../data/derivatives/accuracy.Rda')
+
+###-------------------------------------------------------
+## NOW MAKE SUMMARY FOR MODELLING
+###-------------------------------------------------------
+acc_dat <- door_acc_sum %>% group_by(sub, sess, drug, b) %>%
+                              summarise(tt = sum(tt),
+                              td = sum(td))
+acc_dat <- acc_dat[!is.na(acc_dat$b),]
+# scale the block factor
+acc_dat$b <- scale(acc_dat$b)
+acc_dat$sub <- as.factor(acc_dat$sub)
+acc_dat$sess <- as.factor(acc_dat$sess)
+
+# appears sub 21 is an outlier on most their measures
+boxplot(acc_dat$tt) 
+boxplot(acc_dat$tt[acc_dat$sub != 21])
+boxplot(acc_dat$td)
+boxplot(acc_dat$td[acc_dat$sub != 21]) ###
+
+# removing subject 21 because they are noisy, don't trust the measue
+acc_dat <- acc_dat %>% filter(sub != 21)
+acc_dat <- acc_dat %>% mutate(acc=tt/td)
+
+# now plot block x drug data
+acc_dat %>% ggplot(aes(x=b, y=acc, group=sub, colour=drug)) +
+  geom_line() + facet_wrap(~sess*drug)
+
+acc_dat$acc <- NULL
+# save summary
+save(acc_dat, file='../data/derivatives/acc_dat4_model.Rda')
