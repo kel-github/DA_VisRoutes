@@ -126,5 +126,5 @@ fxbdrg_rfxbdrg <- add_criterion(fxbdrg_rfxbdrg, "loo", moment_match=TRUE, reloo=
 
 loo_compare(fxdrg_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg, criterion = "loo") 
 #fxdrg_bsubrfx       0.0       0.0  - this guy was a tad better at recovering parameters also
-# Now I'll add mindfulness to this guy
+# Now I'll add mindfulness to this guy # COMPARE THIS GUY TO THE ONE WITHOUT DRUG
 #fxbdrg_bsubrfx     -0.1       1.2  
