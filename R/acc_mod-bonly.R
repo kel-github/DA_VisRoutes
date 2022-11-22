@@ -128,7 +128,7 @@ if (new){
 
 if (verbal){
 
-  verbal_output(fxb_bsubint, dir_name = dir_name)
+  verbal_output(mod=fxb_subint, dir_name=dir_name)
   
   # now predict each data point and plot the real over the fitted data
   est <- coef(fxb_subint)$sub[, "Estimate", ] %>% as.data.frame() %>%
@@ -138,7 +138,7 @@ if (verbal){
                         mutate(p= 1/(1+exp(-log_odds))) %>%
                         mutate(obs = tt/td)
   
-  pdf(file=sprintf('../data/derivatives/%s/predobs_resid.pdf'), dir_name)
+  pdf(file=sprintf('../data/derivatives/%s/predobs_resid.pdf', dir_name))
     check_dat %>% ggplot(aes(x=b.x, y=obs, group=sess, colour=sess)) +
       geom_point() + geom_point(aes(x=b.x, y=p), shape=2, inherit.aes = FALSE) +
       facet_wrap(~sub)

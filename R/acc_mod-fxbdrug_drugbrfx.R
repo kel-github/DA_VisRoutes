@@ -90,11 +90,11 @@ if (new){
                           save_pars = save_pars(all=TRUE)) # for model comparisons 
   
   # now save!
-  save(fxbdrg_rfxbdrg, file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, model_name))
+  save(fxbdrg_rfxbdrg, file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, mod_name))
   
 } else {
   
-  load(file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, model_name))
+  load(file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, mod_name))
 }
 
 if (verbal){
