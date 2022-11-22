@@ -49,124 +49,105 @@
 ###-------------------------------------------------------
 
 
-###------------------------------------------------------
-# load packages
-###-----------------------------------------------------
-library(brms)
-library(tidyverse)
+# ###------------------------------------------------------
+# # load packages
+# ###-----------------------------------------------------
+# library(brms)
+# library(tidyverse)
 
-###------------------------------------------------------
-# have you run this model before?
-###-----------------------------------------------------
-new <- TRUE
-verbal <- TRUE
+# ###------------------------------------------------------
+# # have you run this model before?
+# ###-----------------------------------------------------
+# new <- TRUE
+# verbal <- TRUE
+
+# make a directory for results if required
+dir_name <- 'acc_model-bonly'
+dir.create(sprintf('../data/derivatives/%s', dir_name), showWarnings=FALSE)
+mod_name <- dir_name
 
 if (new){
   ###------------------------------------------------------
   # load data
   ###-----------------------------------------------------
-  load('../data/derivatives/accuracy.Rda')
+  load('../data/derivatives/acc_dat4_model.Rda')
   
-  ###------------------------------------------------------
-  # sum over context, as initial peruse of data showed
-  # no information in this variable, for accuracy
-  ###-----------------------------------------------------
-  acc_dat <- door_acc_sum %>% group_by(sub, sess, drug, b) %>%
-    summarise(tt = sum(tt),
-              td = sum(td))
-  acc_dat <- acc_dat[!is.na(acc_dat$b),]
-  # scale the block factor
-  acc_dat$b <- scale(acc_dat$b)
-  acc_dat$sub <- as.factor(acc_dat$sub)
-  acc_dat$sess <- as.factor(acc_dat$sess)
-  
-  ###-----------------------------------------------------
-  # first, generate some data to check the model covers
-  # the correct parameters
-  ###-----------------------------------------------------
-  nsubs <- 40
-  intercept <- 2
-  b <- scale(1:8)
-  nb <- 8
-  b <- rep(b, times=nsubs)
-  betab <- .5
-  sub_int <- rep(rnorm(nsubs, mean=.2, sd=.4), each=nb)
-  log_odds <- intercept + betab*b + sub_int
-  # now turn mu into p
-  p <- 1/(1+exp(-log_odds))
-  # now sample binomial distribution
-  trials <- sample(acc_dat$td, size=length(b))
-  tt <- mapply(function(x,y) rbinom(1,size=x,prob=y), trials, p)
-  faux_dat <- tibble(sub = as.factor(rep(1:nsubs, each=nb)),
-                     b = b,
-                     tt = tt, 
-                     td = trials)
-  ###------------------------------------------------------
-  # define test accuracy model on faux data
-  ###-----------------------------------------------------
-  # start with an effect of block and a subject intercept
-  # NOTE: using default priors from: https://www.jstatsoft.org/article/view/v080i01
-  # 
-  # models
-  faux_b <- brm(formula = tt | trials(td) ~  b + (1|sub),
-                data = faux_dat,
-                warmup = 2000, iter = 10000,
-                family = binomial,
-                save_pars = save_pars(all=TRUE)) # for model comparisons 
-  
-  plot(faux_b)
-  # the model roughly retrieves the parameters, so we're happy
-  
+  if (faux){
+    ###-----------------------------------------------------
+    # first, generate some data to check the model covers
+    # the correct parameters
+    ###-----------------------------------------------------
+    nsubs <- 40
+    intercept <- 2
+    b <- scale(1:8)
+    nb <- 8
+    b <- rep(b, times=nsubs)
+    betab <- .5
+    sub_int <- rep(rnorm(nsubs, mean=.2, sd=.4), each=nb)
+    log_odds <- intercept + betab*b + sub_int
+    # now turn mu into p
+    p <- 1/(1+exp(-log_odds))
+    # now sample binomial distribution
+    trials <- sample(acc_dat$td, size=length(b))
+    tt <- mapply(function(x,y) rbinom(1,size=x,prob=y), trials, p)
+    faux_dat <- tibble(sub = as.factor(rep(1:nsubs, each=nb)),
+                       b = b,
+                       tt = tt, 
+                       td = trials)
+    ###------------------------------------------------------
+    # define test accuracy model on faux data
+    ###-----------------------------------------------------
+    # start with an effect of block and a subject intercept
+    # NOTE: using default priors from: https://www.jstatsoft.org/article/view/v080i01
+    # 
+    # models
+    faux_b <- brm(formula = tt | trials(td) ~  b + (1|sub),
+                  data = faux_dat,
+                  warmup = 2000, iter = 10000,
+                  family = binomial,
+                  save_pars = save_pars(all=TRUE)) # for model comparisons 
+    
+    plot(faux_b)
+    # the model roughly retrieves the parameters, so we're happy
+  }
   ###------------------------------------------------------
   # now run on true data
   ###-----------------------------------------------------
-  b_subint <- brm(formula = tt | trials(td) ~  b + (1|sub),
+  fxb_subint <- brm(formula = tt | trials(td) ~  b + (1|sub),
                   data = acc_dat,
                   warmup = 2000, iter = 10000,
                   family = binomial,
                   save_pars = save_pars(all=TRUE)) # for model comparisons 
   # now save!
-  save.image(file = '../data/derivatives/acc_mod-bonly/acc_mod-bonly.Rda')
+  save(fxb_subint, file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, mod_name))
   # I think these residuals are broadly ok
 } else {
   
-  load(file = '../data/derivatives/acc_mod-bonly/acc_mod-bonly.Rda')
+  load(file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, mod_name))
 }
 
 if (verbal){
-  prior_summary(b)
-  # see https://paul-buerkner.github.io/brms/reference/set_prior.html
-  # for derails on the class etc
-  # see https://pubmed.ncbi.nlm.nih.gov/31082309/
-  # for a guide on how to set priors etc
-  # also need to check how I can do dic comparisons between these models
-  pdf(file='../data/derivatives/acc_mod-bonly/ps_and_chains.pdf')
-  plot(b)
-  dev.off()
-  
-  summary(b)
-  
-  # now look at some posterior predictive checks
-  pdf(file='../data/derivatives/acc_mod-bonly/pp_check.pdf')
-  pp_check(b)
-  dev.off()
+
+  verbal_output(fxb_bsubint, dir_name = dir_name)
   
   # now predict each data point and plot the real over the fitted data
-  est <- coef(b)$sub[, "Estimate", ] %>% as.data.frame() %>%
+  est <- coef(fxb_subint)$sub[, "Estimate", ] %>% as.data.frame() %>%
     mutate(sub = unique(acc_dat$sub))
   check_dat <- inner_join(acc_dat, est, by = "sub")
   check_dat <- check_dat %>% mutate(log_odds = Intercept + b.y*b.x) %>% 
                         mutate(p= 1/(1+exp(-log_odds))) %>%
                         mutate(obs = tt/td)
   
-  pdf(file='../data/derivatives/acc_mod-bonly/predobs_resid.pdf')
-  check_dat %>% ggplot(aes(x=b.x, y=obs, group=sess, colour=sess)) +
-    geom_point() + geom_point(aes(x=b.x, y=p), shape=2, inherit.aes = FALSE) +
-    facet_wrap(~sub)
+  pdf(file=sprintf('../data/derivatives/%s/predobs_resid.pdf'), dir_name)
+    check_dat %>% ggplot(aes(x=b.x, y=obs, group=sess, colour=sess)) +
+      geom_point() + geom_point(aes(x=b.x, y=p), shape=2, inherit.aes = FALSE) +
+      facet_wrap(~sub)
   
   # plot the residuals to check nowt too crazy is happening
-  check_dat %>% mutate(resid=p-obs) %>% 
-    ggplot(aes(x=b.x, y=resid, group=sess, colour=sess)) +
-    geom_point()
+    check_dat %>% mutate(resid=p-obs) %>% 
+      ggplot(aes(x=b.x, y=resid, group=sess, colour=sess)) +
+      geom_point()
   dev.off()
 }
+
+rm(fxb_subint, est, check_dat)

@@ -37,10 +37,6 @@ dir.create(sprintf('../data/derivatives/%s', dir_name), showWarnings=FALSE)
 mod_name <- dir_name
 
 if (new){
-  ###------------------------------------------------------
-  # load data
-  ###-----------------------------------------------------
-  load('../data/derivatives/acc_dat4_model.Rda')
   
   ###------------------------------------------------------
   # generate data for a ffx of drug, and an b*sub rfx
@@ -91,27 +87,16 @@ if (new){
                         save_pars = save_pars(all=TRUE)) # for model comparisons 
   
   # now save!
-  save(fxdrg_bsubrfx, file = sprintf('../data/derivatives/%s/%s', dir_name, mod_name))
+  save(fxdrg_bsubrfx, file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, mod_name))
   
 } else {
   
-  load(file = sprintf('../data/derivatives/%s/%s', dir_name, mod_name))
+  load(file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, mod_name))
 }
 
 if (verbal){
-  # info
-  #prior_summary(fxdrg_bsubrfx)
-
-  pdf(file=sprintf('../data/derivatives/%s/ps_and_chains.pdf', dir_name))
-    plot(fxdrg_bsubrfx)
-  dev.off()
-
-  #summary(fxdrg_bsubrfx)
-
-  # now look at some posterior predictive checks
-  pdf(file=sprintf('../data/derivatives/%s/pp_check.pdf', dir_name))
-    pp_check(fxdrg_bsubrfx)
-  dev.off()
+  
+  verbal_output(fxdrg_bsubrfx, dir_name = dir_name)
 
 # visualising data using:
 # https://bookdown.org/ajkurz/DBDA_recoded/dichotomous-predicted-variable.html#interpreting-the-regression-coefficients
