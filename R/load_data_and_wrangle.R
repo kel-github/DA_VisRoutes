@@ -29,23 +29,27 @@ if (!not_new){
   sub_nums <- rep(c(1:40), each = nses)
   ses_nums <- rep(c(1,2), times = length(sub_nums)/2)
   dat <- mapply(get_data, sub_num = sub_nums, ses = ses_nums, MoreArgs = list(fpth='../data/'), SIMPLIFY = FALSE )
+  dat <- do.call(rbind, dat)
   saveRDS(dat, file='../data/derivatives/raw.Rds')
+
 } else {
   # load the RData file instead
   dat <- readRDS('../data/derivatives/raw.Rds')
 }
-dat <- do.call(rbind, dat)
+
 
 ###-------------------------------------------------------
 ## ADD DRUG INFO
 ###-------------------------------------------------------
-drug_info <- read_csv('../data/derivatives/drug-assignment.csv', col_names=T) 
-drug_info <- drug_info %>%
-              pivot_longer(cols=starts_with('S_'), names_to = 'sess', 
-                           names_prefix='S_', values_to = 'drug')
-drug_info$sess <- as.numeric(drug_info$sess)
-
-dat <- inner_join(dat, drug_info, by=c('sub', 'sess'))
+if (!not_new){
+  drug_info <- read_csv('../data/derivatives/drug-assignment.csv', col_names=T) 
+  drug_info <- drug_info %>%
+    pivot_longer(cols=starts_with('S_'), names_to = 'sess', 
+                 names_prefix='S_', values_to = 'drug')
+  drug_info$sess <- as.numeric(drug_info$sess)
+  
+  dat <- inner_join(dat, drug_info, by=c('sub', 'sess'))
+}
 
 ###-------------------------------------------------------
 ## ADD BLOCK REGRESSOR
@@ -160,3 +164,32 @@ acc_dat %>% ggplot(aes(x=b, y=acc, group=sub, colour=drug)) +
 acc_dat$acc <- NULL
 # save summary
 save(acc_dat, file='../data/derivatives/acc_dat4_model.Rda')
+
+###-------------------------------------------------------
+## NOW MAKE CONTEXT ACC SUMMARY FOR MODELLING
+## BUT GIVE IT THE SAME LABELS AS ABOVE FOR EASE OF MODELLING
+###-------------------------------------------------------
+acc_dat <- door_acc_sum %>% group_by(sub, sess, drug, b) %>%
+                summarise(tt = sum(cc),
+                          td = sum(cc)+sum(oc))
+acc_dat <- acc_dat[!is.na(acc_dat$b),]
+# scale the block factor
+acc_dat$b <- scale(acc_dat$b)
+acc_dat$sub <- as.factor(acc_dat$sub)
+acc_dat$sess <- as.factor(acc_dat$sess)
+
+boxplot(acc_dat$tt) 
+boxplot(acc_dat$tt[acc_dat$sub != 21])
+boxplot(acc_dat$td)
+boxplot(acc_dat$td[acc_dat$sub != 21]) ###
+
+acc_dat <- acc_dat %>% filter(sub != 21)
+acc_dat <- acc_dat %>% mutate(acc=tt/td)
+
+# now plot block x drug data
+acc_dat %>% ggplot(aes(x=b, y=acc, group=sub, colour=drug)) +
+  geom_line() + facet_wrap(~drug)
+
+acc_dat$acc <- NULL
+# save summary
+save(acc_dat, file='../data/derivatives/cacc_dat4_model.Rda')

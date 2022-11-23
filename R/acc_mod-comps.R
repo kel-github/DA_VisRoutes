@@ -17,7 +17,8 @@ new <- FALSE
 verbal <- FALSE
 
 run_b <- FALSE
-run_d <- TRUE# run drug models
+run_d <- FALSE# run drug models\
+run_int <- TRUE # run comparisons between models with an interaction and those without
 
 if (run_b){
   ##################################################################################################################
@@ -50,7 +51,7 @@ if (run_b){
 # there was only 1 influential value in the bfx, and this may
 # improve as the drug term is added to the model
 # 
-# if (run_d){
+if (run_d){
 
 #   # model 1: tt | trials(td) ~ b + drug + (b|sub)
 #   # model 2: tt | trials(td) ~ b + drug + (b:drug|sub)
@@ -66,7 +67,25 @@ if (run_b){
    save(fxbdrg_rfxbdrg, file='../data/derivatives/acc_model-fxbdrg-bdrgsubrfx/acc_model-fxbdrg-bdrgsubrfx.Rda')  
 #   save.image(file='../data/derivatives/acc_model-comps.Rda')
 # } else {
-#   
+#  # now compare the drug models to the best w/out drug model
+   load()
 #   load('../data/derivatives/acc_model-comps.Rda')
-# }
+}
+
+if (run_int){
+
+  load('../data/derivatives/acc_model-fxbdrg-brfx/acc_model-fxbdrg-brfx.Rda')
+  load('../data/derivatives/acc_model-fxbdrg-bdrgsubrfx/acc_model-fxbdrg-bdrgsubrfx.Rda')
+  load('../data/derivatives/acc_model-fxbdrgint-brfx/acc_model-fxbdrgint-brfx.Rda')
+  load('../data/derivatives/acc_model-fxbdrgint-bdrgrfx/acc_model-fxbdrgint-bdrgrfx.Rda')
+  
+  fxbdrgint_bsubrfx <- add_criterion(fxbdrgint_bsubrfx, "loo", moment_match=TRUE, reloo=TRUE)
+  fxbdrgint_bdrgsubrfx <- add_criterion(fxbdrgint_bdrgsubrfx, "loo", moment_match=TRUE, reloo=TRUE)
+  
+  loo_compare(fxbdrg_bsubrfx, fxbdrg_rfxbdrg, fxbdrgint_bsubrfx, fxbdrgint_bdrgsubrfx)
+  # fxbdrgint_bdrgsubrfx is the preferred model
+}
+
+
+
 

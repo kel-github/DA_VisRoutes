@@ -30,9 +30,6 @@
 ###-----------------------------------------------------
 # new <- TRUE
 # verbal <- TRUE
-
-# make a directory for results if required
-dir_name <- 'acc_model-int-bsubrfx'
 dir.create(sprintf('../data/derivatives/%s', dir_name), showWarnings=FALSE)
 mod_name <- dir_name
 
@@ -76,6 +73,7 @@ if (new){
                             family = binomial,
                             save_pars = save_pars(all=TRUE)) # for model comparisons 
   
+  bsubrfx <- add_criterion(bsubrfx, "loo", moment_match=TRUE, reloo=TRUE)
   # now save!
   save(bsubrfx, file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, mod_name))
   

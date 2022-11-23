@@ -18,7 +18,7 @@
 # https://bayesball.github.io/BRMS/multilevel-regression.html
 ###-------------------------------------------------------
 
-# 
+
 # ###------------------------------------------------------
 # # load packages
 # ###-----------------------------------------------------
@@ -30,7 +30,6 @@
 ###-----------------------------------------------------
 # new <- TRUE
 # verbal <- TRUE
-
 # make a directory for results if required
 dir.create(sprintf('../data/derivatives/%s', dir_name), showWarnings=FALSE)
 mod_name <- dir_name
@@ -38,7 +37,6 @@ mod_name <- dir_name
 if (new){
 
   if (faux){
-    
     ###------------------------------------------------------
     # generate data for a ffx of drug, b and an b*sub rfx
     ###-----------------------------------------------------
@@ -53,14 +51,13 @@ if (new){
     b <- rep(b, times=nsubs*drug_levels) # adding drug manipulation
     betab <- rnorm(nsubs, mean=.5, sd=.2)
     betab <- rep(betab, each=nb, times=drug_levels)
-    drugrfx <- rnorm(nsubs, mean=.07, sd=.1)
-    drugrfx <- rep(drugrfx, each=nb, times=drug_levels)
+    int_beta <- .4 # drug * beta interaction
     sub_int <- rep(rnorm(nsubs, mean=.2, sd=.4), each=nb, times=drug_levels)
-    log_odds <- intercept + b_fx*b + betab*b + drug_fx*drug_reg + drugrfx*drug_reg + sub_int
+    log_odds <- intercept + b_fx*b + betab*b + drug_fx*drug_reg + drug_reg*b*int_beta + sub_int
     # now turn mu into p
     p <- 1/(1+exp(-log_odds))
     # now sample binomial distribution
-    trials <- sample(acc_dat$td, size=length(b))
+    trials <- sample(acc_dat$td, size=length(b), replace=TRUE)
     tt <- mapply(function(x,y) rbinom(1,size=x,prob=y), trials, p)
     faux_dat <- tibble(sub = as.factor(rep(1:nsubs, each=nb, times=drug_levels)),
                        drug = drug_reg,
@@ -68,13 +65,13 @@ if (new){
                        tt = tt, 
                        td = trials)
     
-    faux_fxbdrg_rfxbdrug <- brm(formula = tt | trials(td) ~ b + drug + (drug:b|sub),
-                                data = faux_dat,
-                                warmup = 2000, iter = 10000,
-                                family = binomial,
-                                save_pars = save_pars(all=TRUE)) # for model comparisons 
+    faux_fxbdrgint_bsubrfx <- brm(formula = tt | trials(td) ~ b * drug + (b|sub),
+                               data = faux_dat,
+                               warmup = 2000, iter = 10000,
+                               family = binomial,
+                               save_pars = save_pars(all=TRUE)) # for model comparisons 
     
-    summary(faux_fxbdrg_rfxbdrug) # model recovers parameters okaaaay 
+    summary(faux_fxbdrgint_bsubrfx) # model recovers parameters okaaaay 
     # but is a tad biased on the fx of b 
   }
   ###------------------------------------------------------
@@ -82,15 +79,15 @@ if (new){
   ###-----------------------------------------------------
   # start with an effect of block and a subject intercept
 
-  fxbdrg_rfxbdrg <- brm(formula = tt | trials(td) ~ b + drug + (b:drug|sub),
-                          data = acc_dat,
-                          warmup = 2000, iter = 10000,
-                          family = binomial,
-                          save_pars = save_pars(all=TRUE)) # for model comparisons 
+  fxbdrgint_bsubrfx <- brm(formula = tt | trials(td) ~ b * drug + (b|sub),
+                        data = acc_dat,
+                        warmup = 2000, iter = 10000,
+                        family = binomial,
+                        save_pars = save_pars(all=TRUE)) # for model comparisons 
   
-  fxbdrg_rfxbdrg <- add_criterion(fxbdrg_rfxbdrg, "loo", moment_match=TRUE, reloo=TRUE)
+  fxbdrgint_bsubrfx <- add_criterion(fxbdrgint_bsubrfx, "loo", moment_match=TRUE, reloo=TRUE)
   # now save!
-  save(fxbdrg_rfxbdrg, file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, mod_name))
+  save(fxbdrgint_bsubrfx, file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, mod_name))
   
 } else {
   
@@ -98,20 +95,19 @@ if (new){
 }
 
 if (verbal){
-  # info
-  verbal_output(fxbdrg_rfxbdrg, dir_name = dir_name)
-
+ 
+  verbal_output(fxbdrgint_bsubrfx, dir_name = dir_name)
 # visualising data using:
 # https://bookdown.org/ajkurz/DBDA_recoded/dichotomous-predicted-variable.html#interpreting-the-regression-coefficients
 # see end of section 22.2.1
-  est <- coef(fxbdrg_rfxbdrg)$sub[, "Estimate", ] %>% as.data.frame() %>%
+  est <- coef(fxbdrgint_bsubrfx)$sub[, "Estimate", ] %>% as.data.frame() %>%
               mutate(sub = unique(acc_dat$sub))
   check_dat <- inner_join(acc_dat, est, by = "sub")
 
   check_dat <- rbind(check_dat %>% filter(drug == "levodopa") %>% 
-                       mutate(log_odds = Intercept + b.y * b.x + b.x*`b:druglevodopa`),
+                       mutate(log_odds = Intercept + b.y * b.x),
                        check_dat %>% filter(drug == "placebo") %>%
-                       mutate(log_odds = Intercept + drugplacebo + b.y*b.x + b.x*`b:drugplacebo`)) %>% 
+                       mutate(log_odds = Intercept + drugplacebo + b.y*b.x + `b:drugplacebo`*b.x)) %>% 
                        mutate(p= 1/(1+exp(-log_odds))) %>%
                        mutate(obs = tt/td)
 
@@ -126,4 +122,5 @@ if (verbal){
     geom_point()
   dev.off()
 }
-rm(fxbdrg_rfxbdrg, check_dat, est)
+
+rm(fxbdrgint_bsubrfx, est, check_dat)

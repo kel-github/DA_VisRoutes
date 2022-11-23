@@ -62,10 +62,8 @@
 # verbal <- TRUE
 
 # make a directory for results if required
-dir_name <- 'acc_model-bonly'
 dir.create(sprintf('../data/derivatives/%s', dir_name), showWarnings=FALSE)
 mod_name <- dir_name
-
 if (new){
   ###------------------------------------------------------
   # load data
@@ -118,6 +116,7 @@ if (new){
                   warmup = 2000, iter = 10000,
                   family = binomial,
                   save_pars = save_pars(all=TRUE)) # for model comparisons 
+  fxb_subint <- add_criterion(fxb_subint, "loo", moment_match=TRUE, reloo=TRUE)
   # now save!
   save(fxb_subint, file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, mod_name))
   # I think these residuals are broadly ok
