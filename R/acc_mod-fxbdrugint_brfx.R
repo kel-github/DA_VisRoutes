@@ -85,7 +85,7 @@ if (new){
                         family = binomial,
                         save_pars = save_pars(all=TRUE)) # for model comparisons 
   
-  fxbdrgint_bsubrfx <- add_criterion(fxbdrgint_bsubrfx, "loo", moment_match=TRUE, reloo=TRUE)
+  fxbdrgint_bsubrfx <- add_criterion(fxbdrgint_bsubrfx, "loo", moment_match=FALSE, reloo=FALSE)
   # now save!
   save(fxbdrgint_bsubrfx, file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, mod_name))
   

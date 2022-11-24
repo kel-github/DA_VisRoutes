@@ -52,4 +52,4 @@ load(file=sprintf(ftmplt, 'cacc_model-fxbdrgint-bdrgrfx', 'cacc_model-fxbdrgint-
 load(file=sprintf(ftmplt, 'cacc_model-fxbdrgint-brfx', 'cacc_model-fxbdrgint-brfx'))
 
 loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg, 
-            fxbdrgint_bsubrfx, fxbdrgint_bdrgsubrfx)
+            fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx) #,
