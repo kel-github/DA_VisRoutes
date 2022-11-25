@@ -18,86 +18,77 @@
 # https://bayesball.github.io/BRMS/multilevel-regression.html
 ###-------------------------------------------------------
 
-
-###------------------------------------------------------
-# load packages
-###-----------------------------------------------------
-library(brms)
-library(tidyverse)
+# 
+# ###------------------------------------------------------
+# # load packages
+# ###-----------------------------------------------------
+# library(brms)
+# library(tidyverse)
 
 ###------------------------------------------------------
 # have you run this model before?
 ###-----------------------------------------------------
 # new <- TRUE
 # verbal <- FALSE
+# make a directory for results if required
+dir_name <- 'acc_model-fxbdrgm-rfxbdrg'
+dir.create(sprintf('../data/derivatives/%s', dir_name), showWarnings=FALSE)
+mod_name <- dir_name
 
 if (new){
   ###------------------------------------------------------
   # load data
   ###-----------------------------------------------------
-  load('../data/derivatives/accuracy.Rda')
   load('../data/derivatives/mind_scores.Rda')
   ###------------------------------------------------------
   # sum over context, as initial peruse of data showed
   # no information in this variable, for accuracy
   ###-----------------------------------------------------
-  acc_dat <- door_acc_sum %>% group_by(sub, sess, drug, b) %>%
-    summarise(tt = sum(tt),
-              td = sum(td))
-  acc_dat <- acc_dat[!is.na(acc_dat$b),]
-  # scale the block factor
-  acc_dat$b <- scale(acc_dat$b)
-  acc_dat$sub <- as.factor(acc_dat$sub)
-  acc_dat$sess <- as.factor(acc_dat$sess)
-  acc_dat$drug <- as.factor(acc_dat$drug)
-  
-  mind_sum$sub <- as.factor(mind_sum$sub)
-  acc_dat <- inner_join(acc_dat, mind_sum, by="sub")
-  acc_dat$m <- scale(acc_dat$m)
   
   ###------------------------------------------------------
-  # generate data for a ffx of drug & mind, and an b*sub rfx
-  ###-----------------------------------------------------
-  nsubs <- 40
-  intercept = 0.5
-  b <- scale(1:8)
-  nb <- 8
-  drug_levels <- 2
-  drug_reg <- rep(c(0,1), each=nsubs*nb)
-  drug_fx <- .2
-  b <- rep(b, times=nsubs*drug_levels) # adding drug manipulation
-  betab <- rep(rnorm(nsubs, mean=.5, sd=.2), each=nb, times=drug_levels)
-  sub_int <- rep(rnorm(nsubs, mean=.2, sd=.4), each=nb, times=drug_levels)
-  mind_scores <- rep(rnorm(nsubs), each=nb, times=drug_levels)
-  mind_beta <- 2
-  
-  log_odds <- intercept + betab*b + drug_fx*drug_reg + mind_scores*mind_beta + sub_int
-  # now turn mu into p
-  p <- 1/(1+exp(-log_odds))
-  # now sample binomial distribution
-  trials <- sample(acc_dat$td, size=length(b))
-  tt <- mapply(function(x,y) rbinom(1,size=x,prob=y), trials, p)
-  faux_dat <- tibble(sub = as.factor(rep(1:nsubs, each=nb, times=2)),
-                     drug = drug_reg,
-                     mnd = mind_scores,
-                     b = b,
-                     tt = tt, 
-                     td = trials)
-  
-  faux_fxdrgmnd_bsubrfx <- brm(formula = tt | trials(td) ~ drug + mnd + (b|sub),
-                      data = faux_dat,
-                      warmup = 2000, iter = 10000,
-                      family = binomial,
-                      save_pars = save_pars(all=TRUE)) # for model comparisons 
-  
-  summary(faux_fxdrgmnd_bsubrfx) # this looks good to me, time 
-  
+  # generate fake data
+  ###------------------------------------------------------
+  if (faux){
+    nsubs <- 40
+    intercept = 0.5
+    b <- scale(1:8)
+    nb <- 8
+    drug_levels <- 2
+    drug_reg <- rep(c(0,1), each=nsubs*nb)
+    drug_fx <- .2
+    b <- rep(b, times=nsubs*drug_levels) # adding drug manipulation
+    betab <- rep(rnorm(nsubs, mean=.5, sd=.2), each=nb, times=drug_levels)
+    sub_int <- rep(rnorm(nsubs, mean=.2, sd=.4), each=nb, times=drug_levels)
+    mind_scores <- rep(rnorm(nsubs), each=nb, times=drug_levels)
+    mind_beta <- 2
+    
+    log_odds <- intercept + betab*b + drug_fx*drug_reg + mind_scores*mind_beta + sub_int
+    # now turn mu into p
+    p <- 1/(1+exp(-log_odds))
+    # now sample binomial distribution
+    trials <- sample(acc_dat$td, size=length(b))
+    tt <- mapply(function(x,y) rbinom(1,size=x,prob=y), trials, p)
+    faux_dat <- tibble(sub = as.factor(rep(1:nsubs, each=nb, times=2)),
+                       drug = drug_reg,
+                       mnd = mind_scores,
+                       b = b,
+                       tt = tt, 
+                       td = trials)
+    
+    faux_fxdrgmnd_bsubrfx <- brm(formula = tt | trials(td) ~ drug + mnd + (b|sub),
+                                 data = faux_dat,
+                                 warmup = 2000, iter = 10000,
+                                 family = binomial,
+                                 save_pars = save_pars(all=TRUE)) # for model comparisons 
+    
+    summary(faux_fxdrgmnd_bsubrfx) # this looks good to me, time 
+  }
   ###------------------------------------------------------
   # define accuracy models
   ###-----------------------------------------------------
   # start with an effect of block and a subject intercept
 
-  fxdrgmnd_bsubrfx <- brm(formula = tt | trials(td) ~  drug + m + (b|sub),
+  acc_model_fxbdrgintmnd_bdrgrfx <- brm(formula = tt | trials(td) ~  b*drug + m + (b:drug|sub),
                             data = acc_dat,
                             warmup = 2000, iter = 10000,
                             family = binomial,
