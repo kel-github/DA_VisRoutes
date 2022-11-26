@@ -28,11 +28,28 @@ for (i in 1:length(data_names)){
   dir_name <- msv_fnms[i]
   mod_name <- dir_name
   
-  source('acc_mod-fxdrgmnd_drgbrfx.R')
-  source('acc_mod-fxdrgbmndint_drgbrfx.R')
+  source('acc_mod-fxbdrgmnd_drgbrfx.R')
+  
+  dir_name <- paste(dir_name, 'bmint', sep="")
+  mod_name <- dir_name
+  source('acc_mod-fxbdrgbmndint_drgbrfx.R')
 }
 
 # now load models and compare
 # accuracy data
 # WHERE IS THE BEST ACCURACY MODEL
+load('../data/derivatives/cacc_model-fxbdrg-bdrgsubrfx/cacc_model-fxbdrg-bdrgsubrfx.Rda')
+load("../data/derivatives/cacc_winplusmind/cacc_winplusmind.Rda")
+load("../data/derivatives/cacc_winplusmindbmint/cacc_winplusmindbmint.Rda")
 
+loo_compare(fxbdrg_rfxbdrg, mnd, mndb)
+
+plot(mndb)
+
+## summary of results:
+## for accuracy; the winning models are the ones without mindfulness
+## for contextual accuracy: the winning model has a 
+## mindfulness + mindfulness*block effect. The next step is to see if
+## drug and mindfulness interact?
+
+## next step - does mindfulness also interact with drug for cacc?

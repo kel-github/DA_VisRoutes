@@ -83,7 +83,7 @@ if (new){
                    warmup = 2000, iter = 10000,
                    family = binomial,
                    save_pars = save_pars(all=TRUE)) # for model comparisons 
-  mndb <- add_criterion(mnd, "loo",  moment_match=TRUE, reloo=TRUE)
+  mndb <- add_criterion(mndb, "loo",  moment_match=TRUE, reloo=TRUE)
   
   # now save!
   save.image(file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, mod_name))
