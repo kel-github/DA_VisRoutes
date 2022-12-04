@@ -78,12 +78,12 @@ if (new){
   ###-----------------------------------------------------
   # start with an effect of block and a subject intercept
 
-  mnd <- brm(formula = tt | trials(td) ~ b + drug + m + (b:drug|sub),
+  bis <- brm(formula = tt | trials(td) ~ b + drug + bis + (b:drug|sub),
                    data = acc_dat,
                    warmup = 2000, iter = 10000,
                    family = binomial,
                    save_pars = save_pars(all=TRUE)) # for model comparisons 
-  mnd <- add_criterion(mnd, "loo",  moment_match=TRUE, reloo=TRUE)
+  bis <- add_criterion(bis, "loo",  moment_match=TRUE, reloo=TRUE)
   
   # now save!
   save.image(file = sprintf('../data/derivatives/%s/%s.Rda', dir_name, mod_name))
@@ -97,7 +97,7 @@ if (verbal){
   # info
  # prior_summary(mnd)
 
-  verbal_output(mnd, dir_name = dir_name)
+  verbal_output(bis, dir_name = dir_name)
 }
 
-rm(mnd)
+rm(bis)

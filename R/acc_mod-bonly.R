@@ -65,11 +65,7 @@
 dir.create(sprintf('../data/derivatives/%s', dir_name), showWarnings=FALSE)
 mod_name <- dir_name
 if (new){
-  ###------------------------------------------------------
-  # load data
-  ###-----------------------------------------------------
-  load('../data/derivatives/acc_dat4_model.Rda')
-  
+
   if (faux){
     ###-----------------------------------------------------
     # first, generate some data to check the model covers
