@@ -27,7 +27,7 @@ for (i in 1:length(data_names)){
   dir_name <- msv_fnms[i]
   mod_name <- dir_name
   
-  source('acc_mod-fxbdrgmnd_drgbrfx.R')
+  source('acc_mod-fxbdrgbis_drgbrfx.R')
   
   dir_name <- paste(dir_name, 'bbisint', sep="")
   mod_name <- dir_name
@@ -36,7 +36,15 @@ for (i in 1:length(data_names)){
 }
 
 
+# for accuracy data, allow BIS to interact with drug
+i = 1
+dir_name <- paste(msv_fnms[i], 'bdbisint', sep="")
+mod_name <- dir_name
+source('acc_mod-fxbdrgbbisintdrgbisint_drgbrfx.R')
 
+dir_name <- paste(msv_fnms[i], 'plus3way', sep="")
+mod_name <- dir_name
+source('acc_mod-fxbdrgbdrgbisint_drgbrfx.R')
 
 
 

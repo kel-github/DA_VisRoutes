@@ -9,6 +9,10 @@ rm(list=ls())
 library(brms)
 library(tidyverse)
 
+#----------------------------------------------------------------------------
+# MINDFULNESS
+# ---------------------------------------------------------------------------
+
 #-----------------------------------------------------------------------------
 # ACCURACY
 # ---------------------------------------------------------------------------
@@ -38,3 +42,25 @@ loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb)
 # mnddrgb        -3.3       1.6 
 # no effect of mindfulness here either (or at least, its not preferred)
 
+#----------------------------------------------------------------------------
+# BIS
+# ---------------------------------------------------------------------------
+load('../data/derivatives/acc_model-fxbdrg-bdrgsubrfx/acc_model-fxbdrg-bdrgsubrfx.Rda')
+load("../data/derivatives/acc_winplusbis/acc_winplusbis.Rda")
+load("../data/derivatives/acc_winplusbisbbisint/acc_winplusbisbbisint.Rda")
+load("../data/derivatives/acc_winplusbisbdbisint/acc_winplusbisbdbisint.Rda")
+loo_compare(fxbdrg_rfxbdrg, bis, bisb, bisbd)
+# elpd_diff se_diff
+# bisb            0.0       0.0   
+# fxbdrg_rfxbdrg -2.7       3.5   
+# bis            -3.7       3.1   
+rm(fxbdrg_rfxbdrg, bisb, bis, bisbd)
+
+load('../data/derivatives/cacc_model-fxbdrg-bdrgsubrfx/cacc_model-fxbdrg-bdrgsubrfx.Rda')
+load("../data/derivatives/cacc_winplusbis/cacc_winplusbis.Rda")
+load("../data/derivatives/cacc_winplusbisbbisint/cacc_winplusbisbbisint.Rda")
+loo_compare(fxbdrg_rfxbdrg, bis, bisb)
+#               elpd_diff se_diff
+# fxbdrg_rfxbdrg  0.0       0.0   
+# bis            -0.5       0.5   
+# bisb           -1.6       0.6   
