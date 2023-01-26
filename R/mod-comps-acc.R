@@ -24,6 +24,7 @@ loo_compare(fxbdrg_rfxbdrg, mnd, mndb)
 # mndb            0.0       0.0   
 # fxbdrg_rfxbdrg -0.4       1.4   
 # mnd            -1.0       0.7   
+
 rm(fxbdrg_rfxbdrg, mndb, mnd)
 #-----------------------------------------------------------------------------
 # CONTEXTUAL ACCURACY
@@ -38,6 +39,8 @@ loo_compare(fxbdrg_rfxbdrg, mnd, mndb)
 # mnd             0.0       0.0   
 # fxbdrg_rfxbdrg -0.6       1.1   
 # mndb           -1.1       0.8  
+
+
 
 #----------------------------------------------------------------------------
 # BIS
