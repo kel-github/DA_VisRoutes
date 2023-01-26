@@ -21,10 +21,9 @@ load("../data/derivatives/acc_winplusmind/acc_winplusmind.Rda")
 load("../data/derivatives/acc_winplusmindbmint/acc_winplusmindbmint.Rda")
 loo_compare(fxbdrg_rfxbdrg, mnd, mndb)
                 # elpd_diff se_diff
-# fxbdrg_rfxbdrg  0.0       0.0   
-# mndb           -0.6       1.2   
-# mnd            -1.2       0.7 
-# no effect of mindfulness, stop here (for mindfulness)
+# mndb            0.0       0.0   
+# fxbdrg_rfxbdrg -0.4       1.4   
+# mnd            -1.0       0.7   
 rm(fxbdrg_rfxbdrg, mndb, mnd)
 #-----------------------------------------------------------------------------
 # CONTEXTUAL ACCURACY
@@ -32,15 +31,13 @@ rm(fxbdrg_rfxbdrg, mndb, mnd)
 load('../data/derivatives/cacc_model-fxbdrg-bdrgsubrfx/cacc_model-fxbdrg-bdrgsubrfx.Rda')
 load("../data/derivatives/cacc_winplusmind/cacc_winplusmind.Rda")
 load("../data/derivatives/cacc_winplusmindbmint/cacc_winplusmindbmint.Rda")
-load("../data/derivatives/cacc_mndbdrug/cacc_mndbdrug.Rda") # cacc
 
-loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb)
+
+loo_compare(fxbdrg_rfxbdrg, mnd, mndb)
 #                 elpd_diff se_diff
-# fxbdrg_rfxbdrg  0.0       0.0   
-# mndb           -1.0       1.4   
-# mnd            -1.6       0.6   
-# mnddrgb        -3.3       1.6 
-# no effect of mindfulness here either (or at least, its not preferred)
+# mnd             0.0       0.0   
+# fxbdrg_rfxbdrg -0.6       1.1   
+# mndb           -1.1       0.8  
 
 #----------------------------------------------------------------------------
 # BIS
@@ -49,12 +46,15 @@ load('../data/derivatives/acc_model-fxbdrg-bdrgsubrfx/acc_model-fxbdrg-bdrgsubrf
 load("../data/derivatives/acc_winplusbis/acc_winplusbis.Rda")
 load("../data/derivatives/acc_winplusbisbbisint/acc_winplusbisbbisint.Rda")
 load("../data/derivatives/acc_winplusbisbdbisint/acc_winplusbisbdbisint.Rda")
-loo_compare(fxbdrg_rfxbdrg, bis, bisb, bisbd)
+load("../data/derivatives/acc_winplusbisplus3way/acc_winplusbisplus3way.Rda")
+loo_compare(fxbdrg_rfxbdrg, bis, bisb, bisbd, bisbdint)
 # elpd_diff se_diff
-# bisb            0.0       0.0   
-# fxbdrg_rfxbdrg -2.7       3.5   
-# bis            -3.7       3.1   
-rm(fxbdrg_rfxbdrg, bisb, bis, bisbd)
+# bisbd           0.0       0.0   
+# bisbdint       -2.7       1.4   
+# bisb           -4.5       6.1   
+# fxbdrg_rfxbdrg -7.2       7.5   
+# bis            -8.2       7.2  
+rm(fxbdrg_rfxbdrg, bisb, bis, bisbd, bisbdint)
 
 load('../data/derivatives/cacc_model-fxbdrg-bdrgsubrfx/cacc_model-fxbdrg-bdrgsubrfx.Rda')
 load("../data/derivatives/cacc_winplusbis/cacc_winplusbis.Rda")

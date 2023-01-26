@@ -28,7 +28,6 @@ for (i in 1:length(data_names)){
   
   dir_name <- msv_fnms[i]
   mod_name <- dir_name
-  
   source('acc_mod-fxbdrgmnd_drgbrfx.R')
   
   dir_name <- paste(dir_name, 'bmint', sep="")
@@ -37,22 +36,6 @@ for (i in 1:length(data_names)){
 
 }
 
-## move the comparisons code to a different file
-## run through the specification of the final cacc + the interaction (see below)
-## define and run the BIS models for both acc & cacc
-# now load models and compare
-# accuracy data
-
-
-plot(mndb)
-
-## summary of results:
-## for accuracy; the winning models are the ones without mindfulness
-## for contextual accuracy: the winning model has a 
-## mindfulness + mindfulness*block effect. This model is preferred
-## to one where drug and mindfulness interact
-
-## next step - does mindfulness also interact with drug for cacc?
-
+# next, I need both winning models to contain a drug x mindfulness interaction
 
 

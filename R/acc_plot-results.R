@@ -5,6 +5,7 @@ library(vioplot)
 library(brms)
 library(Rmisc)
 library(tidyverse)
+library(modeest)
 source('fig_label.R')
 
 ##############################################################
@@ -15,14 +16,22 @@ if (!acc){
   # first load accuracy data
   load('../data/derivatives/cacc_dat4_model.Rda')
   # now load model
-  load('../data/derivatives/cacc_model-fxbdrg-bdrgsubrfx/cacc_model-fxbdrg-bdrgsubrfx.Rda')
-  mod <- fxbdrg_rfxbdrg
+  load('../data/derivatives/cacc_winplusmind/cacc_winplusmind.Rda')
+  mod <- mnd
   dat_ylim <- c(.45, .75)
   dat_yseq <- seq(.45, .75, .05)
   dat_ylabs <- c(".45","","","","","",".75")
   figinfo = 'cacc'
   w <- 12 # in cm
   h <- 8 # in cm
+} else {
+  load('../data/derivatives/acc_dat4_model.Rda')
+  load('../data/derivatives/acc_winplusbisbdbisint/acc_winplusbisbdbisint.Rda')
+  mod <- bisbd
+  dat_ylim <- c(.45, .75)
+  dat_yseq <- seq(.45, .75, .05)
+  dat_ylabs <- c(".45","","","","","",".75")
+  figinfo = 'acc'
 }
 ##############################################################
 # PLOT SETTINGS
@@ -51,27 +60,49 @@ samples_col <- t_col(samples_col)
 ###############################################################
 # DATA WRANGLES 
 ###############################################################
-
+acc_dat$b <- rep(c(0:7), times=nrow(acc_dat)/8)
 # get predicted values from the model
-est <- coef(mod)$sub[, "Estimate", ] %>% as.data.frame() %>%
+est <- coef(mod, robust = TRUE)$sub[, "Estimate", ] %>% as.data.frame() %>%
   mutate(sub = unique(acc_dat$sub))
 # create a summary dataframe for wrangling and plotting
 sum_dat <- inner_join(acc_dat, est, by="sub")
 
 if (acc){
+  # put the data back together, given the winning model for acc
+  # which was one that 
   sum_dat <- rbind(sum_dat %>% filter(drug == "levodopa") %>% 
-                     mutate(log_odds = Intercept + b.y * b.x + `b:druglevodopa`*b.x),
+                     mutate(log_odds = Intercept + b.y*b.x + `b:druglevodopa`*b.x + bis.y*bis.x + `b:bis`*bis.x*b.x),
                    sum_dat %>% filter(drug == "placebo") %>%
-                     mutate(log_odds = Intercept + drugplacebo + b.y*b.x + `b:drugplacebo`*b.x)) %>% 
+                     mutate(log_odds = Intercept + drugplacebo + b.y*b.x + `b:drugplacebo`*b.x + bis.y*bis.x + `b:bis`*bis.x*b.x + `drugplacebo:bis`*bis.x)) %>% 
     mutate(p= 1/(1+exp(-log_odds))) %>%
-    mutate(obs = tt/td)
+    mutate(obs = tt/td) %>%
+    mutate(resid = obs - p)
+
+  
 } else {
   sum_dat <- rbind(sum_dat %>% filter(drug == "levodopa") %>% 
-                     mutate(log_odds = Intercept + b.y * b.x + `b:druglevodopa`*b.x ),
+                     mutate(log_odds = Intercept + b.y * b.x + `b:druglevodopa`*b.x + m.x*m.y),
                    sum_dat %>% filter(drug == "placebo") %>%
-                     mutate(log_odds = Intercept + drugplacebo + b.y*b.x + `b:drugplacebo`*b.x)) %>% 
+                     mutate(log_odds = Intercept + drugplacebo + b.y*b.x + `b:drugplacebo`*b.x + m.x*m.y)) %>% 
     mutate(p= 1/(1+exp(-log_odds))) %>%
-    mutate(obs = tt/td) 
+    mutate(obs = tt/td) %>%
+    mutate(resid = obs-p)
+    
+    # first, plot residuals by predicted
+    sum_dat %>% ggplot(aes(x=p, y=resid, colour=sub)) + geom_point()
+    # the residuals plot suggests that the model is underpredicting
+    # for a bunch of subs @.7 and over-predicting for possibly the same 
+    # subs
+    sum_dat %>% ggplot(aes(x=p, y=resid, colour=sub)) + geom_point() +
+      facet_wrap(~drug)
+    # this seems to be more the case for placebo, but it is hapenning
+    # in the opposite direction for subs per condition
+    # now going to plot observed vesus predicted per sub
+    sum_dat %>% ggplot(aes(x=b.x, y=obs, colour=drug, group=drug)) + 
+      geom_point() + geom_line(inherit.aes=F, aes(x=b.x, y=p, colour=drug, group=drug)) +
+      facet_wrap(~sub)
+    
+    sum_dat %>% ggplot(aes(x=b.x, y=p, group=drug, colour=drug)) + geom_line() + facet_wrap(~sub, scales="free")
 }
 ###############################################################
 # DATA PLOTS 
@@ -79,6 +110,9 @@ if (acc){
 # as there was a main effect of drug, that did not interact with
 # block, I shall produce two plots. The first will be a drug x block
 # plot, with real data as dots and the model's estimate as a line
+
+med_sum <- sum_dat %>% group_by(drug, b.x) %>% summarise(obs = median(obs),
+                                              p = median(p))
 
 mu_bdrug_dat <- summarySEwithin(data=sum_dat, measurevar=c("obs"),
                                           withinvars=c("drug", "b.x"),
@@ -118,9 +152,9 @@ axis(side=1, at=1:8, tick=TRUE, labels=c("1", "","","","","","","8"))
 axis(side=2, at=dat_yseq, tick=TRUE, labels=dat_ylabs, las=2) #, labels=c())
 with(mu_bdrug_dat %>% filter(drug == "placebo"), 
                               arrows(x0 = b.x, 
-                              y0 = obs - ci,
+                              y0 = obs - se,
                               x1 = b.x,
-                              y1 = obs + ci,
+                              y1 = obs + se,
                               code = 3,
                               angle = 90,
                               length = .025,
@@ -132,14 +166,14 @@ with(mu_bdrug_dat %>% filter(drug == "levodopa"),
                               col=dopa_col))
 with(mu_bdrug_dat %>% filter(drug == "levodopa"), 
                              arrows(x0 = b.x, 
-                              y0 = obs - ci,
+                              y0 = obs - se,
                               x1 = b.x,
-                              y1 = obs + ci,
+                              y1 = obs + se,
                               code = 3,
                               angle = 90,
                               length = .025,
                               col=dopa_col))
-legend(x=5, y=.5, legend = c("l", "p"),
+legend(x=6.5, y=.55, legend = c("l", "p"),
        col = c(dopa_col,placebo_col), 
        pch = 19, bty = "n", cex = 1)
 # now add lines from the model
@@ -152,32 +186,13 @@ with(mu_bdrug_pred %>% filter(drug == "levodopa"),
                       lty=2, col=dopa_col,
                       lwd=1.5))
 fig_label("A", cex = 2)
-########################################
-# PANEL 2: DIFF ACROSS BLOCK 
-#######################################
-# sum_dat$drug <- as.factor(sum_dat$drug)
-# sum_dat <- sum_dat %>% ungroup()
-# 
-# detach(package:plyr)
-# dat_4_vio <- sum_dat %>% group_by(sub, drug) %>% 
-#                   summarise(acc=mean(obs)) %>%
-#                   group_by(sub) %>%
-#                   mutate(diff=acc[drug == "placebo"]-acc[drug=="levodopa"])
-# 
-# par(bty = "n")
-# vioplot(dat_4_vio$diff, 
-#         col = c(dopa_col, placebo_col),
-#         xlab = "drug", ylab = "acc", yaxt = "n",
-#         ylim = c(.35, 1))
-# axis(side=1, at = c(1,2), labels=c("l", "p"))
-# axis(side=2, at = seq(.35, 1, .05), tick=TRUE,
-#         labels=c(".35", "", "", "", "", "", "", "", "", "", "", "", "", "1"),
-#      las=2)
 
 ########################################
 # PANEL 3: DENSITY OF THE PARAMETER ESTIMATE
 #######################################
 variables(mod)
+# for acc, I want the block, drug, and drug x bis parameters
+
 fxdrg_draws <- posterior_samples(mod, pars="b_drugplacebo")
 plot(density(fxdrg_draws$b_drugplacebo),
      col=samples_col,main="", xlab="log odds",

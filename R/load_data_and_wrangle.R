@@ -12,11 +12,15 @@
 #      data/ 
 ###-------------------------------------------------------
 
+# replication stuff
+# 76/162 = acc
+# 46/76 = cacc
+
 ### loading block (to be moved into document when required)
 library(tidyverse)
 source('variability_exp_behav_data_wrangling_functions.R')
 
-not_new <- T # if T then load existing RData file with data
+not_new <- F # if T then load existing RData file with data
 ###-------------------------------------------------------
 ## LOAD DATA
 ###-------------------------------------------------------
@@ -41,7 +45,8 @@ if (!not_new){
 ###-------------------------------------------------------
 ## ADD DRUG INFO
 ###-------------------------------------------------------
-if (!not_new){
+
+#if (!not_new){
   drug_info <- read_csv('../data/derivatives/drug-assignment.csv', col_names=T) 
   drug_info <- drug_info %>%
     pivot_longer(cols=starts_with('S_'), names_to = 'sess', 
@@ -49,7 +54,7 @@ if (!not_new){
   drug_info$sess <- as.numeric(drug_info$sess)
   
   dat <- inner_join(dat, drug_info, by=c('sub', 'sess'))
-}
+#}
 
 ###-------------------------------------------------------
 ## ADD BLOCK REGRESSOR
@@ -143,7 +148,7 @@ acc_dat <- door_acc_sum %>% group_by(sub, sess, drug, b) %>%
                               td = sum(td))
 acc_dat <- acc_dat[!is.na(acc_dat$b),]
 # scale the block factor
-acc_dat$b <- scale(acc_dat$b)
+acc_dat$b <- acc_dat$b - 1
 acc_dat$sub <- as.factor(acc_dat$sub)
 acc_dat$sess <- as.factor(acc_dat$sess)
 
@@ -174,7 +179,7 @@ acc_dat <- door_acc_sum %>% group_by(sub, sess, drug, b) %>%
                           td = sum(cc)+sum(oc))
 acc_dat <- acc_dat[!is.na(acc_dat$b),]
 # scale the block factor
-acc_dat$b <- scale(acc_dat$b)
+acc_dat$b <- acc_dat$b - 1
 acc_dat$sub <- as.factor(acc_dat$sub)
 acc_dat$sess <- as.factor(acc_dat$sess)
 

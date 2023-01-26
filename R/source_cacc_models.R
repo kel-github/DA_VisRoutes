@@ -16,6 +16,7 @@ faux <- FALSE
 # run models
 ###-----------------------------------------------------
 load('../data/derivatives/cacc_dat4_model.Rda')
+acc_dat$b <- rep(0:7, times=nrow(acc_dat)/8)
 # 76/162 = wrong data
 # 46/76 = correct dat
 
@@ -57,9 +58,9 @@ loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg,
 
 #                       elpd_diff se_diff
 # fxbdrg_rfxbdrg          0.0       0.0 
-# fxbdrgint_bdrgsubrfx   -1.6       0.9 
-# fxbdrg_bsubrfx         -6.7      14.3 
-# fxbdrgint_bsubrfx      -7.0      14.3 
-# bsubrfx               -25.0      16.9 
-# fxb_bsubrfx           -25.2      16.8 
-# fxb_subint           -321.0      67.0 
+# fxbdrgint_bdrgsubrfx    0.0       0.3 
+# fxbdrg_bsubrfx       -541.0      65.1 
+# fxbdrgint_bsubrfx    -542.1      65.1 
+# fxb_bsubrfx          -559.4      67.1 
+# bsubrfx              -560.1      67.2 
+# fxb_subint           -856.1      91.2 

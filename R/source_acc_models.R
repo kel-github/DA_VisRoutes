@@ -16,6 +16,7 @@ faux <- FALSE
 # run models
 ###-----------------------------------------------------
 load('../data/derivatives/acc_dat4_model.Rda')
+acc_dat$b <- rep(0:7, times=nrow(acc_dat)/8)
 
 dir_name <- 'acc_model-bonly'
 source('acc_mod-bonly.R')
@@ -53,3 +54,11 @@ load(file=sprintf(ftmplt, 'acc_model-fxbdrgint-brfx', 'acc_model-fxbdrgint-brfx'
 
 loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg, 
             fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx) #,
+
+# fxbdrg_rfxbdrg           0.0       0.0
+# fxbdrgint_bdrgsubrfx    -0.3       0.5
+# fxbdrgint_bsubrfx     -672.4      79.8
+# fxbdrg_bsubrfx        -672.7      80.7
+# fxb_bsubrfx           -676.0      80.9
+# bsubrfx               -676.9      81.1
+# fxb_subint           -1203.4     117.7
