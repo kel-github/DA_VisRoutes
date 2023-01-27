@@ -1,0 +1,244 @@
+---
+title: Assessing the influence of dopamine on the formation of contextually appropriate visual routines
+authors:
+  - name: Kelly G. Garner
+    department: School of Psychology
+    affiliation: University of New South Wales
+    location: Sydney, NSW
+    email: insert.unsw@here.edu.au
+  - name: Li-Ann Leow
+    department: School of Psychology
+    affiliation: The University of Queensland
+    location: St. Lucia, QLD
+  - name: Aya Uchida
+    department: School of Psychology
+    affiliation: The University of Queensland
+    location: St. Lucia, QLD
+  - name: Ole Jensen
+    department: Center for Human Brain Health
+    affiliation: University of Birmingham
+    location: Birmingham, UK
+  - name: Marta Garrido
+    department: School of Psychological Sciences
+    affiliation: University of Melbourne
+    location: Melbourne, VIC
+  - name: Paul  E. Dux
+    department: School of Psychology
+    affiliation: The University of Queensland
+    location: St. Lucia, QLD
+abstract: |
+  Enter the text of your abstract here.
+keywords:
+  - blah
+  - blee
+  - bloo
+  - these are optional and can be removed
+bibliography: references.bib
+biblio-style: unsrt
+output: rticles::arxiv_article
+---
+
+```{r knitr_options, echo=FALSE}
+library(knitr)
+# rstudio will set the folder where .Rmd file seats as work directory
+# set it back to the folder where .Rproj seats
+#opts_knit$set(root.dir = normalizePath("../")) 
+opts_chunk$set(fig.align = 'center', cache = FALSE, warning = FALSE,
+  message = TRUE, echo = FALSE)
+options(digits = 3, width = 88, knitr.graphics.auto_pdf = TRUE,
+        knitr.kable.NA = '')
+# knit_hooks$set(inline = function(x) {
+#   x <- sprintf("%1.2f", x)
+#   paste(x, collapse = ", ")
+# })
+```
+
+# Introduction
+
+Here goes an introduction text
+
+# Methods
+\label{sec:Methods}
+
+## Participants
+
+A total of 40 participants (mean age: 24.5, sd: 5, 30 female, 10 male) were recruited using the undergraduate and paid SONA pools administered by the University of Queensland. All procedures were cleared by the University of Queensland Human Research ethics committee [2017/HE000847], and were conducted in accordance with the National Statement on Ethical Conduct in Human Research. Participants were over 18 years old, had no known neurological and psychiatric conditions (assessed by self report), and no contraindications to Levodopa, as assessed by the Levodopa safety screening questionnaire. Informed consent was obtained at the start of the first session. 
+
+## Procedure
+
+Participants attended two sessions, spaced approximately 1 week apart. After initial blood pressure and mood assessments, participants received either placebo (vitamin C) or Levodopa (Madopar 125: 100 mg Levodopa and 25 mg Benserazide Hydrochloride), crushed and dispersed in orange juice, now referred to the off and DA sessions respectively. The solution was prepared by an experimenter who did not administer the remaining experimental procedures. This protocol was sufficient to achieve double blinding in previous work [INSERT REF]. Participants then completed the Five Facet Mindfulness Questionnaire [@baerUsingSelfReportAssessment2006] and the Barratt Impulsivity Scale [BIS; @pattonFactorStructureBarratt1995], as trait impulsivity scores are associated with midbrain dopamine D2/D3 receptor availability. Around 30 minutes after drug administration, participants completed a second blood pressure and mood rating assessment. Subsequently, participants completed the practice stage of the task, so that the experimental stage began approximately 40 minutes after drug ingestion, within the window of peak plasma availability. At the end of the session, participants completed the final blood pressure and mood rating assessment and were asked whether they thought they were given the active or placebo drug for that session.
+
+## Apparatus
+
+The experimental task was run with custom code^[https://github.com/kel-github/variability-decision-making], written using Matlab 2012b (32 bit) and Psychtoolbox v3.0.14, on a Windows 7 (64-bit) on a Dell Precision T1700 desktop computer, displayed using a ASUS VG248 monitor. Gaze coordinates (x, y) were sampled at 120 Hz using a monitor-mounted iView Red-m infrared eye tracker (SensoMotoric Instruments GmbH, Teltow, Germany). Participants were seated from the monitor at an approximate viewing distance of 57 cm, and positioned on a chin-rest for the duration of the task.
+
+## Experimental Task
+
+Each trial began with a fixation dot presented centrally on a grey screen [RGB: 200 200 200]. Participants were instructed to fixate on the dot to begin a trial. After 1000 ms of continuous correct fixation samples (within 100 pixels of fixation), a square was presented that comprised 18° of degree visual angle from top to bottom (and horizontally). The square could be one of four possible colours [RGBs: 87, 208, 169; 267, 145, 52; 167, 162, 229; 239, 91, 158]. After 1000 ms, a 4 x 4 grid of smaller squares appeared within the larger square, in a darker version of the background colour ([RGB]-50). Each square comprised 2.6° of visual angle. Participants were instructed that the 4 x 4 grid represented doors, and that they were to use their eyes to open the doors to find where the target was hiding. Participants were also instructed that they were to fixate on a single door to open it. When participants had fixated on a single door for over 300 ms, the door either turned black [RGB: 50, 50, 50], to denote the absence of a target, or the target was displayed and the trial was terminated. If the door had turned black, it returned to its previous colour as soon as it was detected that the participant had moved their eyes from the door. Targets were animal images drawn randomly on each trial from a pool of 100 images taken from the internet. The time at which the target was available to be found varied from trial to trial, with the onset being drawn from a uniform distribution between 500-2000 ms. Once the target was available and the correct door selected, the target was displayed for 750 ms. Upon termination of the trial, the grey screen and white fixation cross were presented (Fig 1A).
+
+In each session, participants were shown two possible background and door colour sets. Participants were instructed that each colour represented a world, and that the animals had different places they preferred to hide, depending on the world they were in. There were four possible target locations within each world, or from here on, context. For each context, 1 door from each quadrant was selected as a potential target location (see Fig 1B), and target locations could not overlap between contexts. Thus each colour reflected a context in which participants could establish a set of goal relevant eye-movements, i.e. towards the 4 possible target locations for that context. Note that within each context, the target was equally likely to appear behind any one of the 4 target doors (p=.25) and would never appear behind the remaining doors (p=0). Colour-target location mappings were counterbalanced across participants, as was the assignment of coloured contexts to sessions. Participants completed 80 trials in each context. Eye-movement calibration and validation was performed every 20 trials. Participants were also shown the standard QWERTY keyboard and were instructed that they could press ‘x’ at any time to perform a new calibration and validation if they felt that their eye-movements were no longer being registered accurately; i.e. if they were unable to open doors even though they were selecting them.
+
+```{r, taskfig, out.width='70%', fig.cap='Experimental Task. A) A single trial where participants use their eyes to open doors to locate a target. B) Contexts and sessions: in each session, participants are exposed to two colour contexts each with 4 unique and equiprobable target locations. In each session, Levodopa or placebo is administered under double blind conditions.'}
+
+taskfigpth <- '../../images/DA_ExpTask.pdf'
+knitr::include_graphics(taskfigpth)
+
+```
+
+
+## Statistical Approach
+
+The analysis was designed to assess the learning of the target locations given the context, the extent to which eye-movements became stereotypical, and how both of these measures were modulated by the dopamine and mindfulness factors.
+
+### Data cleaning
+
+Doors were marked as selected if participants gazed at them for a duration of at least 300 ms. We assumed that a door could not be selected twice consecutively, and that such a record constitutes an accidental diversion from the current door. Such events are therefore collapsed into a single door selection. Last, as the final door selection of every trial was fixed (i.e. finding the target location ends trial), we removed the final selection from each trial from the data for the sequence analysis defined below. Note a diversion from our pre-registration^[https://osf.io/2y6pk] with regard to data exclusions. Based on pilot data, We planned to exclude participants who scored < 65% accuracy over the course of a session. However, analysis of the final sample suggested that this was too stringent, as this resulted in the exclusion of 23/40 participants. We therefore opted to retain all participants in the final sample, apart from one participant whose number of door selections was greater than 3 standard deviations from the mean across both sessions and all contexts. The remaining 39 datasets were retained for all of the analyses. 
+
+## Accuracy data
+
+We sought to determine the extent to which participants learned the target locations, and whether participants learned to select the doors that were relevant given the current context. Door selections will be classified as target relevant (TR) for the current context (cc), the other context from that session (oc), or neither (n). Data was then grouped into blocks of 10 trials per context, resulting in 8 blocks. First, to determine whether participants learned the target locations, we assessed overall accuracy as
+
+$$
+acc = \frac{\sum{(TR_{cc}, TR_{oc})}}{N}
+$$
+
+where N is the total number of door selections. To assess the influence of block, session (DA vs off), mindfulness and BIS scores on accuracy, we fit Bayesian mixed effects models with the following general form:
+
+NOTE: NEED TO WORK OUT HOW TO GET THIS ONTO SEPARATE LINES
+
+$$
+y_{i} \sim Bin(n_{i}, p_{i}) \\
+logit(p_{i}) = \mu_{i} \\
+\mu_{i}|x_{i}, \beta, z_{i}, b_{i} \sim N(X_{i}\beta + Z_{i}b_{i}, \sigma^2) \\
+i = 1, ... N \\
+$$
+
+
+where $i$ = 1 to N participants. X is a matrix containing fixed effect regressors for block, session (DA vs. off), the mindfulness and BIS regressors, and any interactions. Z is a matrix of random effects regressors including subject intercepts and slopes, that may contain regressors for the block and drug effects. $n_{i}$ is the number of accurate door selections, and $p_{i}$ is the probability of attaining the given $n_{i}$. $N$ is a normal distribution with standard deviation $\sigma^2$. 
+
+For this and following analyses, we sought to find the model that best fit the data, and then made inference over the resulting parameters. Models were fit using the BRMS [@burknerBrmsPackageBayesian2017] interface for Stan [@standevelopmentteamStanModelingLanguage] and RStan [@standevelopmentteamRStanInterfaceStan2023] in R [@rcoreteamLanguageEnvironmentStatistical2015]. We used the default weakly informative priors as specified in [@burknerBrmsPackageBayesian2017]. Specifically, $\beta$ coefficients were given a flat prior, intercept and standard deviations were assumed to be drawn from a student's $t$ distribution (df=1, location=0, scale=2.5), and the LKJ-correlation prior with parameter $\zeta$ > 0 was used for the parameter covariance matrix. 
+
+To find the best fitting model, we fit models containing each combination of the block and drug regressors (and associated random effects), and found the best model using leave-one-out (LOO) cross validation [as implemented in @vehtariPracticalBayesianModel2017]. (Note that in the pre-registration document we had proposed to compare models using the deviance information criterion (DIC). As, LOO is more robust than DIC to influential observations, and is implemented for ready use with BRMS model objects, we opted to use LOO instead of DIC). Upon identifying the best model from the experimentally manipulated regressors, we then added the mindfulness regressor in all possible combinations with the best model, until increasing complexity provided no further gains in prediction (as evidenced by LOO). We then repeated this process with the BIS scores. In all cases, we sought to use the most complex random effects structure as is supported by the data [@barrRandomEffectsStructure2013]. Note that the inference over parameters was consistent over models, regardless of the exact winning model chosen.
+
+## Contextual Accuracy
+
+We also sought to understand whether dopamine modulates the ability of participants to select the correct door, given the context. Therefore, for each context, we computed context-specific accuracy (c-acc) as:
+
+$$
+\mathit{c\mbox{-}acc} = \frac{TR_{cc}}{\sum (TR_{cc}, TR_{oc})}
+$$
+
+We then fit this data with Bayesian mixed effects models following the procedure above (Note that in the pre-registration document we had suggested to include a regressor for context. Visual inspection of the data upon completion showed that c-acc was highly comparable across contexts [see supplemental figures]. We therefore opted to eschew a large parameter space and collapsed over this factor). 
+
+## Stereotypical sequences
+
+
+
+LaTeX command can be used to reference other section. See Section \ref{sec:headings}.
+However, you can also use **bookdown** extensions mechanism for this.
+
+## Headings: second level
+
+You can use equation in blocks
+
+$$
+\xi _{ij}(t)=P(x_{t}=i,x_{t+1}=j|y,v,w;\theta)= {\frac {\alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}{\sum _{i=1}^{N} \sum _{j=1}^{N} \alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}}
+$$
+
+But also inline i.e $z=x+y$
+
+### Headings: third level
+
+Another paragraph. 
+
+
+# Examples of citations, figures, tables, references
+\label{sec:others}
+
+You can insert references. Here is some text [@kour2014real; @kour2014fast] and see @hadash2018estimate.
+
+The documentation for \verb+natbib+ may be found at
+
+You can use custom blocks with LaTeX support from **rmarkdown** to create environment.
+
+::: {.center latex=true}
+  <http://mirrors.ctan.org/macros/latex/contrib/natbib/natnotes.pdf}>
+:::
+
+Of note is the command \verb+\citet+, which produces citations
+appropriate for use in inline text.  
+
+You can insert LaTeX environment directly too.
+
+\begin{verbatim}
+   \citet{hasselmo} investigated\dots
+\end{verbatim}
+
+produces
+
+\begin{quote}
+  Hasselmo, et al.\ (1995) investigated\dots
+\end{quote}
+
+\begin{center}
+  \url{https://www.ctan.org/pkg/booktabs}
+\end{center}
+
+
+## Figures
+
+You can insert figure using LaTeX directly. 
+
+See Figure \ref{fig:fig1}. Here is how you add footnotes. [^Sample of the first footnote.]
+
+\begin{figure}
+  \centering
+  \fbox{\rule[-.5cm]{4cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
+  \caption{Sample figure caption.}
+  \label{fig:fig1}
+\end{figure}
+
+But you can also do that using R.
+
+```{r fig2, fig.cap = "Another sample figure"}
+plot(mtcars$mpg)
+```
+
+You can use **bookdown** to allow references for Tables and Figures.
+
+
+## Tables
+
+Below we can see how to use tables. 
+
+See awesome Table~\ref{tab:table} which is written directly in LaTeX in source Rmd file.
+
+\begin{table}
+ \caption{Sample table title}
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    \multicolumn{2}{c}{Part}                   \\
+    \cmidrule(r){1-2}
+    Name     & Description     & Size ($\mu$m) \\
+    \midrule
+    Dendrite & Input terminal  & $\sim$100     \\
+    Axon     & Output terminal & $\sim$10      \\
+    Soma     & Cell body       & up to $10^6$  \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:table}
+\end{table}
+
+You can also use R code for that.
+
+```{r}
+knitr::kable(head(mtcars), caption = "Head of mtcars table")
+```
+
+
+## Lists
+
+- Item 1
+- Item 2 
+- Item 3
