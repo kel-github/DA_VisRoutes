@@ -41,9 +41,9 @@ for (i in 1:length(data_names)){
   
   for (j in 1:length(rfs)){
     if (is.NA(app[j])){
-      dir_name <- paste(data_names[i], msv_fnms[i], sep="")
+      dir_name <- paste(msv_fnms[i], sep="")
     } else {
-      dir_name <- paste(data_names[i], msv_fnms[i], app[j], sep="")
+      dir_name <- paste(msv_fnms[i], app[j], sep="")
     }
     mod_name <- dir_name
     source(rfs[j])
