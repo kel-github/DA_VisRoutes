@@ -156,23 +156,25 @@ Participants attended two sessions, spaced approximately 1 week apart.
 After initial blood pressure and mood assessments, participants received
 either placebo (vitamin C) or Levodopa (Madopar 125: 100 mg Levodopa and
 25 mg Benserazide Hydrochloride), crushed and dispersed in orange juice,
-now referred to the off and DA sessions respectively. The solution was
-prepared by an experimenter who did not administer the remaining
-experimental procedures. This protocol was sufficient to achieve double
-blinding in previous work {[}INSERT REF{]}. Participants then completed
-the Five Facet Mindfulness Questionnaire
+now referred to as the `off' and `DA' sessions respectively. The
+solution was prepared by an experimenter who did not administer the
+remaining experimental procedures. This protocol was sufficient to
+achieve double blinding in previous work
+(\textbf{chowdhuryDopamineModulatesEpisodic2012?};
+\textbf{chowdhuryDopamineRestoresReward2013?}). Participants then
+completed the Five Facet Mindfulness Questionnaire
 (\textbf{baerUsingSelfReportAssessment2006?}) and the Barratt
 Impulsivity Scale {[}BIS;
 (\textbf{pattonFactorStructureBarratt1995?}){]}, as trait impulsivity
 scores are associated with midbrain dopamine D2/D3 receptor
 availability. Around 30 minutes after drug administration, participants
 completed a second blood pressure and mood rating assessment.
-Subsequently, participants completed the practice stage of the task, so
-that the experimental stage began approximately 40 minutes after drug
-ingestion, within the window of peak plasma availability. At the end of
-the session, participants completed the final blood pressure and mood
-rating assessment and were asked whether they thought they were given
-the active or placebo drug for that session.
+Participants then completed the practice stage of the task, so that the
+experimental stage began approximately 40 minutes after drug ingestion,
+within the window of peak plasma availability. At the end of the
+session, participants completed the final blood pressure and mood rating
+assessment and were asked whether they thought they had been given the
+active or placebo drug.
 
 \hypertarget{apparatus}{%
 \subsection{Apparatus}\label{apparatus}}
@@ -259,59 +261,58 @@ dopamine and mindfulness factors.
 
 Doors were marked as selected if participants gazed at them for a
 duration of at least 300 ms. We assumed that a door could not be
-selected twice consecutively, and that such a record constitutes an
-accidental diversion from the current door. Such events are therefore
-collapsed into a single door selection. Last, as the final door
-selection of every trial was fixed (i.e.~finding the target location
-ends trial), we removed the final selection from each trial from the
-data for the sequence analysis defined below. Note a diversion from our
-pre-registration\footnote{\url{https://osf.io/2y6pk}} with regard to
-data exclusions. Based on pilot data, We planned to exclude participants
-who scored \textless{} 65\% accuracy over the course of a session.
-However, analysis of the final sample suggested that this was too
-stringent, as this resulted in the exclusion of 23/40 participants. We
-therefore opted to retain all participants in the final sample, apart
-from one participant whose number of door selections was greater than 3
-standard deviations from the mean across both sessions and all contexts.
-The remaining 39 datasets were retained for all of the analyses.
+selected twice consecutively, and collapsed any consecutive duplications
+into a single door selection. Last, as the final door selection of every
+trial was fixed (i.e.~finding the target location ends trial), we
+removed the final selection from each trial for the sequence analysis
+defined below. We excluded data from one participant whose total number
+of door selections was greater than 3 standard deviations from the mean
+across both sessions. The remaining 39 datasets were retained for all of
+the analyses. Note that this is more inclusive than our pre-registered
+plan for data exclusions\footnote{\url{https://osf.io/2y6pk}}. Based on
+pilot data, we had planned to exclude participants who scored
+\textless{} 65\% accuracy over the course of a session. However,
+analysis of the final sample suggested that this was too stringent, as
+this resulted in the exclusion of 23/40 participants.
 
 \hypertarget{accuracy-data}{%
 \subsection{Accuracy data}\label{accuracy-data}}
 
 We sought to determine the extent to which participants learned the
 target locations, and whether participants learned to select the doors
-that were relevant given the current context. Door selections will be
+that were relevant given the current context. Door selections were
 classified as target relevant (TR) for the current context (cc), the
 other context from that session (oc), or neither (n). Data was then
-grouped into blocks of 10 trials per context, resulting in 8 blocks.
-First, to determine whether participants learned the target locations,
-we assessed overall accuracy as
+grouped into blocks of 10 trials per context, and grouped across
+contexts, resulting in 8 blocks of 20 trials. First, to determine
+whether participants learned the target locations overall, we counted
+the number of correct door selections (referred to from now as accuracy
+{[}acc{]}):
 
 \[
-acc = \frac{\sum{(TR_{cc}, TR_{oc})}}{N}
+acc = \sum{(TR_{cc}, TR_{oc})}
 \]
 
-where N is the total number of door selections. To assess the influence
-of block, session (DA vs off), mindfulness and BIS scores on accuracy,
-we fit Bayesian mixed effects models with the following general form:
+To assess the influence of block and drug (DA vs off) on accuracy, we
+fit Bayesian mixed effects models with the following general form:
 
 NOTE: NEED TO WORK OUT HOW TO GET THIS ONTO SEPARATE LINES
 
 \[
-y_{i} \sim Bin(n_{i}, p_{i}) \\
+acc_{i} \sim Bin(n_{i}, p_{i}) \\
 logit(p_{i}) = \mu_{i} \\
-\mu_{i}|x_{i}, \beta, z_{i}, b_{i} \sim N(X_{i}\beta + Z_{i}b_{i}, \sigma^2) \\
+\mu_{i}|x_{i}, \beta, z_{i}, b_{i} \sim \mathcal{N}(X_{i}\beta + Z_{i}b_{i}, \sigma^2) \\
 i = 1, ... N \\
 \]
 
 where \(i\) = 1 to N participants. X is a matrix containing fixed effect
-regressors for block, session (DA vs.~off), the mindfulness and BIS
-regressors, and any interactions. Z is a matrix of random effects
-regressors including subject intercepts and slopes, that may contain
-regressors for the block and drug effects. \(n_{i}\) is the number of
-accurate door selections, and \(p_{i}\) is the probability of attaining
-the given \(n_{i}\). \(N\) is a normal distribution with standard
-deviation \(\sigma^2\).
+regressors for block, and drug (DA vs.~off), and any interactions. Z is
+a matrix of random effects regressors including subject intercepts and
+slopes, containing regressors for the block and drug effects and their
+interaction. \(\mathcal{N}\) is a normal distribution with standard
+deviation \(\sigma^2\). \(n_{i}\) is the total number of door selections
+(cc + oc + n), and \(p_{i}\) is the probability of attaining \(acc_{i}\)
+given \(n_{i}\).
 
 For this and following analyses, we sought to find the model that best
 fit the data, and then made inference over the resulting parameters.
@@ -321,11 +322,12 @@ Models were fit using the BRMS
 (\textbf{standevelopmentteamRStanInterfaceStan2023?}) in R
 (\textbf{rcoreteamLanguageEnvironmentStatistical2015?}). We used the
 default weakly informative priors as specified in
-(\textbf{burknerBrmsPackageBayesian2017?}). Specifically, \(\beta\)
-coefficients were given a flat prior, intercept and standard deviations
-were assumed to be drawn from a student's \(t\) distribution (df=1,
-location=0, scale=2.5), and the LKJ-correlation prior with parameter
-\(\zeta\) \textgreater{} 0 was used for the parameter covariance matrix.
+(\textbf{burknerBrmsPackageBayesian2017?}). Specifically, \(\beta\) and
+\(b\) coefficients were given a flat prior, intercept and standard
+deviations were assumed to be drawn from a student's \(t\) distribution
+(df=1, location=0, scale=2.5), and the LKJ-correlation prior with
+parameter \(\zeta\) \textgreater{} 0 was used for the parameter
+covariance matrix.
 
 To find the best fitting model, we fit models containing each
 combination of the block and drug regressors (and associated random
@@ -334,38 +336,87 @@ validation (as implemented in
 \textbf{vehtariPracticalBayesianModel2017?}). (Note that in the
 pre-registration document we had proposed to compare models using the
 deviance information criterion (DIC). As, LOO is more robust than DIC to
-influential observations, and is implemented for ready use with BRMS
+influential observations, and is readily implemented for use with BRMS
 model objects, we opted to use LOO instead of DIC). Upon identifying the
 best model from the experimentally manipulated regressors, we then added
 the mindfulness regressor in all possible combinations with the best
 model, until increasing complexity provided no further gains in
-prediction (as evidenced by LOO). We then repeated this process with the
-BIS scores. In all cases, we sought to use the most complex random
-effects structure as is supported by the data
-(\textbf{barrRandomEffectsStructure2013?}). Note that the inference over
-parameters was consistent over models, regardless of the exact winning
-model chosen.
+prediction (as evidenced by LOO). Last we controlled for trait
+impulsivity by adding BIS scores as a regressor to the winning model. In
+all cases, we sought to use the most complex random effects structure as
+is supported by the data (\textbf{barrRandomEffectsStructure2013?}).
+Note that even though we used model selection, the inference over
+parameters was consistent across models.
 
 \hypertarget{contextual-accuracy}{%
 \subsection{Contextual Accuracy}\label{contextual-accuracy}}
 
 We also sought to understand whether dopamine modulates the ability of
 participants to select the correct door, given the context. Therefore,
-for each context, we computed context-specific accuracy (c-acc) as:
-
-\[
-\mathit{c\mbox{-}acc} = \frac{TR_{cc}}{\sum (TR_{cc}, TR_{oc})}
-\]
+for each context, we computed the total number of cc door selections
+(c-acc), and modelled the probability of attaining c-acc given the total
+number of correct door selections (i.e.~\(n_{i}\) from equation X
+becomes \(\sum (TR_{cc}, TR_{oc}\)).
 
 We then fit this data with Bayesian mixed effects models following the
 procedure above (Note that in the pre-registration document we had
 suggested to include a regressor for context. Visual inspection of the
-data upon completion showed that c-acc was highly comparable across
-contexts {[}see supplemental figures{]}. We therefore opted to eschew a
-large parameter space and collapsed over this factor).
+data showed that c-acc was highly comparable across contexts {[}see
+supplemental figures{]}. We therefore opted to eschew a larger parameter
+space and collapsed over this factor).
 
 \hypertarget{stereotypical-sequences}{%
 \subsection{Stereotypical sequences}\label{stereotypical-sequences}}
+
+Next, we seek to determine whether eye-movement patterns become more
+stereotypical over the course of the task, and whether dopamine and
+mindfulness modulates the extent of stereotypy. Here we define
+stereotypy as sets of door selections being deployed in the same order,
+over trials. Therefore we wish to know whether, given the set of doors
+that a participant chose to open over the trials of the experiment, did
+they select them in a particular order more than would be expected by
+chance?
+
+In order to characterise the extent to which the order of door
+selections differed from what would be expected by chance, we computed a
+null hypothesis for each subject, generated under the assumption that
+there is no temporal regularity in their door selection patterns. This
+null hypothesis was then used as a regressor in a hierarchical model
+that we describe below. If additional parameters are required to account
+for the data over and above the theoretical null regressor, then those
+parameters are interpreted as implying the presence and extent of
+stereotypy, modulated by the experimental factor coded by the additional
+parameter.
+
+The construction of the null hypothesis is as follows: to identify how a
+participant's data should look under the null, we take the door
+selections from any given trial, and given those selections, we compute
+all the possible permutations of door selection order, excluding any
+permutation where the same door is selected twice consecutively. For any
+given set of trials, we then compute the transition matrix; given that
+the participant is in the state of being at door x, how many times did
+they move to door y? The resulting transition matrix forms the null
+hypothesis for that subject, which can be compared to the observed
+transition counts for that subject and set of trials. Note that we
+present simulation results demonstrating the suitability of this method
+in our pre-registration document\footnote{\url{https://osf.io/xn6d2/}}.
+
+The observed transition counts were using the same model structure as
+defined above, with the addition of the null regressor. Identification
+of the best random effects structure and the winning model proceeded as
+described for the accuracy data above. Mindfulness and impulsivity
+scores were added to the winning model, again according to the procedure
+outlined above.
+
+\hypertarget{control-analyses}{%
+\subsection{Control analyses}\label{control-analyses}}
+
+To determine whether awareness of the dopamine intervention could have
+contributed to the findings, the probability of participant and
+experimenter ratings will be compared to the expected values assuming
+chance guessing, using a binomial model. Blood-pressure and mood
+measures were compared using {[}insert whether paired t-test or
+Mann-Whitney U test{]}.
 
 LaTeX command can be used to reference other section. See Section
 \ref{sec:headings}. However, you can also use \textbf{bookdown}
