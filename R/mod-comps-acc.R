@@ -21,13 +21,15 @@ load("../data/derivatives/acc_winplusmind/acc_winplusmind.Rda")
 load("../data/derivatives/acc_winplusmindbmint/acc_winplusmindbmint.Rda")
 load("../data/derivatives/acc_winplusmind_bmndintdrgmndint/acc_winplusmind_bmndintdrgmndint.Rda")
 load("../data/derivatives/acc_winplusmind_drgmndint/acc_winplusmind_drgmndint.Rda")
-loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mndbdrgmnd, bdrgmdrgmi)
+load("../data/derivatives/acc_winplusmind_bmndintdrgmndintbmnddrgint/acc_winplusmind_bmndintdrgmndintbmnddrgint.Rda")
+loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mndbdrgmnd, bdrgmdrgmi, mndbdrg3way)
                 # elpd_diff se_diff
 # mndbdrgmnd       0.0       0.0  
+# mndbdrg3way      0.0       0.9  
 # bdrgmdrgmi      -0.5       0.7  
 # mndb           -10.9       6.6  
 # fxbdrg_rfxbdrg -11.3       6.6  
-# mnd            -11.9       6.7
+# mnd            -11.9       6.7 
 
 rm(fxbdrg_rfxbdrg, mndb, mnd, mndbdrgmnd, bdrgmdrgmi)
 #-----------------------------------------------------------------------------
