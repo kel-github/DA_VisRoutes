@@ -19,28 +19,34 @@ library(tidyverse)
 load('../data/derivatives/acc_model-fxbdrg-bdrgsubrfx/acc_model-fxbdrg-bdrgsubrfx.Rda')
 load("../data/derivatives/acc_winplusmind/acc_winplusmind.Rda")
 load("../data/derivatives/acc_winplusmindbmint/acc_winplusmindbmint.Rda")
-loo_compare(fxbdrg_rfxbdrg, mnd, mndb)
+load("../data/derivatives/acc_winplusmind_bmndintdrgmndint/acc_winplusmind_bmndintdrgmndint.Rda")
+load("../data/derivatives/acc_winplusmind_drgmndint/acc_winplusmind_drgmndint.Rda")
+loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mndbdrgmnd, bdrgmdrgmi)
                 # elpd_diff se_diff
-# mndb            0.0       0.0   
-# fxbdrg_rfxbdrg -0.4       1.4   
-# mnd            -1.0       0.7   
+# mndbdrgmnd       0.0       0.0  
+# bdrgmdrgmi      -0.5       0.7  
+# mndb           -10.9       6.6  
+# fxbdrg_rfxbdrg -11.3       6.6  
+# mnd            -11.9       6.7
 
-rm(fxbdrg_rfxbdrg, mndb, mnd)
+rm(fxbdrg_rfxbdrg, mndb, mnd, mndbdrgmnd, bdrgmdrgmi)
 #-----------------------------------------------------------------------------
 # CONTEXTUAL ACCURACY
 # ---------------------------------------------------------------------------
 load('../data/derivatives/cacc_model-fxbdrg-bdrgsubrfx/cacc_model-fxbdrg-bdrgsubrfx.Rda')
 load("../data/derivatives/cacc_winplusmind/cacc_winplusmind.Rda")
 load("../data/derivatives/cacc_winplusmindbmint/cacc_winplusmindbmint.Rda")
+load("../data/derivatives/cacc_winplusmind_bmndintdrgmndint/cacc_winplusmind_bmndintdrgmndint.Rda")
+load("../data/derivatives/cacc_winplusmind_drgmndint/cacc_winplusmind_drgmndint.Rda")
 
 
-loo_compare(fxbdrg_rfxbdrg, mnd, mndb)
+loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mndbdrgmnd, bdrgmdrgmi)
 #                 elpd_diff se_diff
 # mnd             0.0       0.0   
 # fxbdrg_rfxbdrg -0.6       1.1   
-# mndb           -1.1       0.8  
-
-
+# mndb           -1.1       0.8   
+# bdrgmdrgmi     -2.0       0.5   
+# mndbdrgmnd     -2.6       0.9  
 
 #----------------------------------------------------------------------------
 # BIS
