@@ -20,7 +20,7 @@
 library(tidyverse)
 source('variability_exp_behav_data_wrangling_functions.R')
 
-not_new <- F # if T then load existing RData file with data
+not_new <- T # if T then load existing RData file with data
 ###-------------------------------------------------------
 ## LOAD DATA
 ###-------------------------------------------------------
@@ -198,3 +198,10 @@ acc_dat %>% ggplot(aes(x=b, y=acc, group=sub, colour=drug)) +
 acc_dat$acc <- NULL
 # save summary
 save(acc_dat, file='../data/derivatives/cacc_dat4_model.Rda')
+
+###-------------------------------------------------------
+## REMOVE TARGET FIND TRIALS FROM BLOCKED DAT TO MAKE DATA
+## FOR SEQUENCE MODELLING
+###-------------------------------------------------------
+blocked_dat <- blocked_dat %>% filter(onset != 999.000)
+save(blocked_dat, file='../data/derivatives/dat4_seq_model.Rda')
