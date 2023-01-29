@@ -43,7 +43,7 @@ for (i in 1:length(data_names)){
   acc_dat$m <- scale(acc_dat$m)
   
   for (j in 1:length(rfs)){
-    if (is.NA(app[j])){
+    if (is.na(app[j])){
       dir_name <- paste(msv_fnms[i], sep="")
     } else {
       dir_name <- paste(msv_fnms[i], app[j], sep="")
