@@ -40,15 +40,14 @@ for (i in 1:length(data_names)){
   acc_dat$m <- scale(acc_dat$m)
   
   for (j in 1:length(rfs)){
-    if (is.na(app[j])){
-      dir_name <- paste(data_names[i], msv_fnms[i], sep="")
+    if (is.NA(app[j])){
+      dir_name <- paste(msv_fnms[i], sep="")
     } else {
-      dir_name <- paste(data_names[i], msv_fnms[i], app[j], sep="")
+      dir_name <- paste(msv_fnms[i], app[j], sep="")
     }
     mod_name <- dir_name
     source(rfs[j])
   }
-
 }
 
 # for both acc and cacc, either the win + mnd*b model wins (acc) or the win + mnd
