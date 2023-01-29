@@ -50,7 +50,4 @@ for (i in 1:length(data_names)){
   }
 }
 
-# for both acc and cacc, either the win + mnd*b model wins (acc) or the win + mnd
-# next, I need to take those winning models and add a drug x mindfulness interaction
-
 
