@@ -69,8 +69,8 @@ if (verbal){
   # info
  # prior_summary(mnd)
 
-  verbal_output(mndbdrgmnd, dir_name = dir_name)
+  verbal_output(acc_mindwin_bis, dir_name = dir_name)
 
 }
 
-rm(mndbdrgmnd)
+rm(acc_mindwin_bis)
