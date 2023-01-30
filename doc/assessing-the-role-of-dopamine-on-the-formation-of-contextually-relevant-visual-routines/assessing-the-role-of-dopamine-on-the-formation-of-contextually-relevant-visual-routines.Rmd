@@ -88,7 +88,7 @@ knitr::include_graphics(taskfigpth)
 
 ## Statistical Approach
 
-The analysis was designed to assess the learning of the target locations given the context, the extent to which eye-movements became stereotypical, and how both of these measures were modulated by the dopamine and mindfulness factors.
+The analysis was designed to assess the learning of the target locations given the context, the extent to which eye-movements became stereotypical, and how both of these measures were modulated by the dopamine and mindfulness factors. All custom analysis code is available online^[insert link]. The analysis was performed using, and can be reproduced in the Neurodesk container environment [@rentonNeurodeskAccessibleFlexible2022].
 
 ### Data cleaning
 
@@ -119,6 +119,9 @@ where $i$ = 1 to N participants. X is a matrix containing fixed effect regressor
 For this and following analyses, we sought to find the model that best fit the data, and then made inference over the resulting parameters. Models were fit using the BRMS [@burknerBrmsPackageBayesian2017] interface for Stan [@standevelopmentteamStanModelingLanguage] and RStan [@standevelopmentteamRStanInterfaceStan2023] in R [@rcoreteamLanguageEnvironmentStatistical2015]. We used the default weakly informative priors as specified in [@burknerBrmsPackageBayesian2017]. Specifically, $\beta$ and $b$ coefficients were given a flat prior, intercept and standard deviations were assumed to be drawn from a student's $t$ distribution (df=1, location=0, scale=2.5), and the LKJ-correlation prior with parameter $\zeta$ > 0 was used for the parameter covariance matrix. 
 
 To find the best fitting model, we fit models containing each combination of the block and drug regressors (and associated random effects), and found the best model using leave-one-out (LOO) cross validation [as implemented in @vehtariPracticalBayesianModel2017]. (Note that in the pre-registration document we had proposed to compare models using the deviance information criterion (DIC). As, LOO is more robust than DIC to influential observations, and is readily implemented for use with BRMS model objects, we opted to use LOO instead of DIC). Upon identifying the best model from the experimentally manipulated regressors, we then added the mindfulness regressor in all possible combinations with the best model, until increasing complexity provided no further gains in prediction (as evidenced by LOO). Last we controlled for trait impulsivity by adding BIS scores as a regressor to the winning model. In all cases, we sought to use the most complex random effects structure as is supported by the data [@barrRandomEffectsStructure2013]. Note that even though we used model selection, the inference over parameters was consistent across models.
+
+ADD DETAILS ABOUT MODEL QUALITY IN THE PARAGRAPH ABOVE
+ADD STUFF ABOUT PLOT P (ACC) BUT PARAMETERS ARE IN LOG ODDS
 
 ## Contextual Accuracy
 
