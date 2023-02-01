@@ -147,7 +147,7 @@ with(mu_bdrug_dat %>% filter(drug == "levodopa"),
                               angle = 90,
                               length = .025,
                               col=dopa_col))
-legend(x=5.5, y=.55, legend = c("l", "p"),
+legend(x=5.5, y=.55, legend = c("DA", "P"),
        col = c(dopa_col,placebo_col), 
        pch = 19, bty = "n", cex = 1)
 # now add lines from the model
@@ -176,7 +176,7 @@ plot(density(fxdrg_draws$b_drugplacebo),
 axis(side=1, at = c(-0.15, 0, 0.25), labels=c("-0.15", "0", "0.15"))
 axis(side=2, at=c(0, 20), labels=c("0", "20"), las=2)
 polygon(density(fxdrg_draws$b_drugplacebo), border=samples_col, col=samples_col)
-title("DA vs off")
+title("DA vs P")
 fig_label("B", cex = 2)
 
 fxb_draws <- posterior_samples(mod, pars="b_b")
