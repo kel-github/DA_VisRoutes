@@ -204,4 +204,5 @@ save(acc_dat, file='../data/derivatives/cacc_dat4_model.Rda')
 ## FOR SEQUENCE MODELLING
 ###-------------------------------------------------------
 blocked_dat <- blocked_dat %>% filter(onset != 999.000)
+blocked_dat <- blocked_dat %>% filter(sub != 21)
 save(blocked_dat, file='../data/derivatives/dat4_seq_model.Rda')

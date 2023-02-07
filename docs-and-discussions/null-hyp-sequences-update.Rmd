@@ -1,0 +1,76 @@
+---
+title: "null-hyp-sequences-update"
+author: "Kelly Garner"
+date: "2023-02-07"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Definition of the null hypothesis for eye-movement 'sequence' data
+
+This document is a follow up to [this pre-registration](https://osf.io/2y6pk) where I defined a null hypothesis test for whether participants were moving between door selections (door transitions) by chance, or whether we could infer that the order of door transitions had become stereotyped; i.e. occurred in a specific order that was consistent across trials. Unfortunately, the proposed method of identifying the chance probability of door transitions (which involved taking the sequence of door selections from a given trial and permuting all possible sequences for that trial) is computationally unwieldy and a different method is required. I propose the following method instead:
+
+## Some Definitions
+
+I am interested in whether the order a participant opens doors becomes more consistent over the course of the experiment, and whether the extent of this consistency is influenced by dopamine administration. I am assuming that this consistency reflects an individual's stereotypy.
+
+If a participant is performing door transitions in a consistent manner, then the door they transition to depends on the door they are currently at. Therefore, given any door $x$ visited by the participant, the probability that they move to door $y$ should be greater than chance.
+
+## Defining chance door transitions
+
+A simple model for defining chance door transitions:  
+
+Say we have the following sequences performed over 3 trials:
+
+t1: {'A', 'B', 'C'} \
+t2: {'C', 'A', 'B'} \
+t3: {'A', 'C', 'B'} \
+
+Over 3 trials, the participant has selected doors 'A', 'B' & 'C'. This means the following door transitions are possible:
+
+'A' -> 'B' \
+'A' -> 'C' \
+'B' -> 'A' \
+'B' -> 'C' \
+'C' -> 'B' \
+'C' -> 'A' \
+
+and the probability of selecting any given door transition by chance $p(chance)$ = $\frac{1}{6}$
+which is equivalent to 1 over the number of elements off the diagonal of the transition matrix. Therefore
+
+$$ p(chance) = \frac{1}{n^2 - n} $$
+where n is the number of unique elements, which is the number of unique doors chosen by the participant.
+
+This can be compared against the observed probabilities of the door transitions, that was made over the three trials.
+
+For the model scenario of 3 trials above, there were 6 transitions in total, therefore:
+
+$$p(A->B) = \frac{2}{6} = \frac{1}{3}$$ 
+$$p(B->C) = \frac{1}{6}$$
+and so on.
+
+When the number of transitions exceeds the number of elements, this method carries the property that commonly occurring transitions will occur greater than chance, whereas those occurring less often will either occur at chance, or less often than indicated by chance. Thus using the null hypothesis as a regressor will not provide sufficient information to predict the observed transition probabilities, which leads to the proposed analysis in our previous [pre-registration document](https://osf.io/2y6pk).
+
+For example:
+
+t1: {'A', 'B', 'A', 'C'} \
+t2: {'C', 'A', 'B', 'A'} \
+t3: {'A', 'C', 'B', 'A'} \
+
+$p(chance) = \frac{1}{6}$ whereas $p(A->B) = \frac{2}{9}$, $p(B->A) = \frac{1}{3}$, $p(A->C) = \frac{2}{9}$, $p(C->A) = \frac{1}{9}$.
+
+Plotting the most preferred transition to the least preferred, against the null hypothesis, we see:
+
+```{r, echo = FALSE}
+
+plot(x=c(1, 2, 3, 4), y=c(1/3, 2/9, 2/9, 1/9), type="l", col="blue", ylim=c(0, 1/2),
+     ylab = "p", xlab = "tp")
+points(x=c(1, 2,3 , 4), y = c(1/6, 1/6, 1/6, 1/6), type="l", col="red")
+
+
+```
+
+
