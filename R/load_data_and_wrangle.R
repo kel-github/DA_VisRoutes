@@ -12,7 +12,8 @@
 #      data/ 
 ###-------------------------------------------------------
 
-# replication stuff
+# replication stuff (relevant when I was checking code saved and loaded
+# data from the correct places)
 # 76/162 = acc
 # 46/76 = cacc
 
@@ -202,7 +203,14 @@ save(acc_dat, file='../data/derivatives/cacc_dat4_model.Rda')
 ###-------------------------------------------------------
 ## REMOVE TARGET FIND TRIALS FROM BLOCKED DAT TO MAKE DATA
 ## FOR SEQUENCE MODELLING
+## take transition counts for each trial, sum over
+## blocks, normalise and take the variance
 ###-------------------------------------------------------
 blocked_dat <- blocked_dat %>% filter(onset != 999.000)
 blocked_dat <- blocked_dat %>% filter(sub != 21)
+
+get_transition_matrices(blocked_dat %>% filter(sub == 1 & drug == "levodopa" & cond == 1 & b == 1))
+
+
+
 save(blocked_dat, file='../data/derivatives/dat4_seq_model.Rda')

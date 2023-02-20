@@ -205,14 +205,14 @@ assign_door_types <- function(tmp){
 ##########################################################################################################################################
 
 get_transition_matrices <- function(data, ndoors=16){
-  # for a given dataset (typically broken down by
-  # subject, drug, context and block), get a transition
+  # for a given dataset (typically, a trial), get a transition
   # matrix for that block of data
   #
   # Kwargs:
   # -- data: dataframe, data subset down to level of choice
   # -- ndoors: [integer] how many doors were there in the experiment?
-  
+  # Output:
+  # -- out_mat: UN-NORMALISED MATRIX of transition counts for data 
   out_mat <- matrix(data = 0, nrow = ndoors, ncol = ndoors)
   
   trials <- data
@@ -221,16 +221,78 @@ get_transition_matrices <- function(data, ndoors=16){
     # rows = where you are, cols = where you just were
     out_mat[ data$door[i], data$door[i-1] ] = out_mat[ data$door[i], data$door[i-1] ] + 1
   }
-  out_mat <- out_mat /sum(out_mat)
+  #out_mat <- out_mat /sum(out_mat)
   colnames(out_mat) <- paste(seq(1, ndoors, 1))
   rownames(out_mat) <- colnames(out_mat)
   out_mat
 }
 
+apply_get_transition_matrices_over_trials <- function(data){
+  # take a set of trials, compute the transition counts for each 
+  # trial, then when done, normalize the matrix to get probabilities
+  # output is a transition matrix for the trials included in data
+  # Kwargs:
+  # -- data: dataframe, collection of trials for which to compute
+  # transition counts. Developed for dataframe blocked_dat
+  # Out:
+  # -- tps: matrix, ndoors x ndoors, see get_transition_matrices
+  
+  # first get the trials in this collection of data
+  ts <- unique(data$t)
+  tmp <- lapply(ts, function(z) get_transition_matrices(data = data %>% filter(t == z)))
+  tmp <- Reduce('+', tmp)
+  tmp/sum(tmp)
+}
+
 apply_get_transition_matrices_over_blocks <- function(data, i=seq(1,8,1)){
-  # this function takes data from one subject and one session to get
+  # this function takes data from one subject, one session and one condition, to get
   # the transiton matrices per block, returns a list of 8
-  lapply(i, function(z) get_transition_matrices(data = data %>% filter(b == z)))
+  # Kwargs
+  # -- data: data filtered down to one sub, session and condition. Developed for 
+  #          the dataframe blocked_dat
+  lapply(i, function(z) apply_get_transition_matrices_over_trials(data = data %>% filter(b == z)))
+}
+
+get_variance_from_tp <- function(tp){
+  # given a transition probability matrix, collapse into a vector
+  # and take the variance
+  # Kargs:
+  # -- tp: a numeric matrix
+  # Out:
+  # -- var_tp: variance of the matrix
+  
+  var_tp <- var(as.vector(tp))
+  var_tp
+}
+
+score_transition_matrices_4_one_sub_and_session <- function(data, nblock = 8){
+  # for one subject and session, take the variance of their 
+  # transition matrices for each condition
+  # output is a dataframe containing fields sub, drug, cond, block, var
+  # Kwargs:
+  # -- data - data filtered to contain only info from one sub from one session
+  #           developed on blocked_dat
+  # -- nblock - how many blocks of data are we putting together? (default = 8)
+  # Outs:
+  # -- df - dataframe of the above description
+  
+  # define indexing variables
+  conds <- unique(data$cond)
+  nconds <- length(conds)
+  sub <- data$sub[1]
+  drug <- data$drug[1]
+  
+  # get matrices for each cond
+  tmp <- lapply(conds, function(i) apply_get_transition_matrices_over_blocks(data %>% filter(cond == i)))
+  tmp <- lapply(tmp, function(x) lapply(x, get_variance_from_tp))
+  tmp <- lapply(tmp, function(x) do.call(rbind, x))
+  
+  # make df
+  tibble(sub = rep(sub, times=nblock*nconds),
+         drug = rep(drug, times=nblock*nconds),
+         cond = rep(conds, each=nblock),
+         block = rep(1:nblock, times=nconds),
+         v = do.call(rbind, tmp))
 }
 
 ##########################################################################################################################################
