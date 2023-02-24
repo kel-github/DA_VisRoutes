@@ -16,7 +16,7 @@
 # data from the correct places)
 # 76/162 = acc
 # 46/76 = cacc
-
+rm(list=ls())
 ### loading block (to be moved into document when required)
 library(tidyverse)
 source('variability_exp_behav_data_wrangling_functions.R')
@@ -27,7 +27,6 @@ not_new <- T # if T then load existing RData file with data
 ###-------------------------------------------------------
 # NOTE: you only want to do this once and then save the dataframe
 # as it is very slooooow
-
 if (!not_new){
   nses <- 2 # number of sessions
   nsub <- 40
@@ -84,6 +83,9 @@ blocked_dat <- do.call(rbind, mapply(apply_insert_block_Ns,
                                      MoreArgs=list(data=dat), 
                                      SIMPLIFY=FALSE))
 
+#### if doing stereotypy data, now skip ahead to 
+#### ## REMOVE TARGET FIND TRIALS FROM BLOCKED DAT TO MAKE DATA
+## FOR SEQUENCE MODELLING
 ###-------------------------------------------------------
 ## ADD DOOR TYPE REGRESSOR
 ###-------------------------------------------------------
@@ -203,14 +205,31 @@ save(acc_dat, file='../data/derivatives/cacc_dat4_model.Rda')
 ###-------------------------------------------------------
 ## REMOVE TARGET FIND TRIALS FROM BLOCKED DAT TO MAKE DATA
 ## FOR SEQUENCE MODELLING
+## for each subject, session and condition,
 ## take transition counts for each trial, sum over
-## blocks, normalise and take the variance
+## blocks, normalise as a probability and take the variance
+## of the resulting matrix
 ###-------------------------------------------------------
 blocked_dat <- blocked_dat %>% filter(onset != 999.000)
 blocked_dat <- blocked_dat %>% filter(sub != 21)
 
-get_transition_matrices(blocked_dat %>% filter(sub == 1 & drug == "levodopa" & cond == 1 & b == 1))
+subs <- unique(blocked_dat$sub)
+ses <- unique(blocked_dat$drug)
+sub_var_dat <- lapply(subs, function(i) lapply(ses, function(j) score_transition_matrices_4_one_sub_and_session(
+                                                                       blocked_dat %>% filter(sub == i & drug == j))))
+sub_var_dat <- lapply(sub_var_dat, function(x) do.call(rbind, x))
+sub_var_dat <- do.call(rbind, sub_var_dat)
+# now summarise over context
+names(sub_var_dat)[length(names(sub_var_dat))] <- "v"
+sub_var_dat <- sub_var_dat %>% group_by(sub, drug, block) %>% summarise(v = mean(v))
 
+# quick plot
+sub_var_dat %>% ggplot(aes(x=block, y=v, group=sub, colour=drug)) + geom_line() + facet_wrap(~drug)
+hist(sub_var_dat$v, breaks = 50)
 
+sub_var_dat %>% group_by(sub, block) %>% summarise(d = v[drug=="placebo"] - v[drug=="levodopa"]) %>%
+  ungroup() %>%
+  ggplot(aes(x=block, y=d, group=as.factor(sub), colour=as.factor(sub))) + geom_line()
 
-save(blocked_dat, file='../data/derivatives/dat4_seq_model.Rda')
+# now save it ready for modelling
+save(sub_var_dat, file='../data/derivatives/dat4_seq_model.Rda')
