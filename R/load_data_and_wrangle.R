@@ -221,15 +221,26 @@ sub_var_dat <- lapply(sub_var_dat, function(x) do.call(rbind, x))
 sub_var_dat <- do.call(rbind, sub_var_dat)
 # now summarise over context
 names(sub_var_dat)[length(names(sub_var_dat))] <- "v"
-sub_var_dat <- sub_var_dat %>% group_by(sub, drug, block) %>% summarise(v = mean(v))
+names(sub_var_dat)[names(sub_var_dat) == "block"] <- "b" # acc parlance
+sub_var_dat$b <- scale(sub_var_dat$b)
+sub_var_dat <- sub_var_dat %>% group_by(sub, drug, b) %>% summarise(v = mean(v))
 
+####### EXPLORATORY CODE CHECKING THE NATURE OF THE RELATIONSHIP BETWEEN
+# b AND v - e.g. power, linear etc
 # quick plot
-sub_var_dat %>% ggplot(aes(x=block, y=v, group=sub, colour=drug)) + geom_line() + facet_wrap(~drug)
-hist(sub_var_dat$v, breaks = 50)
 
-sub_var_dat %>% group_by(sub, block) %>% summarise(d = v[drug=="placebo"] - v[drug=="levodopa"]) %>%
+sub_var_dat %>% group_by(drug, b) %>% summarise(mu = mean(v)) %>%
+  ggplot(aes(x=b, y=mu, group=drug, colour=drug)) + geom_line()
+sub_var_dat %>% group_by(drug, b) %>% summarise(mu = mean(v)) %>%
+  ggplot(aes(x=b, y=log(mu), group=drug, colour=drug)) + geom_line()
+sub_var_dat %>% group_by(drug, b) %>% summarise(mu = mean(v)) %>%
+  ggplot(aes(x=log(b), y=log(mu), group=drug, colour=drug)) + geom_line()
+
+hist(log(sub_var_dat$v), breaks = 50)
+
+sub_var_dat %>% group_by(sub, b) %>% summarise(d = log(v[drug=="placebo"]) - log(v[drug=="levodopa"])) %>%
   ungroup() %>%
-  ggplot(aes(x=block, y=d, group=as.factor(sub), colour=as.factor(sub))) + geom_line()
+  ggplot(aes(x=b, y=d, group=as.factor(sub), colour=as.factor(sub))) + geom_line()
 
 # now save it ready for modelling
 save(sub_var_dat, file='../data/derivatives/dat4_seq_model.Rda')

@@ -10,20 +10,7 @@
 #      R/code is here
 #      data/ 
 #        derivatives/ # summary data is here
-#
-#
-# RESOURCES:
-# https://www.jstatsoft.org/article/view/v080i01
-# https://github.com/paul-buerkner/brms
-# https://bayesball.github.io/BRMS/multilevel-regression.html
 ###-------------------------------------------------------
-
-
-# ###------------------------------------------------------
-# # load packages
-# ###-----------------------------------------------------
-# library(brms)
-# library(tidyverse)
 
 ###------------------------------------------------------
 # have you run this model before?

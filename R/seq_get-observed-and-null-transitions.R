@@ -22,6 +22,14 @@ load('../data/derivatives/dat4_seq_model.Rda')
 ### development
 # data from one subject and context 
 
+# what is the max sequence length?
+maxN <- blocked_dat %>% group_by(sub, drug, cond, b, t) %>% summarise(N=length(door)) %>%
+          summarise(m = max(N))
+
+maxN %>% filter(max == 66)
+View(blocked_dat %>% filter(sub == 16 & drug == "levodopa" & cond == 2 & b == 3 & t == 66))
+# max = 66
+
 this_trial <- blocked_dat %>% filter(sub == 1 & drug == "placebo" & cond == 1 & b == 1 & t == 9)
 
 
