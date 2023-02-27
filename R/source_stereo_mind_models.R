@@ -28,7 +28,7 @@ sub_var_dat <- inner_join(sub_var_dat, mind_sum, by="sub")
 sub_var_dat$drug <- as.factor(sub_var_dat$drug) # makes no difference if fct or chr
 sub_var_dat$m <- scale(sub_var_dat$m)
   
-for (j in 1:1){
+for (j in 2){
   if (is.na(app[j])){
     dir_name <- paste(msv_fnms, sep="")
   } else {
@@ -49,3 +49,9 @@ load(file=sprintf(ftmplt, 'stereo_winplusmind_dmindint', 'stereo_winplusmind_dmi
 load(file=sprintf(ftmplt, 'stereo_winplusmind_bdmindint', 'stereo_winplusmind_bdmindint'))
 
 loo_compare(fxbdrg_bsubrfx, mndbd, mndbd_bm, mndbd_dm, mndbd_bdm)
+# elpd_diff se_diff
+# mndbd_bm        0.0       0.0   
+# mndbd          -0.5       0.9   
+# fxbdrg_bsubrfx -1.1       1.7   
+# mndbd_dm       -1.1       2.2   
+# mndbd_bdm      -1.8       3.0   
