@@ -16,9 +16,12 @@ faux <- FALSE
 # run models
 ###-----------------------------------------------------
 load('../data/derivatives/dat4_seq_model.Rda')
+sub_var_dat$sub <- as.factor(sub_var_dat$sub)
+sub_var_dat$drug <- as.factor(sub_var_dat$drug)
 names(sub_var_dat)[names(sub_var_dat) == "block"] <- "b" # to keep in 
 sub_var_dat$b <- scale(sub_var_dat$b, scale=FALSE) # mean center regressor
 # line with the accuracy data terminology
+
 dir_name <- 'stereo_model-bonly'
 source('stereo_mod-bonly.R')
 
@@ -55,3 +58,11 @@ load(file=sprintf(ftmplt, 'stereo_model-fxbdrgint-brfx', 'stereo_model-fxbdrgint
 
 loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg, 
             fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx) #,
+
+# fxbdrg_bsubrfx         0.0       0.0  
+# fxb_bsubrfx           -0.1       2.0  
+# fxbdrgint_bsubrfx     -0.3       1.2  
+# bsubrfx               -1.0       2.6  
+# fxbdrgint_bdrgsubrfx  -2.4       2.8  
+# fxbdrg_rfxbdrg        -2.4       2.5  
+# fxb_subint           -65.5      13.8 

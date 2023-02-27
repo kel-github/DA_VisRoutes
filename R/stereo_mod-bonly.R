@@ -28,7 +28,7 @@ if (new){
   fxb_subint <- brm(formula = log(v) ~ b + (1|sub),
                   data = sub_var_dat,
                   warmup = 2000, iter = 10000,
-                  family = gaussian,
+                  family = skew_normal,
                   save_pars = save_pars(all=TRUE)) # for model comparisons 
   # will try mean centering the x-axis - works!
   # putting v data on the log scale (make the relationship linear) - works!

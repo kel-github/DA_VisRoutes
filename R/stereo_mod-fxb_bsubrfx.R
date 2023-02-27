@@ -32,7 +32,7 @@ if (new){
   fxb_bsubrfx <- brm(formula = log(v) ~ b + (b|sub),
                      data = sub_var_dat,
                      warmup = 2000, iter = 10000,
-                     family = gaussian,
+                     family = skew_normal,
                      save_pars = save_pars(all=TRUE)) # for model comparisons 
   
   fxb_bsubrfx <- add_criterion(fxb_bsubrfx, "loo", moment_match=TRUE, reloo=TRUE)

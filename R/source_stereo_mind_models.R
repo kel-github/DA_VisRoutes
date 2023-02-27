@@ -28,7 +28,7 @@ sub_var_dat <- inner_join(sub_var_dat, mind_sum, by="sub")
 sub_var_dat$drug <- as.factor(sub_var_dat$drug) # makes no difference if fct or chr
 sub_var_dat$m <- scale(sub_var_dat$m)
   
-for (j in 1:length(rfs)){
+for (j in 1:1){
   if (is.na(app[j])){
     dir_name <- paste(msv_fnms, sep="")
   } else {
@@ -42,7 +42,7 @@ for (j in 1:length(rfs)){
 # perform model comparisons
 ###-----------------------------------------------------
 ftmplt = '../data/derivatives/%s/%s.Rda'
-load(file=sprintf(ftmplt, 'stereo_model-bonly', 'stereo_model-bonly'))
+load(file=sprintf(ftmplt, 'stereo_model-fxbdrg-brfx', 'stereo_model-fxbdrg-brfx'))
 load(file=sprintf(ftmplt, 'stereo_winplusmind', 'stereo_winplusmind'))
 load(file=sprintf(ftmplt, 'stereo_winplusmind_bmindint', 'stereo_winplusmind_bmindint'))
 
