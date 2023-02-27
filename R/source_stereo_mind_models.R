@@ -13,8 +13,8 @@ verbal <- TRUE
 faux <- FALSE
 
 msv_fnms <- c('stereo_winplusmind')
-rfs <- c("stereo_mod-fxbbmnd_brfx.R", "stereo_mod-fxbbmndbtm_brfx.R")
-app <- c(NA, "_bmindint")
+rfs <- c("stereo_mod-fxbdmnd_brfx.R", "stereo_mod-fxbdmnd_bmndint_brfx.R", "stereo_mod-fxbdmnd_dmndint_brfx.R", "stereo_mod-fxbdmnd_bdmndint_brfx.R")
+app <- c(NA, "_bmindint", '_dmindint', '_bdmindint')
 
 
 ###------------------------------------------------------
@@ -45,5 +45,7 @@ ftmplt = '../data/derivatives/%s/%s.Rda'
 load(file=sprintf(ftmplt, 'stereo_model-fxbdrg-brfx', 'stereo_model-fxbdrg-brfx'))
 load(file=sprintf(ftmplt, 'stereo_winplusmind', 'stereo_winplusmind'))
 load(file=sprintf(ftmplt, 'stereo_winplusmind_bmindint', 'stereo_winplusmind_bmindint'))
+load(file=sprintf(ftmplt, 'stereo_winplusmind_dmindint', 'stereo_winplusmind_dmindint'))
+load(file=sprintf(ftmplt, 'stereo_winplusmind_bdmindint', 'stereo_winplusmind_bdmindint'))
 
-loo_compare(fxb_bsubrfx, mndb, mndbint)
+loo_compare(fxbdrg_bsubrfx, mndbd, mndbd_bm, mndbd_dm, mndbd_bdm)
