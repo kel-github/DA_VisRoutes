@@ -27,8 +27,9 @@ mind_sum$sub <- as.factor(mind_sum$sub)
 sub_var_dat <- inner_join(sub_var_dat, mind_sum, by="sub")
 sub_var_dat$drug <- as.factor(sub_var_dat$drug) # makes no difference if fct or chr
 sub_var_dat$m <- scale(sub_var_dat$m)
+sub_var_dat <- sub_var_dat[!is.na(sub_var_dat$v),]
   
-for (j in 2){
+for (j in 1:length(rfs)){
   if (is.na(app[j])){
     dir_name <- paste(msv_fnms, sep="")
   } else {

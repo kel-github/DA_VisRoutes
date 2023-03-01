@@ -21,6 +21,9 @@ sub_var_dat$drug <- as.factor(sub_var_dat$drug)
 names(sub_var_dat)[names(sub_var_dat) == "block"] <- "b" # to keep in 
 sub_var_dat$b <- scale(sub_var_dat$b, scale=FALSE) # mean center regressor
 # line with the accuracy data terminology
+# remove sub with NA
+rm_subs <- unique(sub_var_dat$sub[is.na(sub_var_dat$v)])
+sub_var_dat <- sub_var_dat %>% filter(!sub %in% rm_subs)
 
 dir_name <- 'stereo_model-bonly'
 source('stereo_mod-bonly.R')

@@ -32,6 +32,8 @@ bis_sum$sub <- as.factor(bis_sum$sub)
 sub_var_dat <- inner_join(sub_var_dat, bis_sum, by="sub")
 sub_var_dat$bis <- scale(sub_var_dat$bis)
 
+# remove subject with NA values
+
   
 dir_name <- paste(msv_fnms, sep="")
 mod_name <- dir_name
