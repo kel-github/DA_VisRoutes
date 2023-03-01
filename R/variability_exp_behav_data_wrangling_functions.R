@@ -45,8 +45,8 @@ get_data <- function(fpth, sub_num, ses){
     rt <- vector(mode="numeric", length=length(onsets))
     
     # get variables
-    for (i in 2:length(resps$door)){
-      if (resps$door[i] == resps$door[i-1]){
+    for (i in 2:length(resps$door)){ # increment an index if the p is on the same door, and that same door belongs to the same trial
+      if (resps$door[i] == resps$door[i-1] & resps$t[i] == resps$t[i-1] ){
         count <- count + 1
         rt[i] <- rt[i-1] + diff(c(onsets[i-1], onsets[i]))
       } else {
@@ -58,14 +58,21 @@ get_data <- function(fpth, sub_num, ses){
     resps$rt <- rt
     
     # now, keep only those with > 17 entries as 17 * .017 ~ 300 ms
-    resps <- resps %>% filter(idx > 17)
+    # trials of interest - sub 14 - 142 146 152 153 156 157 158 159
+    # would be removed from the variability analysis
+    resps <- resps %>% filter(idx >= 17) # needs to be >= 
     # and now, keep the last of each door switch, as long as the door was marked as open at the time
     # this latter conditions removes times where participants skipped to a door that was 
     # accidentally marked as open
+    # trials removed = 0 
+    # U2H - check what this removes for sub 14, drug session cond 2, and check I want that
     resps <- resps %>% filter(lead(door,1) != door & open_d == 1 | lead(onset,1) < onset & open_d == 1 | tgt_found == 1) 
+    
     # now I re-do removing times where two doors were selected in a row, as filtering by open_d
     # above would have created some double door selections, as in times a door was open, eyes skipped 
     # somewhere else and then went back to the original door
+    
+    # this removes trial 158
     resps <- resps %>% filter(lead(door,1) != door | tgt_found == 1)
     # also remove the target door from each trial - i.e. the 'fixed' one
 #    resps <- resps %>% filter(onset != 999)
