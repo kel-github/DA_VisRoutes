@@ -13,7 +13,7 @@ verbal <- TRUE
 faux <- FALSE
 
 msv_fnms <- c('stereo_winplusbis')
-rfs <- c("stereo_mod-fxbdmndbis_bmindint.R")
+rfs <- c("stereo_mod-fxbdmndbis_bmndint_brfx.R")
 app <- c(NA)
 
 ###------------------------------------------------------
