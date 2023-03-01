@@ -244,3 +244,6 @@ sub_var_dat %>% group_by(sub, b) %>% summarise(d = log(v[drug=="placebo"]) - log
 
 # now save it ready for modelling
 save(sub_var_dat, file='../data/derivatives/dat4_seq_model.Rda')
+
+#### subs 14, 22 26, 34 have NAs at end - why is that?
+## sub 14 - levopa session - cond 2
