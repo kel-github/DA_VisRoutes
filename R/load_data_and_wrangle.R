@@ -149,7 +149,7 @@ save(door_acc_sum, file='../data/derivatives/accuracy.Rda')
 acc_dat <- door_acc_sum %>% group_by(sub, sess, drug, b) %>%
                               summarise(tt = sum(tt),
                               td = sum(td))
-acc_dat <- acc_dat[!is.na(acc_dat$b),]
+acc_dat <- acc_dat[!is.na(acc_dat$b),] # this removes extra data due to sub 17 restarting the task 
 # scale the block factor
 acc_dat$b <- acc_dat$b - 1
 acc_dat$sub <- as.factor(acc_dat$sub)
