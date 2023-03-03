@@ -65,17 +65,12 @@ get_data <- function(fpth, sub_num, ses){
     # this latter conditions removes times where participants skipped to a door that was 
     # accidentally marked as open
     # trials removed = 0 
-    # U2H - check what this removes for sub 14, drug session cond 2, and check I want that
     resps <- resps %>% filter(lead(door,1) != door & open_d == 1 | lead(onset,1) < onset & open_d == 1 | tgt_found == 1) 
     
     # now I re-do removing times where two doors were selected in a row, as filtering by open_d
     # above would have created some double door selections, as in times a door was open, eyes skipped 
     # somewhere else and then went back to the original door
-    
-    # this removes trial 158
     resps <- resps %>% filter(lead(door,1) != door | tgt_found == 1)
-    # also remove the target door from each trial - i.e. the 'fixed' one
-#    resps <- resps %>% filter(onset != 999)
     ### assign probability of location label
     names(trials)[names(trials)=="prob"] = "tgt_prob" # rename to make life easier
     
