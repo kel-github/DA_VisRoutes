@@ -18,18 +18,16 @@ faux <- FALSE
 # the elements of the two vectors should match up, so position one of each
 # corresponds to the same data and what you want to do with that data
 # this will form the loop that is used to fit the various models
-#data_names <- c('acc', 'cacc')
+
 data_names <- c('acc')
-# msv_fnms <- c('acc_winplusmind', 'cacc_winplusmind') # save names
 msv_fnms <- c('acc_winplusmind')
+
 # these vectors contain the model files that you want to run, and any appends that
 # should be made to the msv_fnms above (again, make sure that the elements across
 # the two vectors correspond. these vectors will
 # be looped over within the data/naming loop above
-# rfs <- c("acc_mod-fxbdrgbmndintdrgmndint_drgbrfx.R", "acc_mod-fxbdrgmdrgint_drgbrfx.R")
-# app <- c("_bmndintdrgmndint",                     "_drgmndint")
-rfs <- c("acc_mod-fxbdrgbmndintdrgmndintbdrgmndint_drgbrfx.R")
-app <- c("_bmndintdrgmndintbmnddrgint")
+rfs <- c("acc_mod-win-mnd.R", "acc_mod-win-mnd-bmnd.R", "acc_mod-win-mnd-drgmnd.R", "acc_mod-win-mnd-bmd-dmnd.R", "acc_mod-win-mnd-bdrgmnd.R")
+app <- c(NA, "_bmnd", "_dmnd", "bmnd_dmnd", "bdmnd")
 
 for (i in 1:length(data_names)){
   
