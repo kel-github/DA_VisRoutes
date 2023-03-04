@@ -51,8 +51,8 @@ load(file=sprintf(ftmplt, 'stereo_winplusmind_bdmindint', 'stereo_winplusmind_bd
 
 loo_compare(fxbdrg_bsubrfx, mndbd, mndbd_bm, mndbd_dm, mndbd_bdm)
 # elpd_diff se_diff
-# mndbd_bm        0.0       0.0   
-# mndbd          -0.5       0.9   
-# fxbdrg_bsubrfx -1.1       1.7   
-# mndbd_dm       -1.1       2.2   
-# mndbd_bdm      -1.8       3.0   
+# mndbd_bdm       0.0       0.0   
+# mndbd_bm       -0.1       3.3   
+# mndbd          -0.1       3.3   
+# mndbd_dm       -0.3       2.5   
+# fxbdrg_bsubrfx -0.7       3.6   

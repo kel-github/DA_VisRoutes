@@ -19,11 +19,9 @@ load('../data/derivatives/dat4_seq_model.Rda')
 sub_var_dat$sub <- as.factor(sub_var_dat$sub)
 sub_var_dat$drug <- as.factor(sub_var_dat$drug)
 names(sub_var_dat)[names(sub_var_dat) == "block"] <- "b" # to keep in 
-sub_var_dat$b <- scale(sub_var_dat$b, scale=FALSE) # mean center regressor
+#sub_var_dat$b <- scale(sub_var_dat$b, scale=FALSE) # mean center regressor 
+# (above line already done in load_data etc)
 # line with the accuracy data terminology
-# remove sub with NA
-rm_subs <- unique(sub_var_dat$sub[is.na(sub_var_dat$v)])
-sub_var_dat <- sub_var_dat %>% filter(!sub %in% rm_subs)
 
 dir_name <- 'stereo_model-bonly'
 source('stereo_mod-bonly.R')
@@ -63,9 +61,9 @@ loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg,
             fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx) #,
 
 # fxbdrg_bsubrfx         0.0       0.0  
-# fxb_bsubrfx           -0.1       2.0  
-# fxbdrgint_bsubrfx     -0.3       1.2  
-# bsubrfx               -1.0       2.6  
-# fxbdrgint_bdrgsubrfx  -2.4       2.8  
-# fxbdrg_rfxbdrg        -2.4       2.5  
-# fxb_subint           -65.5      13.8 
+# fxbdrgint_bsubrfx     -1.0       0.7  
+# fxb_bsubrfx           -1.0       2.1  
+# bsubrfx               -1.8       2.7  
+# fxbdrg_rfxbdrg        -2.1       2.1  
+# fxbdrgint_bdrgsubrfx  -2.6       2.3  
+# fxb_subint           -68.1      13.9 
