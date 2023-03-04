@@ -57,10 +57,10 @@ loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg,
             fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx) #,
 
 #                       elpd_diff se_diff
-# fxbdrg_rfxbdrg          0.0       0.0 
-# fxbdrgint_bdrgsubrfx    0.0       0.3 
-# fxbdrg_bsubrfx       -541.0      65.1 
-# fxbdrgint_bsubrfx    -542.1      65.1 
-# fxb_bsubrfx          -559.4      67.1 
-# bsubrfx              -560.1      67.2 
-# fxb_subint           -856.1      91.2 
+# fxbdrgint_bdrgsubrfx    0.0       0.0 
+# fxbdrg_rfxbdrg          0.0       0.4 
+# fxbdrg_bsubrfx       -553.3      66.3 
+# fxbdrgint_bsubrfx    -553.9      66.2 
+# fxb_bsubrfx          -570.5      68.3 
+# bsubrfx              -571.1      68.3 
+# fxb_subint           -868.1      91.0 
