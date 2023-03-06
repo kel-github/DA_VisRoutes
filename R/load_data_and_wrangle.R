@@ -228,13 +228,18 @@ sub_var_dat <- sub_var_dat %>% group_by(sub, drug, b) %>% summarise(v = mean(v))
 ####### EXPLORATORY CODE CHECKING THE NATURE OF THE RELATIONSHIP BETWEEN
 # b AND v - e.g. power, linear etc
 # quick plot
-
+sub_var_dat$b <- rep(1:8, times=624/8)
 sub_var_dat %>% group_by(drug, b) %>% summarise(mu = mean(v)) %>%
   ggplot(aes(x=b, y=mu, group=drug, colour=drug)) + geom_line()
 sub_var_dat %>% group_by(drug, b) %>% summarise(mu = mean(v)) %>%
   ggplot(aes(x=b, y=log(mu), group=drug, colour=drug)) + geom_line()
 sub_var_dat %>% group_by(drug, b) %>% summarise(mu = mean(v)) %>%
   ggplot(aes(x=log(b), y=log(mu), group=drug, colour=drug)) + geom_line()
+
+# to me, the log log plot looks like the straightest line
+# and therefore most amenable to a linear regression
+# for modelling choices, am going to try fitting log(v) ~ 1:8 and log(v) ~ log(1:8) 
+# and see which one fits the best
 
 hist(log(sub_var_dat$v), breaks = 50)
 
