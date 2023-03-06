@@ -23,7 +23,7 @@ mod_name <- dir_name
 
 if (new){
 
-  fxbdrgint_bdrgsubrfx <- brm(formula = log(v) ~ b * drug + (b:drug|sub),
+  fxbdrgint_bdrgsubrfx <- brm(formula = v ~ b * drug + (b:drug|sub),
                         data = sub_var_dat,
                         warmup = 2000, iter = 10000,
                         family = skew_normal,

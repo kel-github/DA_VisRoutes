@@ -18,8 +18,7 @@ faux <- FALSE
 load('../data/derivatives/dat4_seq_model.Rda')
 sub_var_dat$sub <- as.factor(sub_var_dat$sub)
 sub_var_dat$drug <- as.factor(sub_var_dat$drug)
-names(sub_var_dat)[names(sub_var_dat) == "block"] <- "b" # to keep in 
-sub_var_dat$b <- rep(1:8, times=nrow(sub_var_dat)/8)
+
 # (above line already done in load_data etc)
 # line with the accuracy data terminology
 

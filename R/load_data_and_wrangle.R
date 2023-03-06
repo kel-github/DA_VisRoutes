@@ -222,7 +222,6 @@ sub_var_dat <- do.call(rbind, sub_var_dat)
 # now summarise over context
 names(sub_var_dat)[length(names(sub_var_dat))] <- "v"
 names(sub_var_dat)[names(sub_var_dat) == "block"] <- "b" # acc parlance
-sub_var_dat$b <- scale(sub_var_dat$b)
 sub_var_dat <- sub_var_dat %>% group_by(sub, drug, b) %>% summarise(v = mean(v))
 
 ####### EXPLORATORY CODE CHECKING THE NATURE OF THE RELATIONSHIP BETWEEN
@@ -252,6 +251,11 @@ hist(log(sub_var_dat$v), breaks = 50)
 sub_var_dat %>% group_by(sub, b) %>% summarise(d = log(v[drug=="placebo"]) - log(v[drug=="levodopa"])) %>%
   ungroup() %>%
   ggplot(aes(x=b, y=d, group=as.factor(sub), colour=as.factor(sub))) + geom_line()
+
+
+## logging the v and the b data
+sub_var_dat$b <- log(sub_var_dat$b)
+sub_var_dat$v <- log(sub_var_dat$v)
 
 # now save it ready for modelling
 save(sub_var_dat, file='../data/derivatives/dat4_seq_model.Rda')

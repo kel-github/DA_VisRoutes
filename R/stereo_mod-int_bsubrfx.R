@@ -22,7 +22,7 @@ mod_name <- dir_name
 
 if (new){
 
-  bsubrfx <- brm(formula = log(v) ~ (b|sub),
+  bsubrfx <- brm(formula = v ~ (b|sub),
                             data = sub_var_dat,
                             warmup = 2000, iter = 10000,
                             family = skew_normal,
