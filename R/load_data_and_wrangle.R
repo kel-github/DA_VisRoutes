@@ -227,8 +227,14 @@ sub_var_dat <- sub_var_dat %>% group_by(sub, drug, b) %>% summarise(v = mean(v))
 
 ####### EXPLORATORY CODE CHECKING THE NATURE OF THE RELATIONSHIP BETWEEN
 # b AND v - e.g. power, linear etc
-# quick plot
-sub_var_dat$b <- rep(1:8, times=624/8)
+# quick plot shows log log = straight line, therefore power
+# decided to log both the x and the y, and compare to when I had just logged the y
+# elpd_diff se_diff
+# fxb_subint_test  0.0       0.0   
+# fxb_subint      -5.7       3.9  
+# that coupled with the fact that the residuals looks better with log(x) log(y) convinces me
+# to do logging of both (see notes below plot code below)
+
 sub_var_dat %>% group_by(drug, b) %>% summarise(mu = mean(v)) %>%
   ggplot(aes(x=b, y=mu, group=drug, colour=drug)) + geom_line()
 sub_var_dat %>% group_by(drug, b) %>% summarise(mu = mean(v)) %>%

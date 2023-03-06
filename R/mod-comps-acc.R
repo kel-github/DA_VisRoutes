@@ -18,20 +18,20 @@ library(tidyverse)
 # ---------------------------------------------------------------------------
 load('../data/derivatives/acc_model-fxbdrg-bdrgsubrfx/acc_model-fxbdrg-bdrgsubrfx.Rda')
 load("../data/derivatives/acc_winplusmind/acc_winplusmind.Rda")
-load("../data/derivatives/acc_winplusmindbmint/acc_winplusmindbmint.Rda")
-load("../data/derivatives/acc_winplusmind_bmndintdrgmndint/acc_winplusmind_bmndintdrgmndint.Rda")
-load("../data/derivatives/acc_winplusmind_drgmndint/acc_winplusmind_drgmndint.Rda")
-load("../data/derivatives/acc_winplusmind_bmndintdrgmndintbmnddrgint/acc_winplusmind_bmndintdrgmndintbmnddrgint.Rda")
-loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mndbdrgmnd, bdrgmdrgmi, mndbdrg3way)
-                # elpd_diff se_diff
-# mndbdrgmnd       0.0       0.0  
-# mndbdrg3way      0.0       0.9  
-# bdrgmdrgmi      -0.5       0.7  
-# mndb           -10.9       6.6  
-# fxbdrg_rfxbdrg -11.3       6.6  
-# mnd            -11.9       6.7 
+load("../data/derivatives/acc_winplusmind_bmnd/acc_winplusmind_bmnd.Rda")
+load("../data/derivatives/acc_winplusmind_dmnd/acc_winplusmind_dmnd.Rda")
+load("../data/derivatives/acc_winplusmindbmnd_dmnd/acc_winplusmindbmnd_dmnd.Rda")
+load("../data/derivatives/acc_winplusmindbdmnd/acc_winplusmindbdmnd.Rda")
+loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
+#                 elpd_diff se_diff
+# bdrgmdrgmi       0.0       0.0  # acc_winplusmind_dmnd
+# mnddrgb         -0.2       0.6  
+# mndbdrg3way     -0.5       0.9  
+# mnd            -12.1       6.7  
+# fxbdrg_rfxbdrg -12.3       6.7  
+# mndb           -12.5       6.8  
 
-rm(fxbdrg_rfxbdrg, mndb, mnd, mndbdrgmnd, bdrgmdrgmi)
+rm(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
 #-----------------------------------------------------------------------------
 # CONTEXTUAL ACCURACY
 # ---------------------------------------------------------------------------
