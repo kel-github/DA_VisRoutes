@@ -21,7 +21,7 @@ rm(list=ls())
 library(tidyverse)
 source('variability_exp_behav_data_wrangling_functions.R')
 
-not_new <- T # if T then load existing RData file with data
+not_new <- F # if T then load existing RData file with data
 ###-------------------------------------------------------
 ## LOAD DATA
 ###-------------------------------------------------------
@@ -210,7 +210,8 @@ save(acc_dat, file='../data/derivatives/cacc_dat4_model.Rda')
 ## blocks, normalise as a probability and take the variance
 ## of the resulting matrix
 ###-------------------------------------------------------
-blocked_dat <- blocked_dat %>% filter(onset != 999.000)
+
+blocked_dat <- blocked_dat %>% filter(onset != 999.000) # this leaves 6 trials for cond 1 & 7 for cond 2
 blocked_dat <- blocked_dat %>% filter(sub != 21)
 
 subs <- unique(blocked_dat$sub)
@@ -218,7 +219,7 @@ ses <- unique(blocked_dat$drug)
 sub_var_dat <- lapply(subs, function(i) lapply(ses, function(j) score_transition_matrices_4_one_sub_and_session(
                                                                        blocked_dat %>% filter(sub == i & drug == j))))
 sub_var_dat <- lapply(sub_var_dat, function(x) do.call(rbind, x))
-sub_var_dat <- do.call(rbind, sub_var_dat)
+sub_var_dat <- do.call(rbind, sub_var_dat) # THERE ARE NO NAs HERE WHEN I RUN SUB 14 ALONE ON MY MACHINE
 # now summarise over context
 names(sub_var_dat)[length(names(sub_var_dat))] <- "v"
 names(sub_var_dat)[names(sub_var_dat) == "block"] <- "b" # acc parlance

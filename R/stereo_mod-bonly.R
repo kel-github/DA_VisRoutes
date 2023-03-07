@@ -25,7 +25,7 @@ if (new){
     ###------------------------------------------------------
   # now run on true data
   ###-----------------------------------------------------
-  fxb_subint_test <- brm(formula = v ~ b + (1|sub),
+  fxb_subint <- brm(formula = v ~ b + (1|sub),
                   data = sub_var_dat,
                   warmup = 2000, iter = 10000,
                   family = skew_normal,

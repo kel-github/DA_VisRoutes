@@ -59,10 +59,10 @@ load(file=sprintf(ftmplt, 'stereo_model-fxbdrgint-brfx', 'stereo_model-fxbdrgint
 loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg, 
             fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx) #,
 
-# fxbdrg_bsubrfx         0.0       0.0  
-# fxbdrgint_bsubrfx     -1.0       0.7  
-# fxb_bsubrfx           -1.0       2.1  
-# bsubrfx               -1.8       2.7  
-# fxbdrg_rfxbdrg        -2.1       2.1  
-# fxbdrgint_bdrgsubrfx  -2.6       2.3  
-# fxb_subint           -68.1      13.9 
+# fxbdrg_rfxbdrg          0.0       0.0 # 'stereo_model-fxbdrg-bdrgsubrfx'
+# fxbdrgint_bdrgsubrfx   -0.9       0.3 
+# fxbdrg_bsubrfx       -113.2      16.2 
+# fxb_bsubrfx          -113.2      16.6 
+# fxbdrgint_bsubrfx    -113.5      16.2 
+# bsubrfx              -114.5      16.5 
+# fxb_subint           -188.8      18.6 

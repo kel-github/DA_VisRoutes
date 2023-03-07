@@ -22,9 +22,9 @@ sub_var_dat$drug <- as.factor(sub_var_dat$drug) # makes no difference if fct or 
 sub_var_dat$m <- scale(sub_var_dat$m)
 
 # now load model
-load('../data/derivatives/stereo_winplusmind_bdmindint/stereo_winplusmind_bdmindint.Rda')
+load('../data/derivatives/stereo_model-fxbdrg-bdrgsubrfx/stereo_model-fxbdrg-bdrgsubrfx.Rda')
 
-mod <- mndbd_bdm
+mod <- fxbdrg_rfxbdrg #mndbd_bdm
 dat_ylim <- c(-9.5, -8.25)
 dat_yseq <- seq(-9.5, -8.25, .25)
 dat_ylabs <- c("-9.5","","","","","-8.25")
@@ -93,6 +93,15 @@ sum_dat <- rbind(sum_dat %>% filter(drug == "levodopa") %>%
                                                  `b:drugplacebo:m`*b.x*m.x)) %>% 
     mutate(resid = log(v) - pred_v)
 
+sum_dat <- rbind(sum_dat %>% filter(drug == "levodopa") %>% 
+                   mutate(pred_v = Intercept + b.y*b.x + 
+                            b.x*`b:druglevodopa`),
+                 sum_dat %>% filter(drug == "placebo") %>%
+                   mutate(pred_v = Intercept + b.y*b.x +  
+                                   drugplacebo + 
+                                   b.x*`b:drugplacebo`)) %>% 
+           mutate(resid = v - pred_v)
+
 # quick residuals check
 sum_dat %>% ggplot(aes(x=pred_v, y=resid, colour=sub)) + geom_point() # pretty happy 
 
@@ -111,7 +120,7 @@ bm <- sum_dat %>% group_by(sub, b.x, drug) %>% summarise(v = mean(v, na.rm=T)) %
                    summarise(b = en-st)
 bm <- inner_join(bm, mind_sum, by="sub")
 bm$m <- scale(bm$m)
-
+sum_dat[(is.na(sum_dat$v)),]
 ###############################################################
 # DATA 4 PLOTS 
 ###############################################################
@@ -120,9 +129,8 @@ bm$m <- scale(bm$m)
 ### to give people an idea of the basic level of behaviour
 ### plot
 library(Rmisc)
-sum_dat$b.x <- rep(c(1:8), times=length(sum_dat$b.x)/8)
+#sum_dat$b.x <- rep(c(1:8), times=length(sum_dat$b.x)/8)
 #sum_dat <- sum_dat[!is.na(sum_dat$v),]
-sum_dat$v <- log(sum_dat$v)
 mu_bdrug_dat <- summarySEwithin(data=sum_dat, measurevar=c("v"),
                                           withinvars=c("drug", "b.x"),
                                           idvar="sub") 

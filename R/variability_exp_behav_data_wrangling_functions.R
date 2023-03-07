@@ -56,9 +56,19 @@ get_data <- function(fpth, sub_num, ses){
       resps$idx[i] <- count
     }
     resps$rt <- rt
-    
+    # the below comments are here for some sanity checking
     # now, keep only those with > 17 entries as 17 * .017 ~ 300 ms
     # trials of interest - sub 14 - 142 146 152 153 156 157 158 159
+    #                               147 148 149 150 151 154 155 160
+                                  # 147 148 149 150 151 154 155 160 filter > 17
+                                  # 147 148 149 150 151 154 155 160 filter(lead(door,1)) etc
+                                  # 147 148 149 150 151 154 155 160 filter....tgt_found == 1 etc
+                                  # for Cond 1 - none of the filtering causes a problem
+    #                        Cond : 142 146 152 153 156 157 158 159
+                                  # 142 146 152 153 156 157 158 159 filter > 17
+                                  # 142 146 152 153 156 157 158 159 filter(lead(door,1)) etc
+                                  # 142 146 152 153 156 157 158 159 filter....tgt_found == 1 etc
+                                  # so this should pass out this number of trials for block 8
     # would be removed from the variability analysis
     resps <- resps %>% filter(idx >= 17) # needs to be >= 
     # and now, keep the last of each door switch, as long as the door was marked as open at the time
@@ -285,7 +295,11 @@ score_transition_matrices_4_one_sub_and_session <- function(data, nblock = 8){
   drug <- data$drug[1]
   
   # get matrices for each cond
-  tmp <- lapply(conds, function(i) apply_get_transition_matrices_over_blocks(data %>% filter(cond == i)))
+  # when the below function is applied to the data from sub 14, drug = l session, then when I pass in both
+  # conditions, I get NA for cond 1, block 8
+  # when I pass in only sub 14, drug l, cond 1, I get values
+  # so something is going on with the apply
+  tmp <- lapply(conds, function(j) apply_get_transition_matrices_over_blocks(data %>% filter(cond == j)))
   tmp <- lapply(tmp, function(x) lapply(x, get_variance_from_tp))
   tmp <- lapply(tmp, function(x) do.call(rbind, x))
   
