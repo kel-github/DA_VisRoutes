@@ -22,9 +22,9 @@ sub_var_dat$drug <- as.factor(sub_var_dat$drug) # makes no difference if fct or 
 sub_var_dat$m <- scale(sub_var_dat$m)
 
 # now load model
-load('../data/derivatives/stereo_model-fxbdrg-bdrgsubrfx/stereo_model-fxbdrg-bdrgsubrfx.Rda')
+load('../data/derivatives/stereo_winplusmind_dmindint/stereo_winplusmind_dmindint.Rda')
 
-mod <- fxbdrg_rfxbdrg #mndbd_bdm
+mod <- mndbd_dm
 dat_ylim <- c(-9.5, -8.25)
 dat_yseq <- seq(-9.5, -8.25, .25)
 dat_ylabs <- c("-9.5","","","","","-8.25")
@@ -73,34 +73,25 @@ sum_dat <- inner_join(sub_var_dat, est, by="sub")
 # put the data back together, given the winning model 
 # to understand the data I need to:
 # 1. plot block x drug
-# 2. plot block diff x mindfulness score
+# 2. plot drug effect (overall) x mindfulness score
 # 3. plot the parameter posteriors for block (with 95% CI lines)
 # 3. plot posteriors for drug
-# 4. plot for block x mindfulness
+# 4. plot for drug x mindfulness
 # 5. report the remaining posterior distribution in the text
 
 # so, the 
 sum_dat <- rbind(sum_dat %>% filter(drug == "levodopa") %>% 
                      mutate(pred_v = Intercept + b.y*b.x + 
                                                  m.y*m.x + 
-                                                `b:m`*b.x*m.x),
+                                                `b:druglevodopa`),
                  sum_dat %>% filter(drug == "placebo") %>%
                      mutate(pred_v = Intercept + b.y*b.x +  
                                                  drugplacebo + 
                                                  m.y*m.x + 
-                                                 `b:m`*b.x*m.x +
                                                  `drugplacebo:m`*m.x +
-                                                 `b:drugplacebo:m`*b.x*m.x)) %>% 
-    mutate(resid = log(v) - pred_v)
+                                                 `b:drugplacebo`)) %>% 
+    mutate(resid = v - pred_v)
 
-sum_dat <- rbind(sum_dat %>% filter(drug == "levodopa") %>% 
-                   mutate(pred_v = Intercept + b.y*b.x + 
-                            b.x*`b:druglevodopa`),
-                 sum_dat %>% filter(drug == "placebo") %>%
-                   mutate(pred_v = Intercept + b.y*b.x +  
-                                   drugplacebo + 
-                                   b.x*`b:drugplacebo`)) %>% 
-           mutate(resid = v - pred_v)
 
 # quick residuals check
 sum_dat %>% ggplot(aes(x=pred_v, y=resid, colour=sub)) + geom_point() # pretty happy 
