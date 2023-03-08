@@ -13,7 +13,7 @@ verbal <- TRUE
 faux <- FALSE
 
 msv_fnms <- c('stereo_winplusbis')
-rfs <- c("stereo_mod-fxbdmndbis_bdmndint_brfx.R")
+rfs <- c("stereo_mod-fxbdmndbis_dmndint_dbrfx.R")
 app <- c(NA)
 
 ###------------------------------------------------------
@@ -32,9 +32,6 @@ bis_sum$sub <- as.factor(bis_sum$sub)
 sub_var_dat <- inner_join(sub_var_dat, bis_sum, by="sub")
 sub_var_dat$bis <- scale(sub_var_dat$bis)
 
-# remove subject with NA values
-
-  
 dir_name <- paste(msv_fnms, sep="")
 mod_name <- dir_name
 source(rfs)
@@ -44,10 +41,10 @@ source(rfs)
 # perform model comparisons
 ###-----------------------------------------------------
 ftmplt = '../data/derivatives/%s/%s.Rda'
-load(file=sprintf(ftmplt, 'stereo_winplusmind_bdmindint', 'stereo_winplusmind_bdmindint'))
+load(file=sprintf(ftmplt, 'stereo_winplusmind_dmindint', 'stereo_winplusmind_dmindint'))
 load(file=sprintf(ftmplt, 'stereo_winplusbis', 'stereo_winplusbis'))
 
-loo_compare(mndbd_bdm, mndbdbis_bm)
+loo_compare(mndbd_dm, mndbdbis_bm)
 # elpd_diff se_diff
-# mndbd_bdm    0.0       0.0   
-# mndbdbis_bm -0.4       0.4  
+# mndbd_dm     0.0       0.0   
+# mndbdbis_bm -0.5       0.4 
