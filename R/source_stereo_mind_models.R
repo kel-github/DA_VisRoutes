@@ -13,7 +13,8 @@ verbal <- TRUE
 faux <- FALSE
 
 msv_fnms <- c('stereo_winplusmind')
-rfs <- c("stereo_mod-fxbdmnd_brfx.R", "stereo_mod-fxbdmnd_bmndint_brfx.R", "stereo_mod-fxbdmnd_dmndint_brfx.R", "stereo_mod-fxbdmnd_bdmndint_brfx.R")
+rfs <- c("stereo_mod-fxbdmnd_bdrfx.R", "stereo_mod-fxbdmnd_bmndint_bdrfx.R", 
+         "stereo_mod-fxbdmnd_dmndint_bdrfx.R", "stereo_mod-fxbdmnd_bdmndint_bdrfx.R")
 app <- c(NA, "_bmindint", '_dmindint', '_bdmindint')
 
 

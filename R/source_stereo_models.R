@@ -1,6 +1,6 @@
 ## written by K. Garner, 2022
 ### use this file to source (i.e. run) all the accuracy models
-rm(list=ls())
+(list=ls())
 ###------------------------------------------------------
 # load packages
 ###-----------------------------------------------------
@@ -59,7 +59,7 @@ load(file=sprintf(ftmplt, 'stereo_model-fxbdrgint-brfx', 'stereo_model-fxbdrgint
 loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg, 
             fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx) #,
 
-# fxbdrg_rfxbdrg          0.0       0.0 # 'stereo_model-fxbdrg-bdrgsubrfx'
+# fxbdrg_rfxbdrg          0.0       0.0 # 'stereo_model-fxbdrg-bdrgsubrfx' # plotted this guy it looks great
 # fxbdrgint_bdrgsubrfx   -0.9       0.3 
 # fxbdrg_bsubrfx       -113.2      16.2 
 # fxb_bsubrfx          -113.2      16.6 

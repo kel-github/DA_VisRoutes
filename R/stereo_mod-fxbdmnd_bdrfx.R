@@ -12,7 +12,7 @@ dir.create(sprintf('../data/derivatives/%s', dir_name), showWarnings=FALSE)
 
 if (new){
 
-  mndbd <- brm(formula = log(v) ~ b + drug + m + (b|sub),
+  mndbd <- brm(formula = v ~ b + drug + m + (b:drug|sub),
               data = sub_var_dat,
               warmup = 2000, iter = 10000,
               family = skew_normal,
