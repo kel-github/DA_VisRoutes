@@ -56,9 +56,9 @@ loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg,
             fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx) #,
 
 # fxbdrg_rfxbdrg           0.0       0.0
-# fxbdrgint_bdrgsubrfx    -1.3       0.4
-# fxbdrg_bsubrfx        -673.6      80.7
-# fxbdrgint_bsubrfx     -675.9      80.6
-# fxb_bsubrfx           -678.2      81.4
-# bsubrfx               -678.6      81.6
-# fxb_subint           -1224.7     118.0
+# fxbdrgint_bdrgsubrfx    -0.2       0.5
+# fxbdrg_bsubrfx        -674.1      80.8
+# fxbdrgint_bsubrfx     -674.8      80.5
+# bsubrfx               -677.8      81.3
+# fxb_bsubrfx           -679.3      81.7
+# fxb_subint           -1224.6     118.0
