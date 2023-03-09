@@ -53,13 +53,13 @@ loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mndbdrgmnd, bdrgmdrgmi)
 #----------------------------------------------------------------------------
 # BIS
 # ---------------------------------------------------------------------------
-load("../data/derivatives/acc_winplusmind_dmnd/acc_winplusmind_dmnd.Rda")
+load("../data/derivatives/acc_winplusmindbdmnd/acc_winplusmindbdmnd.Rda")
 load("../data/derivatives/acc_mindwin_bis/acc_mindwin_bis.Rda")
-loo_compare(bdrgmdrgmi, acc_mindwin_bis)
+loo_compare(mndbdrg3way, acc_mindwin_bis)
 # elpd_diff se_diff
-# bdrgmdrgmi       0.0       0.0   
-# acc_mindwin_bis -0.1       0.4 
-rm(mndbdrgmnd, acc_mindwin_bis)
+# mndbdrg3way      0.0       0.0   
+# acc_mindwin_bis -0.2       0.5  
+rm(mndbdrg3way, acc_mindwin_bis)
 
 load("../data/derivatives/cacc_winplusmind/cacc_winplusmind.Rda")
 load("../data/derivatives/cacc_mindwin_bis/cacc_mindwin_bis.Rda")
