@@ -1,10 +1,8 @@
 ## plot the accuracy data, model fits and parameters
 ####################################################
 rm(list=ls())
-library(vioplot)
 library(brms)
-#library(Rmisc)
-library(modeest)
+#library(modeest)
 library(tidyverse)
 source('fig_label.R')
 
@@ -28,6 +26,15 @@ mod <- mndbd_dm
 dat_ylim <- c(-9.5, -8.25)
 dat_yseq <- seq(-9.5, -8.25, .25)
 dat_ylabs <- c("-9.5","","","","","-8.25")
+
+## correlation settings
+cor_ylim <- c(-1.2, 0.6)
+cor_yseq <- seq(-1.2, 0.57, .2)
+cor_ylabs <- c("-1.2","","","","","","","","0.6")
+cor_xlim <- c(-2.5, 3)
+cor_xseq <- seq(-2.5, 3, .5)
+cor_xlabs <- c("-2.5","","","","","0","","","","","","3")
+
 figinfo = 's'
 w <- 12 # in cm
 h <- 12 # in cm
@@ -74,9 +81,9 @@ sum_dat <- inner_join(sub_var_dat, est, by="sub")
 # to understand the data I need to:
 # 1. plot block x drug
 # 2. plot drug effect (overall) x mindfulness score
-# 3. plot the parameter posteriors for block (with 95% CI lines)
-# 3. plot posteriors for drug
-# 4. plot for drug x mindfulness
+# 3. plot the parameter posteriors for drug * mind (with 95% CI lines)
+# 3. plot posteriors for mind
+# 4. plot for block
 # 5. report the remaining posterior distribution in the text
 
 # so, the 
@@ -99,23 +106,17 @@ sum_dat %>% ggplot(aes(x=pred_v, y=resid, colour=sub)) + geom_point() # pretty h
 # going to generate model predictions for block x drug interaction
 # for the mean mindfulness score, as well as + or - 1 standard deviation from the mean
 
-
-
 #### summarising data for future correlations with mindfulness
+dm <- sum_dat %>% group_by(sub, drug) %>%
+                    summarise(pv = mean(pred_v)) %>%
+                    group_by(sub) %>%
+                    summarise(v = pv[drug == "levodopa"] - pv[drug=="placebo"])
+dm <- dm %>% inner_join(mind_sum, dm, by="sub")
+dm$m <- scale(dm$m)
 
-bm <- sum_dat %>% group_by(sub, b.x, drug) %>% summarise(v = mean(v, na.rm=T)) %>%
-                   group_by(sub, drug) %>%
-                   summarise(st = mean(v[b.x==min(b.x)]),
-                             en = mean(v[b.x==max(b.x)])) %>%
-                   group_by(sub, drug) %>%
-                   summarise(b = en-st)
-bm <- inner_join(bm, mind_sum, by="sub")
-bm$m <- scale(bm$m)
-sum_dat[(is.na(sum_dat$v)),]
 ###############################################################
 # DATA 4 PLOTS 
 ###############################################################
-
 ### first I will summarise all the predicted data, for the first block x drug 
 ### to give people an idea of the basic level of behaviour
 ### plot
@@ -128,8 +129,14 @@ mu_bdrug_dat <- summarySEwithin(data=sum_dat, measurevar=c("v"),
 mu_bdrug_pred <- summarySEwithin(data=sum_dat, measurevar="pred_v",
                                           withinvars=c("drug", "b.x"),
                                           idvar="sub")
-mu_bdrug_dat$b.x <- as.numeric(mu_bdrug_dat$b.x)
-mu_bdrug_pred$b.x <- as.numeric(mu_bdrug_pred$b.x)
+
+mu_bdrug_dat$b.x <- rep(unique(sum_dat$b.x), 
+                        times=length(mu_bdrug_dat$b.x)/length(unique(sum_dat$b.x)))
+mu_bdrug_pred$b.x <- rep(unique(sum_dat$b.x), 
+                         times=length(mu_bdrug_pred$b.x)/length(unique(sum_dat$b.x)))
+
+## next question to answer - whether to plot on log scale 
+## or on accuary?
 
 ###############################################################
 #### set up for full plot
@@ -137,7 +144,7 @@ mu_bdrug_pred$b.x <- as.numeric(mu_bdrug_pred$b.x)
 pdf(sprintf("../images/%s_fig.pdf", figinfo),
     width = w/2.54, height = h/2.54) 
 
-plot.mat = matrix(c(1, 2, 1, 3),
+plot.mat = matrix(c(1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5),
                   nrow = 2, byrow = T)
 
 layout(plot.mat)
@@ -150,10 +157,11 @@ with(mu_bdrug_dat %>% filter(drug == "placebo"),
                                ylim=dat_ylim,
                                col=placebo_col,
                                bty="n",
-                               xlab = "block",
+                               xlab = "log(b)",
                                ylab = "log(v)",
                                axes =F))
-axis(side=1, at=1:8, tick=TRUE, labels=c("1", "","","","","","","8"))
+axis(side=1, at=unique(mu_bdrug_dat$b.x), tick=TRUE, 
+                  labels=c("0", "","","","","","","2.1"))
 axis(side=2, at=dat_yseq, tick=TRUE, labels=dat_ylabs, las=2) #, labels=c())
 with(mu_bdrug_dat %>% filter(drug == "placebo"), 
                               arrows(x0 = b.x, 
@@ -178,7 +186,7 @@ with(mu_bdrug_dat %>% filter(drug == "levodopa"),
                               angle = 90,
                               length = .025,
                               col=dopa_col))
-legend(x=1, y=.0004, legend = c("DA", "P"),
+legend(x=0, y=-8.25, legend = c("DA", "P"),
        col = c(dopa_col,placebo_col), 
        pch = 19, bty = "n", cex = 1)
 # now add lines from the model
@@ -194,9 +202,26 @@ fig_label("A", cex = 2)
 
 ########################################
 # PANEL 2, INTERACTION BETWEEN
-# BLOCK 
+# DRUG AND MINDFULNESS
 #######################################
-
+with(dm, 
+     plot(m, v,
+          type = "p",
+          pch = 19,
+          ylim=cor_ylim,
+          xlim=cor_xlim,
+          col=cor_data_col,
+          bty="n",
+          xlab = "m",
+          ylab = "v (DA - P)",
+          axes =F))
+axis(side=1, at=cor_xseq, tick=TRUE, labels=cor_xlabs)
+axis(side=2, at=cor_yseq, tick=TRUE, labels=cor_ylabs, las=2) #, labels=c())
+abline(lm(v ~ m, data = dm), col = "grey17") # is this the best way to show the 
+# correlation in the model = probably not. I should maybe get the model to estimate
+# v across the values of m, take the diff and plot that line.
+# will prob get the same thing though, as these are predicted values?
+fig_label("B", cex = 2)
 
 
 ########################################
@@ -204,7 +229,7 @@ fig_label("A", cex = 2)
 # AND DRUG x MIND
 #######################################
 variables(mod)
-# for acc, I want the block, drug, and drug x bis parameters
+# for stereo, I want the block, drug, and drug x bis parameters
 
 # posterior_samples is deprecated, use as_draws next time
 fxdrg_draws <- posterior_samples(mod, pars="b_drugplacebo")
