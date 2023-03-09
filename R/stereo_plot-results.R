@@ -232,24 +232,34 @@ variables(mod)
 # for stereo, I want the block, drug, and drug x bis parameters
 
 # posterior_samples is deprecated, use as_draws next time
-fxdrg_draws <- posterior_samples(mod, pars="b_drugplacebo")
+fxdrg_draws <- posterior_samples(mod, pars="drugplacebo:m")
 plot(density(fxdrg_draws$b_drugplacebo),
-     col=samples_col, main="", xlab="log odds",
-     ylab="d", bty="n", xlim=c(-0.15, 0.25), ylim=c(0,20), axes=F)
-axis(side=1, at = c(-0.15, 0, 0.25), labels=c("-0.15", "0", "0.15"))
-axis(side=2, at=c(0, 20), labels=c("0", "20"), las=2)
+     col=samples_col, main="", xlab=expression(beta),
+     ylab="d", bty="n", xlim=c(-0.15, 0.25), ylim=c(0,10), axes=F)
+axis(side=1, at = c(-0.15, 0, 0.25), labels=c("", "0", ".25"))
+axis(side=2, at=c(0, 10), labels=c("0", "10"), las=2)
 polygon(density(fxdrg_draws$b_drugplacebo), border=samples_col, col=samples_col)
-title("DA vs P")
-fig_label("B", cex = 2)
+title("DA*m")
+fig_label("C", cex = 2)
+
+fxm_draws <- posterior_samples(mod, pars="b_m")
+plot(density(fxm_draws$b_m),
+     col=samples_col, main="", xlab="",
+     ylab="", bty="n", xlim=c(-.4, 0.15), ylim=c(0,10), axes=F)
+axis(side=1, at = c(-0.4, 0, .15), labels=c("-0.4", "0", ""))
+axis(side=2, at=c(0, 10), labels=c("0", "10"), las=2)
+polygon(density(fxm_draws$b_m), border=samples_col, col=samples_col)
+title("m")
+fig_label("D", cex = 2)
 
 fxb_draws <- posterior_samples(mod, pars="b_b")
 plot(density(fxb_draws$b_b),
      col=samples_col, main="", xlab="",
-     ylab="", bty="n", xlim=c(-.15, 0.3), ylim=c(0,15), axes=F)
-axis(side=1, at = c(-0.15, 0, .3), labels=c("-0.15", "0", "0.3"))
-axis(side=2, at=c(0, 15), labels=c("0", "15"), las=2)
+     ylab="", bty="n", xlim=c(-0.15, 0.5), ylim=c(0,10), axes=F)
+axis(side=1, at = c(-0.15, 0, .5), labels=c("", "0", "0.5"))
+axis(side=2, at=c(0, 10), labels=c("0", "10"), las=2)
 polygon(density(fxb_draws$b_b), border=samples_col, col=samples_col)
 title("b")
-fig_label("C", cex = 2)
+fig_label("E", cex = 2)
 
 dev.off()
