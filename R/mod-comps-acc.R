@@ -24,12 +24,12 @@ load("../data/derivatives/acc_winplusmindbmnd_dmnd/acc_winplusmindbmnd_dmnd.Rda"
 load("../data/derivatives/acc_winplusmindbdmnd/acc_winplusmindbdmnd.Rda")
 loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
 #                 elpd_diff se_diff
-# bdrgmdrgmi       0.0       0.0  # acc_winplusmind_dmnd
-# mnddrgb         -0.2       0.6  
-# mndbdrg3way     -0.5       0.9  
-# mnd            -12.1       6.7  
-# fxbdrg_rfxbdrg -12.3       6.7  
-# mndb           -12.5       6.8  
+# mndbdrg3way      0.0       0.0  
+# mnddrgb          0.0       0.7  
+# bdrgmdrgmi      -0.2       0.8  
+# mndb           -11.8       6.4  
+# mnd            -11.9       6.4  
+# fxbdrg_rfxbdrg -12.0       6.4  
 
 rm(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
 #-----------------------------------------------------------------------------
