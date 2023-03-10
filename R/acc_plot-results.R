@@ -1,46 +1,30 @@
 ## plot the accuracy data, model fits and parameters
 ####################################################
 rm(list=ls())
-library(vioplot)
 library(brms)
 library(Rmisc)
 library(tidyverse)
-library(modeest)
 source('fig_label.R')
 
 ##############################################################
 # WHAT ARE YOU PLOTTING?
 ##############################################################
-#acc <- TRUE # if false, you are plotting contectual acc
-# if (!acc){
-#   # first load accuracy data
-#   load('../data/derivatives/cacc_dat4_model.Rda')
-#   # now load model
-#   load('../data/derivatives/cacc_winplusmind/cacc_winplusmind.Rda')
-#   mod <- mnd
-#   dat_ylim <- c(.45, .75)
-#   dat_yseq <- seq(.45, .75, .05)
-#   dat_ylabs <- c(".45","","","","","",".75")
-#   figinfo = 'cacc'
-#   w <- 12 # in cm
-#   h <- 8 # in cm
-# } else {
-  load('../data/derivatives/acc_dat4_model.Rda')
-  load('../data/derivatives/acc_winplusmind_bmndintdrgmndint/acc_winplusmind_bmndintdrgmndint.Rda')
-  mod <- mndbdrgmnd
-  dat_ylim <- c(.45, .75)
-  dat_yseq <- seq(.45, .75, .05)
-  dat_ylabs <- c(".45","","","","","",".75")
-  figinfo = 'acc'
-  cor_ylim <- c(-0.3, 0.25)
-  cor_yseq <- seq(-0.3, 0.25, .05)
-  cor_ylabs <- c("-0.3","","","","","","","","","","","0.25")
-  cor_xlim <- c(-2.5, 3)
-  cor_xseq <- seq(-2.5, 3, .5)
-  cor_xlabs <- c("-2.5","","","","","0","","","","","","3")
-  w = 17
-  h = 17
-#}
+load('../data/derivatives/acc_dat4_model.Rda')
+load('../data/derivatives/acc_winplusmindbdmnd/acc_winplusmindbdmnd.Rda')
+mod <- mndbdrg3way
+dat_ylim <- c(.45, .75)
+dat_yseq <- seq(.45, .75, .05)
+dat_ylabs <- c(".45","","","","","",".75")
+figinfo = 'acc'
+cor_ylim <- c(-0.3, 0.25)
+cor_yseq <- seq(-0.3, 0.25, .05)
+cor_ylabs <- c("-0.3","","","","","","","","","","","0.25")
+cor_xlim <- c(-2.5, 3)
+cor_xseq <- seq(-2.5, 3, .5)
+cor_xlabs <- c("-2.5","","","","","0","","","","","","3")
+w = 12
+h = 12
+
 ##############################################################
 # PLOT SETTINGS
 ##############################################################
@@ -88,12 +72,21 @@ sum_dat <- inner_join(acc_dat, est, by="sub")
 # 4. plot the parameter posteriors for drug x mindfulness, block, and drug 
 # 5. plot the remaining posterior distributions for supplemental
 sum_dat <- rbind(sum_dat %>% filter(drug == "levodopa") %>% 
-                     mutate(log_odds = Intercept + b.y*b.x + `b:druglevodopa`*b.x + m.y*m.x + `b:m`*m.x),
+                     mutate(log_odds = Intercept + b.y*b.x + 
+                              `b:druglevodopa`*b.x + 
+                               m.y*m.x + 
+                              `b:m`*m.x*b.x),
                    sum_dat %>% filter(drug == "placebo") %>%
-                     mutate(log_odds = Intercept + b.y*b.x +  drugplacebo + `b:drugplacebo`*b.x + m.y*m.x + `b:m`*m.x + `drugplacebo:m`*m.x)) %>% 
-    mutate(p= 1/(1+exp(-log_odds))) %>%
-    mutate(obs = tt/td) %>%
-    mutate(resid = obs - p)
+                     mutate(log_odds = Intercept + b.y*b.x +  
+                              drugplacebo + 
+                              `b:drugplacebo`*b.x + 
+                               m.y*m.x + 
+                              `b:m`*m.x*b.x + 
+                              `drugplacebo:m`*m.x +
+                              `b:drugplacebo:m`*b.x*m.x)) %>% 
+            mutate(p= 1/(1+exp(-log_odds))) %>%
+            mutate(obs = tt/td) %>%
+            mutate(resid = obs - p)
 
 # quick residuals check
 sum_dat %>% ggplot(aes(x=p, y=resid, colour=sub)) + geom_point() # pretty happy 
@@ -105,6 +98,7 @@ sum_dat %>% ggplot(aes(x=p, y=resid, colour=sub)) + geom_point() # pretty happy
 
 ### first I will summarise all the predicted data, for the first block x drug 
 ### plot
+
 mu_bdrug_dat <- summarySEwithin(data=sum_dat, measurevar=c("obs"),
                                           withinvars=c("drug", "b.x"),
                                           idvar="sub") 
@@ -117,7 +111,7 @@ mu_bdrug_pred$b.x <- as.numeric(mu_bdrug_pred$b.x)
 ## to show the mindfulness x drug interaction, I will show the difference
 ## between drug and placebo, collapsed across block, correlated with mindfulness
 mnddrgi <- sum_dat %>% group_by(sub, b.x) %>%
-                        summarise(diff = obs[drug == "levodopa"] - obs[drug == "placebo"]) %>%
+                        summarise(diff = p[drug == "levodopa"] - p[drug == "placebo"]) %>%
                         group_by(sub) %>%
                         summarise(mu_diff = mean(diff))
 mnddat <- sum_dat[,c("sub", "m.x")] %>% distinct()
@@ -129,11 +123,11 @@ mnddrgi <- inner_join(mnddrgi, mnddat, by = "sub")
 pdf(sprintf("../images/%s_fig.pdf", figinfo),
     width = w/2.54, height = h/2.54) 
 
-plot.mat = matrix(c(1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5),
-                  nrow = 2, byrow = T)
+plot.mat = matrix(c(1, 1, 1, 2, 2, 2, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5),
+                  nrow = 3, byrow = T)
 layout(plot.mat)
 
-par(las=1, mgp=c(2,1,0))
+par(las=1, mgp=c(2,1,0), mar=c(3,3,3,2))
 with(mu_bdrug_dat %>% filter(drug == "placebo"), 
                           plot(b.x, obs,
                                type = "p",
@@ -209,33 +203,34 @@ fig_label("B", cex = 2)
 variables(mod)
 # for acc, I want the block, drug, and drug x bis parameters
 
-# posterior_samples is deprecated, use as_draws next time
-fxdrg_draws <- posterior_samples(mod, pars="b_drugplacebo")
-plot(density(fxdrg_draws$b_drugplacebo),
-     col=samples_col,main="", xlab="log odds",
-     ylab="d", bty="n", xlim=c(-0.15, 0.15), axes=F)
-axis(side=1, at = c(-0.15, 0, 0.15), labels=c("-0.15", "0", "0.15"))
-axis(side=2, at=c(0, 25), labels=c("0", "25"), las=2)
-polygon(density(fxdrg_draws$b_drugplacebo), border=samples_col, col=samples_col)
-title("DA vs P")
-fig_label("C", cex = 2)
-
-plot(density(fxdrg_draws$`b_drugplacebo:m`),
-     col=samples_col, main="", xlab="",
-     ylab="", bty="n", xlim=c(-.25, 0.25), axes=F)
-axis(side=1, at = c(-0.25, 0, .25), labels=c("-0.25", "0", "0.25"))
-#axis(side=2, at=c(0, 25), labels=c("0", "25"), las=2)
-polygon(density(fxdrg_draws$`b_drugplacebo:m`), border=samples_col, col=samples_col)
-title("m*drug")
-fig_label("D", cex = 2)
-
 fxb_draws <- posterior_samples(mod, pars="b_b")
 plot(density(fxb_draws$b_b),
-     col=samples_col, main="", xlab="",
-     ylab="", bty="n", xlim=c(-0.15, .35), axes=F)
-axis(side=1, at = c(-0.25, 0, .35), labels=c("-0.25", "0", "0.35"))
+     col=samples_col, main="", xlab="log odds",
+     ylab="d", bty="n", xlim=c(-0.1, .4), axes=F)
+axis(side=1, at = c(-0.1, 0, .4), labels=c("", "0", "0.4"))
+axis(side=2, at= c(0, 25), labels=c("0", "25"), las=2)
 polygon(density(fxb_draws$b_b), border=samples_col, col=samples_col)
 title("b")
-fig_label("E", cex=2)
+fig_label("C", cex=2)
+
+fxmedrg_draws <- posterior_samples(mod, pars="drugplacebo")
+plot(density(fxmedrg_draws$b_drugplacebo),
+     col=samples_col, main="", xlab="",
+     ylab="", bty="n", xlim=c(-.2, 0.3), axes=F)
+axis(side=1, at = c(-0.1, 0, 0.3), labels=c("", "0", "0.3"))
+#axis(side=2, at=c(0, 25), labels=c("0", "25"), las=2)
+polygon(density(fxmedrg_draws$b_drugplacebo), border=samples_col, col=samples_col)
+title("DA")
+fig_label("D", cex = 2)
+
+# posterior_samples is deprecated, use as_draws next time
+fxdrg_draws <- posterior_samples(mod, pars="b_drugplacebo:m")
+plot(density(fxdrg_draws$`b_drugplacebo:m`),
+     col=samples_col,main="", xlab="",
+     bty="n", xlim=c(-0.2, 0.1), axes=F)
+axis(side=1, at = c(-0.2, 0, 0.1), labels=c("-0.2", "0", ""))
+polygon(density(fxdrg_draws$b_drugplacebo), border=samples_col, col=samples_col)
+title("DA*m")
+fig_label("E", cex = 2)
 
 dev.off()

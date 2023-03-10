@@ -144,12 +144,12 @@ mu_bdrug_pred$b.x <- rep(unique(sum_dat$b.x),
 pdf(sprintf("../images/%s_fig.pdf", figinfo),
     width = w/2.54, height = h/2.54) 
 
-plot.mat = matrix(c(1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5),
-                  nrow = 2, byrow = T)
+plot.mat = matrix(c(1, 1, 1, 2, 2, 2, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5),
+                  nrow = 3, byrow = T)
 
 layout(plot.mat)
 
-par(las=1, mgp=c(2,1,0))
+par(las=1, mgp=c(2,1,0), mar=c(3,3,3,2))
 with(mu_bdrug_dat %>% filter(drug == "placebo"), 
                           plot(b.x, v,
                                type = "p",
