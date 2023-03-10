@@ -39,7 +39,7 @@ if (new){
   ###-----------------------------------------------------
   # start with an effect of block and a subject intercept
 
-  mndb <- brm(formula = tt | trials(td) ~ b + drug + m + b:drug + b:m + (b:drug|sub),
+  mndb <- brm(formula = tt | trials(td) ~ b + drug + m + b:m + (b:drug|sub),
                    data = acc_dat,
                    warmup = 2000, iter = 10000,
                    family = binomial,
