@@ -62,3 +62,7 @@ loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg,
 # bsubrfx               -677.8      81.3
 # fxb_bsubrfx           -679.3      81.7
 # fxb_subint           -1224.6     118.0
+
+acc_comp <- loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg, 
+                        fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx)
+save(acc_comp, file="../data/derivatives/acc_loo.Rda")

@@ -31,6 +31,10 @@ loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
 # mnd            -11.9       6.4  
 # fxbdrg_rfxbdrg -12.0       6.4  
 
+acc_mind_comp <- loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
+print(comp, simplify=FALSE, digits = 2)
+save(acc_mind_comp, file="../data/derivatives/acc_mind_loo.Rda")
+
 rm(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
 #-----------------------------------------------------------------------------
 # CONTEXTUAL ACCURACY
@@ -59,6 +63,8 @@ loo_compare(mndbdrg3way, acc_mindwin_bis)
 # elpd_diff se_diff
 # mndbdrg3way      0.0       0.0   
 # acc_mindwin_bis -0.2       0.5  
+acc_mind_bis_comp <- loo_compare(mndbdrg3way, acc_mindwin_bis)
+save(acc_mind_bis_comp, file="../data/derivatives/acc_mind_bis_comp.Rda")
 rm(mndbdrg3way, acc_mindwin_bis)
 
 load("../data/derivatives/cacc_winplusmind/cacc_winplusmind.Rda")
