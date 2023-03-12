@@ -175,10 +175,29 @@ In demonstration that participant learned the target door locations over the cou
 
 accfigpth <- '../../images/acc_fig.pdf'
 knitr::include_graphics(accfigpth)
-
 ```
 
 ## Contextual accuracy (acc)
+
+```{r, load_cacc_mod_comps, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+
+load('../../data/derivatives/cacc_loo.Rda')
+load('../../data/derivatives/cacc_mind_loo.Rda')
+load('../../data/derivatives/cacc_mind_bis_comp.Rda')
+load('../../data/derivatives/cacc_winplusmind/cacc_winplusmind.Rda')
+cacc_results <- print(mnd, digits = 2)
+
+```
+
+### Model Selection
+
+The model that best accounted for the experimental factors contained main fixed effects of block and drug, and random effects for block x drug. Although this model was only closely preferred to the next most complex model that contained a block x drug interaction (ELPD diff = `r sprintf("%1.2f", cacc_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", cacc_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"]/cacc_comp["fxbdrgint_bdrgsubrfx", "se_diff"])`), it was strongly preferred to all other models (min ELPD diff = `r sprintf("%1.2f", cacc_comp["fxbdrg_bsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", cacc_comp["fxbdrg_bsubrfx", "elpd_diff"]/cacc_comp["fxbdrg_bsubrfx", "se_diff"])`). Adding mindfulness scores improved the predictive accuracy of the model; the winning model contained an additional main effect of mindfulness (ELPD diff = `r sprintf("%1.2f", cacc_mind_comp["fxbdrg_rfxbdrg", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", cacc_mind_comp["fxbdrg_rfxbdrg", "elpd_diff"]/cacc_mind_comp["fxbdrg_rfxbdrg", "se_diff"])`). Adding BIS scores did not improve the predictive value of the model (ELPD diff = `r sprintf("%1.2f", cacc_mind_bis_comp["acc_mindwin_bis", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", cacc_mind_bis_comp["acc_mindwin_bis", "elpd_diff"]/cacc_mind_bis_comp["acc_mindwin_bis", "se_diff"])`). Note that although we draw inferences over parameters from the winning model, our inferences are the same as if we had used the more complex model that includes the BIS scores.
+
+### Drug, and not mindfulness, impacts contextual accuracy
+
+Having established the best model to account for the data, we next determine the influence of DA and mindfulness on accuracy by making inference over the resulting parameters. DA reduced contextual accuracy; the log-odds of performing a contextual accurate target door selection increased in the placebo session (mean log odds = `r sprintf("%1.2f", cacc_results$fixed["drugplacebo","Estimate"])`, 95% CI[`r sprintf("%1.2f", cacc_results$fixed["drugplacebo","l-95% CI"])`, `r sprintf("%1.2f", cacc_results$fixed["drugplacebo","u-95% CI"])`). 
+
+In demonstration that participant learned to make contextually accurate target door locations over the course of the sessions, contextual accuracy reliably increased over blocks (mean log odds = `r sprintf("%1.2f", cacc_results$fixed["b","Estimate"])`, 95% CI[`r sprintf("%1.2f", cacc_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", cacc_results$fixed["b","u-95% CI"])`, Fig XX). Mindfulness did not have a reliable impact on contextual accuracy (mean log odds = `r sprintf("%1.2f", cacc_results$fixed["m","Estimate"])`, 95% CI[`r sprintf("%1.2f", cacc_results$fixed["m","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["m","u-95% CI"])`, Fig XX). 
 
 
 ## Stereotypy

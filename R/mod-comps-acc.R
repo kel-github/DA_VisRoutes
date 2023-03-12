@@ -76,5 +76,5 @@ loo_compare(mnd, acc_mindwin_bis)
 # elpd_diff se_diff
 # mnd             0.0       0.0    
 # acc_mindwin_bis 0.0       0.5  
-cacc_mind_bis_comp <- loo_compare(mndbdrg3way, acc_mindwin_bis)
+cacc_mind_bis_comp <- loo_compare(mnd, acc_mindwin_bis)
 save(cacc_mind_bis_comp, file="../data/derivatives/cacc_mind_bis_comp.Rda")
