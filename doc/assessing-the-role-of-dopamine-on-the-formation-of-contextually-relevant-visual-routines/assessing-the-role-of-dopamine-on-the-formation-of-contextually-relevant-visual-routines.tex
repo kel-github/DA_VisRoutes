@@ -236,7 +236,7 @@ be found varied from trial to trial, with the onset being drawn from a
 uniform distribution between 500-2000 ms. Once the target was available
 and the correct door selected, the target was displayed for 750 ms. Upon
 termination of the trial, the grey screen and white fixation cross were
-presented (Fig @ref(fig:taskFig)A).
+presented (see Fig \ref{fig:taskFig}A).
 
 In each session, participants were shown two possible background and
 door colour sets. Participants were instructed that each colour
@@ -245,7 +245,7 @@ preferred to hide, depending on the world they were in. There were four
 possible target locations within each world, or from here on, visual
 context. For each visual context, 1 door from each quadrant was selected
 as one of the 4 target locations where the targets could appear (see Fig
-@ref(fig:taskFig)B), with the constraint that target locations could not
+\ref{fig:taskFig}B), with the constraint that target locations could not
 overlap between contexts. Thus each colour reflected a context in which
 participants could establish a set of task-relevant eye-movements,
 i.e.~towards the 4 possible target locations for that context. Note that
@@ -304,17 +304,17 @@ the exclusion of 14 of 40 participants.
 \hypertarget{accuracy}{%
 \subsection{Accuracy}\label{accuracy}}
 
-We sought to determine the extent to which participants learned the
-target locations, and whether participants learned to select the doors
-that were relevant given the current context. Door selections were
-classified as target relevant (TR) for the current context (cc), the
-other context from that session (oc), or neither (n). Data was then
+We first sought to determine the extent to which participants learned
+the target locations, and then whether participants learned to select
+the doors that were relevant given the current context. Door selections
+were classified as target relevant (TR) for the current context (cc),
+the other context from that session (oc), or neither (n). Data was then
 grouped into blocks of 10 trials per context, and grouped across
 contexts, resulting in 8 blocks of 20 trials. First, to determine
 whether participants learned the target locations, regardless of
-context, we computed accuracy as the number of correct door selections
-(referred to from now as accuracy {[}acc{]}), relative to all door
-selections:
+context, we computed accuracy as the number of times participants
+selected a target door (referred to from now as accuracy {[}acc{]}),
+relative to all door selections:
 
 \[
 acc = \frac{\sum{(TR_{cc}, TR_{oc})}}{\sum{(TR_{cc}, TR_{oc}, n)}}
@@ -322,20 +322,17 @@ acc = \frac{\sum{(TR_{cc}, TR_{oc})}}{\sum{(TR_{cc}, TR_{oc}, n)}}
 
 We assessed the influence of block, drug and mindfulness on accuracy
 using a Bayesian mixed model approach. Accuracy was assumed to be drawn
-from a binomial distribution (1=target door, 0 = non-target door), and
-the probability of drawing a hit from the total number of door
-selections made by a given participant was modelled using a logistic
-regression, using default weakly informative priors on the regression
-coefficients that are defined below. Note that as we use logistic
-regression, resulting regression parameter values reflect changes to the
-log-odds of correct door selections.
+from a binomial distribution (1=target door, 0 = non-target door). The
+probability of drawing a target-door from the total number of door
+selections made by a given participant was modelled logistic regression.
+Note that as we use logistic regression, resulting regression parameter
+values reflect changes to the log-odds of target door selections.
 
-For this and following analyses, we sought to identified the model that
-best fit the data, and then made inference over the resulting
-parameters. We report the 95\% confidence intervals (CIs) of the
-parameter posteriors, and assume we have detetected a reliable effect of
-a parameter when the 95\% CIs of the posterior do not include zero.
-Models were fit using the BRMS
+For this and following analyses, we found the model that best fit the
+data, and made inference over the resulting parameters. We report the
+95\% confidence intervals (CIs) of the parameter posteriors, and assume
+we have detected a reliable effect when the 95\% CIs of the posterior do
+not include zero. Models were fit using the BRMS
 (\textbf{burknerBrmsPackageBayesian2017?}) interface for Stan
 (\textbf{standevelopmentteamStanModelingLanguage?}) and RStan
 (\textbf{standevelopmentteamRStanInterfaceStan2023?}). We used the
@@ -346,93 +343,94 @@ and standard deviations were assumed to be drawn from a student's \(t\)
 distribution (df=1, location=0, scale=2.5), and the LKJ-correlation
 prior with parameter \(\zeta\) \textgreater{} 0 was used for the
 parameter covariance matrix. For each model, we checked for parameter
-recovery using simulated data. Furthermore, once fitted, we checked that
-the residuals showed no signs of systematic error, that the chains had
+recovery using simulated data. Once fitted, we checked that the
+residuals showed no signs of systematic error, that the chains had
 converged, and that \(\hat{R}\) values were less than 1.01.
 
 To eschew an overly large model space, and in line with our
-pre-registration, we first fit models that containing each combination
-of the block and drug regressors (and associated random effects), and
-found the best model using leave-one-out (LOO) cross validation (as
-implemented in \textbf{vehtariPracticalBayesianModel2017?}). (Note that
-in the pre-registration document we had proposed to compare models using
-the deviance information criterion (DIC). As LOO is more robust than DIC
-to influential observations, and is readily implemented for use with
-BRMS model objects, we opted to use LOO instead of DIC). Upon
-identifying the best model from the experimentally manipulated
-regressors, we then added the mindfulness regressor in all possible
-combinations with the best model for the experimental effects, and once
-again selected the best model (as evidenced by LOO). Last we controlled
-for trait impulsivity by adding BIS scores as a main effect to the
-winning model. Note that in no cases did adding BIS scores improve the
-model, as assessed by LOO. We report the difference in the expected log
+pre-registration, we first fit models that contained each possible
+combination of the block and drug regressors (and associated random
+effects), and found the best model using leave-one-out (LOO) cross
+validation (as implemented in
+\textbf{vehtariPracticalBayesianModel2017?}). (Note that in the
+pre-registration document we had proposed to compare models using the
+deviance information criterion (DIC). As LOO is more robust than DIC to
+influential observations, and is readily implemented for use with BRMS
+model objects, we opted to use LOO instead of DIC). Upon identifying the
+best model, we then added the mindfulness regressor using all possible
+combinations, and once again selected the best model (as evidenced by
+LOO). Last we controlled for trait impulsivity by adding BIS scores as a
+main effect to the winning model. Note that in no cases did adding BIS
+scores improve the model. We report the difference in the expected log
 posterior density (ELPD) between the winning model and the next best
 models, and the ratio of the ELPD difference to the standard error (SE)
 of the difference (ELPD:SE). The full set of model comparisons are
-presented in the supplementary materials. Note that this value suggests
-the difference between the model ELPD's in units of SE.
+presented in the supplementary materials.
 
 \hypertarget{contextual-accuracy}{%
 \subsection{Contextual Accuracy}\label{contextual-accuracy}}
 
-We also sought to understand whether dopamine modulates the ability of
+We next sought to understand whether dopamine modulates the ability of
 participants to select the correct door, given the context. Therefore,
 for each context, we computed the total number of cc door selections
 (c-acc), and modelled the probability of attaining c-acc given the total
 number of correct door selections:
 
 \[
-c-acc = \frac{\sum{TR_{cc}}}{\sum{(TR_{cc}, TR_{oc})}}
+c\mathrm{-}acc = \frac{\sum{TR_{cc}}}{\sum{(TR_{cc}, TR_{oc})}}
 \]
 
-We then fit this data with Bayesian mixed effects models following the
-procedure above (Note that in the pre-registration document we had
+We then modelled this data using the Bayesian mixed effects approach
+described above (Note that in the pre-registration document we had
 suggested to include a regressor for context. Visual inspection of the
 data showed that c-acc was highly comparable across contexts {[}see
 supplemental figures{]}. We therefore opted to simplify the model space
 and collapse over this factor).
 
-\hypertarget{stereotypical-sequences}{%
-\subsection{Stereotypical sequences}\label{stereotypical-sequences}}
+\hypertarget{stereotypical-door-selections}{%
+\subsection{Stereotypical door
+selections}\label{stereotypical-door-selections}}
 
-Next, we seek to determine the extent to which door-selection patterns
-become more stereotypical over the course of the task, and whether
+Next, we determined the extent to which door-selection patterns
+increased in stereotypy over the course of the task, and whether
 dopamine and mindfulness modulates the extent of stereotypy. Here we
 define stereotypy as sets of door selections being deployed in the same
-order, over trials. Therefore we wish to know whether, given the set of
-doors that a participant chose to open over the trials of the
-experiment, does their data suggest that they are selecting them in a
-more regularised manner as the experiment progresses?
+order, over trials (e.g. \textbf{desrochersHabitLearningNaive2015?}).
+Therefore we wish to know whether, given the doors that a participant
+chose to open over the trials of the experiment, does their data suggest
+that they are selecting them in a more regularised manner as the
+experiment progresses?
 
 In order to characterise the extent to which door selections increased
-in stereotypicality, we reasoned that participants showing more
-stereotypical door selections should show an increase in a given subset
-of transition probabilities, and a decrease in lesser or unused door
-transitions. This stands in contrast to someone who is making door
+in stereotypy, we reasoned that stereotypy should be evidenced by an
+increase in the probability of a subset of door selection transitions,
+at the expense of others. This stands in contrast to when making door
 selections in an exploratory, or non-stereotyped way, where a greater
-set of door transition probabilities should show higher probability.
-Therefore, the transition matrices of individuals engaged in
-stereotypical door selections should show higher variance than those who
-are not engaging in stereotypical door selections. We therefore omputed
-transition probability matrices for each participant, session, block and
-context, and computed the variance of each matrix. Variances were then
-collapsed across context to form a single variance score for each
-participant, session and block.
+number of door transitions should show comparable probabilities.
+Therefore, the transition probability matrices of individuals engaged in
+more stereotypical door selections should show higher variance than
+those who are not engaging in stereotypical door selections. We
+therefore computed trial level transition probability matrices, and
+computed the variance of each matrix. Variances were then collapsed
+across context and trials to form a variance score for each participant,
+session and block.
 
 The resulting variance scores were subject to a comparable Bayesian
-mixture modelling approach as is described for the accuracy data above
-with a few key differences; the variance scores were assumed to be drawn
-from a skewed normal distribution whose mean was defined by the
-regression parameters. \(\sigma\) was assumed to be drawn from a
-Student's t distribution (df=3, location=0, scale=2.5), the skew
-parameter was assumed to be drawn from a normal distribution
-\(\mathcal{N}(0,4)\). The remaining priors for the intercept,
-beta-coefficients and covariances were defined in the same manner as for
-the accuracy data models. As the log-log plot of V vs block suggested a
-power function, analysis was performed on the logged data so that the
-relationship between the regressors and the computed V values was best
-described by a straight line. Identification of the winning model
-proceeded as described for the accuracy data above.
+mixture modelling approach as described above with a few key
+differences; the variance scores were assumed to be drawn from a skewed
+normal distribution \(\mathcal{N}(\mu, \sigma, \alpha)\) whose mean
+(\(\mu\)) was defined by the regression parameters (the distribution of
+variance scores can be found in the supplemental materials). \(\sigma\)
+was assumed to be drawn from a Student's t distribution (df=3,
+location=0, scale=2.5), the skew parameter (\(\alpha\)) was assumed to
+be drawn from a normal distribution \(\mathcal{N}(0,4)\). The remaining
+priors for the intercept, beta-coefficients and parameter covariance
+matrix were defined in the same manner as for the accuracy data models.
+As the log-log plot of variances vs block suggested a power function,
+analysis was performed on the logged data. This ensured that the
+relationship between block and variance values was best described by a
+straight line. Identification of the winning model proceeded as
+described for the accuracy data above.
 
 \hypertarget{blinding-analyses}{%
 \subsection{Blinding analyses}\label{blinding-analyses}}
@@ -455,52 +453,55 @@ HERE I INSERT THE BRIEFEST OVER VIEW OF ALL THE RESULTS
 \hypertarget{model-selection}{%
 \subsubsection{Model Selection}\label{model-selection}}
 
-For the accuracy data, the winning model contained main effects of
-block, drug, mindfulness, as well as a block x mindfulness, a drug x
-mindfulness and a block x drug x mindfulness interaction. This model was
-very closely preferred to the next best model, which was the same except
-for the 3-way interaction (ELPD diff = -0.01, ELPD:SE = -0.01). However,
-this model was more strongly preferred than those containing no
-interactions between mindfulness and the block and drug factors (ELPD
-diff = -11.94, ELPD:SE = -1.87), and the one that did not include an
-effect of mindfulness (ELPD diff = -12.02, ELPD:SE = -1.88). Adding the
-BIS scores did not improve the predictive value of the model (ELPD diff
-= -0.16, ELPD:SE = -0.34). Note that although we draw inferences over
-parameters from the winning model, our inferences are the same as if we
-had used the more complex model that includes the BIS scores, or the
-next best model.
+First we sought the model with the greatest predictive accuracy so that
+we could make subsequent inference over the parameters. The model that
+best accounted for the experimental factors contained main fixed effects
+of block and drug, and random effects for block x drug. Although this
+model was only closely preferred to the next most complex model that
+contained a block x drug interaction (ELPD diff = -0.17, ELPD:SE =
+-0.32), it was strongly preferred to all other models (min ELPD diff =
+-674.10, ELPD:SE = -8.35). Adding mindfulness scores improved the
+predictive accuracy of the model; the winning model contained an
+additional main effect of mindfulness, two-way interactions with block
+and with drug, and a 3-way block x drug x mindfulness interaction (ELPD
+diff = -12.02, ELPD:SE = -1.88). Adding BIS scores did not improve the
+predictive value of the model (ELPD diff = -0.16, ELPD:SE = -0.34). Note
+that although we draw inferences over parameters from the winning model,
+our inferences are the same as if we had used the more complex model
+that includes the BIS scores.
 
-\hypertarget{the-effect-of-drug-and-mindfulness-on-acc}{%
+\hypertarget{the-effect-of-drug-and-mindfulness-on-accuracy}{%
 \subsubsection{The effect of drug and mindfulness on
-acc}\label{the-effect-of-drug-and-mindfulness-on-acc}}
+accuracy}\label{the-effect-of-drug-and-mindfulness-on-accuracy}}
 
-Accuracy data are plotted by block and drug session (DA va placebo) are
-shown in Fig Fig @ref(fig:accFig)A. In line with the notion that
-dopamine and mindfulness may interact to support the learning of
-appropriate sets of door selections, the winning model showed a drug x
-mindfulness interaction that differed from zero (mean log odds = -0.11,
-95\% CI{[}-0.16, -0.06{]}, Fig @ref(fig:accFig)E). To better understand
-this interaction, we first computed a score for each participant that
-reflected the overall change of accuracy due to levodopa administration.
-To achieve this, we computed the average accuracy for each participant
-and session, as predicted by the model, and took the difference between
-the DA and placebo sessions (acc{[}DA - P{]}). Note that a positive
-score indicates that performance was better in the DA session. Next we
-examined the relationship between these scores and mindfulness scores.
-As can be seen in Fig @ref(fig:accFig)B, there was a positive
-relationship between the effect of DA and mindfulness; participants
-scoring higher for mindfulness showed higher accuracy for the DA
-relative to the placebo session, individuals scoring low on mindfulness
-showed poorer accuracy on the DA relative to the placebo session. Thus
-the impact of DA on the establishment of task-relevant eye-movement
-sequences is dependent on the mindfulness state of the individual.
+Having established the best model to account for the data, we next
+determine the influence of DA and mindfulness on accuracy by making
+inference over the resulting parameters. Accuracy data plotted by block
+x drug session (DA va placebo) are shown in Fig \ref{fig:accFig}A. In
+line with the notion that dopamine and mindfulness interact to support
+the learning of target doors, the drug x mindfulness parameter reliably
+differed from zero (mean log odds = -0.11, 95\% CI{[}-0.16, -0.06{]},see
+Fig @ref(fig:accFig)E). To better understand this interaction, we
+computed a score for each participant that reflected the mean accuracy
+change due to the drug session (\(\mu\) acc{[}DA - P{]}). Note that a
+positive score indicates that performance was better in the DA session
+relative to placebo. Next we examined the relationship between
+drug-induced accuracy changes and mindfulness scores. As can be seen in
+Fig \ref{fig:accFig}B, there was a positive relationship between
+drug-induced accuracy changes and mindfulness; participants scoring
+higher for mindfulness showed higher accuracy for the DA relative to the
+placebo session, individuals scoring low on mindfulness showed poorer
+accuracy on the DA relative to the placebo session. Thus the impact of
+DA on the establishment of task-relevant eye-movement sequences is
+dependent on the mindfulness state of the individual.
 
-As can be seen from Fig @ref(fig:accFig)C, accuracy increased over
-blocks (mean log odds = 0.15, 95\% CI{[}0.09, 0.22, Fig
-@ref(fig:accFig)D). We also note that there was the suggestion of a main
-effect of the drug intervention (mean log odds = 0.04, 95\% CI{[}-0.00,
-0.09, Fig XX), however, the strength of this effect is presumably
-modulated by the drug x mindfulness interaction.
+In demonstration that participant learned the target door locations over
+the course of the sessions, accuracy reliably increased over blocks
+(mean log odds = 0.15, 95\% CI{[}0.09, 0.22, Fig \ref{fig:accFig}C).
+There was the suggestion of a main effect of the drug intervention (mean
+log odds = 0.04, 95\% CI{[}-0.00, 0.09, Fig \ref{fig:accFig}D), however,
+the impact of drug on accuracy is presumably better explained by the
+drug x mindfulness interaction.
 
 \begin{figure}
 

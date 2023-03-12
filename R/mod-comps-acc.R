@@ -52,6 +52,10 @@ loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
 # bdrgmdrgmi     -1.9       0.4   
 # mnddrgb        -2.1       0.7   
 # mndbdrg3way    -2.5       0.8
+cacc_mind_comp <- loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
+print(cacc_mind_comp, simplify=FALSE, digits = 2)
+save(cacc_mind_comp, file="../data/derivatives/cacc_mind_loo.Rda")
+
 
 #----------------------------------------------------------------------------
 # BIS
@@ -69,6 +73,8 @@ rm(mndbdrg3way, acc_mindwin_bis)
 load("../data/derivatives/cacc_winplusmind/cacc_winplusmind.Rda")
 load("../data/derivatives/cacc_mindwin_bis/cacc_mindwin_bis.Rda")
 loo_compare(mnd, acc_mindwin_bis)
-#               elpd_diff se_diff
-# mnd              0.0       0.0   
-# acc_mindwin_bis -0.7       0.5  
+# elpd_diff se_diff
+# mnd             0.0       0.0    
+# acc_mindwin_bis 0.0       0.5  
+cacc_mind_bis_comp <- loo_compare(mndbdrg3way, acc_mindwin_bis)
+save(cacc_mind_bis_comp, file="../data/derivatives/cacc_mind_bis_comp.Rda")
