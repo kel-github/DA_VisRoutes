@@ -41,18 +41,17 @@ rm(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
 # ---------------------------------------------------------------------------
 load('../data/derivatives/cacc_model-fxbdrg-bdrgsubrfx/cacc_model-fxbdrg-bdrgsubrfx.Rda')
 load("../data/derivatives/cacc_winplusmind/cacc_winplusmind.Rda")
-load("../data/derivatives/cacc_winplusmindbmint/cacc_winplusmindbmint.Rda")
-load("../data/derivatives/cacc_winplusmind_bmndintdrgmndint/cacc_winplusmind_bmndintdrgmndint.Rda")
-load("../data/derivatives/cacc_winplusmind_drgmndint/cacc_winplusmind_drgmndint.Rda")
-
-
-loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mndbdrgmnd, bdrgmdrgmi)
-#                 elpd_diff se_diff
+load("../data/derivatives/cacc_winplusmind_bmnd/cacc_winplusmind_bmnd.Rda")
+load("../data/derivatives/cacc_winplusmind_dmnd/cacc_winplusmind_dmnd.Rda")
+load("../data/derivatives/cacc_winplusmindbmnd_dmnd/cacc_winplusmindbmnd_dmnd.Rda")
+load("../data/derivatives/cacc_winplusmindbdmnd/cacc_winplusmindbdmnd.Rda")
+loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
 # mnd             0.0       0.0   
-# fxbdrg_rfxbdrg -0.6       1.1   
+# fxbdrg_rfxbdrg -0.1       1.0   
 # mndb           -1.1       0.8   
-# bdrgmdrgmi     -2.0       0.5   
-# mndbdrgmnd     -2.6       0.9  
+# bdrgmdrgmi     -1.9       0.4   
+# mnddrgb        -2.1       0.7   
+# mndbdrg3way    -2.5       0.8
 
 #----------------------------------------------------------------------------
 # BIS
