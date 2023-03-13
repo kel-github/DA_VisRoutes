@@ -2,7 +2,6 @@
 ####################################################
 rm(list=ls())
 library(brms)
-#library(modeest)
 library(tidyverse)
 source('fig_label.R')
 
@@ -230,16 +229,14 @@ fig_label("B", cex = 2)
 #######################################
 variables(mod)
 # for stereo, I want the block, drug, and drug x bis parameters
-
-# posterior_samples is deprecated, use as_draws next time
-fxdrg_draws <- posterior_samples(mod, pars="drugplacebo:m")
-plot(density(fxdrg_draws$b_drugplacebo),
+fxb_draws <- posterior_samples(mod, pars="b_b")
+plot(density(fxb_draws$b_b),
      col=samples_col, main="", xlab=expression(beta),
-     ylab="d", bty="n", xlim=c(-0.15, 0.25), ylim=c(0,10), axes=F)
-axis(side=1, at = c(-0.15, 0, 0.25), labels=c("", "0", ".25"))
+     ylab="d", bty="n", xlim=c(-0.15, 0.5), ylim=c(0,10), axes=F)
+axis(side=1, at = c(-0.15, 0, .5), labels=c("", "0", "0.5"))
 axis(side=2, at=c(0, 10), labels=c("0", "10"), las=2)
-polygon(density(fxdrg_draws$b_drugplacebo), border=samples_col, col=samples_col)
-title("DA*m")
+polygon(density(fxb_draws$b_b), border=samples_col, col=samples_col)
+title("b")
 fig_label("C", cex = 2)
 
 fxm_draws <- posterior_samples(mod, pars="b_m")
@@ -252,14 +249,15 @@ polygon(density(fxm_draws$b_m), border=samples_col, col=samples_col)
 title("m")
 fig_label("D", cex = 2)
 
-fxb_draws <- posterior_samples(mod, pars="b_b")
-plot(density(fxb_draws$b_b),
+# posterior_samples is deprecated, use as_draws next time
+fxdrg_draws <- posterior_samples(mod, pars="drugplacebo:m")
+plot(density(fxdrg_draws$b_drugplacebo),
      col=samples_col, main="", xlab="",
-     ylab="", bty="n", xlim=c(-0.15, 0.5), ylim=c(0,10), axes=F)
-axis(side=1, at = c(-0.15, 0, .5), labels=c("", "0", "0.5"))
+     ylab="", bty="n", xlim=c(-0.15, 0.25), ylim=c(0,10), axes=F)
+axis(side=1, at = c(-0.15, 0, 0.25), labels=c("", "0", ".25"))
 axis(side=2, at=c(0, 10), labels=c("0", "10"), las=2)
-polygon(density(fxb_draws$b_b), border=samples_col, col=samples_col)
-title("b")
+polygon(density(fxdrg_draws$b_drugplacebo), border=samples_col, col=samples_col)
+title("DA*m")
 fig_label("E", cex = 2)
 
 dev.off()
