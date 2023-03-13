@@ -197,7 +197,7 @@ The model that best accounted for the experimental factors contained main fixed 
 
 Having established the best model to account for the data, we next determined the influence of DA and mindfulness on accuracy by making inference over the resulting model parameters (see Fig \ref{fig:caccfig}. DA reduced contextual accuracy; the log-odds of selecting a target door that was specific to the current context increased in the placebo session, relative to the DA session (mean log odds = `r sprintf("%1.2f", cacc_results$fixed["drugplacebo","Estimate"])`, 95% CI[`r sprintf("%1.2f", cacc_results$fixed["drugplacebo","l-95% CI"])`, `r sprintf("%1.2f", cacc_results$fixed["drugplacebo","u-95% CI"])`, Fig \ref{fig:caccfig}A&B). 
 
-In demonstration that participants learned to make contextually accurate door selections over the course of the sessions, contextual accuracy reliably increased over blocks (mean log odds = `r sprintf("%1.2f", cacc_results$fixed["b","Estimate"])`, 95% CI[`r sprintf("%1.2f", cacc_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", cacc_results$fixed["b","u-95% CI"])`, Fig Fig \ref{fig:caccfig}C). In contrast to the overall accuracy data, mindfulness did not have a reliable impact on contextual accuracy (mean log odds = `r sprintf("%1.2f", cacc_results$fixed["m","Estimate"])`, 95% CI[`r sprintf("%1.2f", cacc_results$fixed["m","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["m","u-95% CI"])`]). 
+In demonstration that participants learned to make contextually accurate door selections over the course of the sessions, contextual accuracy reliably increased over blocks (mean log odds = `r sprintf("%1.2f", cacc_results$fixed["b","Estimate"])`, 95% CI[`r sprintf("%1.2f", cacc_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", cacc_results$fixed["b","u-95% CI"])`, Fig \ref{fig:caccfig}C). In contrast to the overall accuracy data, mindfulness did not have a reliable impact on contextual accuracy (mean log odds = `r sprintf("%1.2f", cacc_results$fixed["m","Estimate"])`, 95% CI[`r sprintf("%1.2f", cacc_results$fixed["m","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["m","u-95% CI"])`]). 
 
 ```{r, caccfig, out.width='70%', fig.cap='The influence of dopamine and mindfulness on contextual accuracy. A) Accuracy (acc) data by block and drug. Circles reflect observed average accuracy, dotted lines show the fit of the winning model. B) Estimated posterior density (in log odds) for the main effect of drug (DA vs P), D) same as in B, but for the main effect of block. DA = dopamine, P = placebo, b = block, d = density. Error bars reflect within-subject standard error of the mean [SE].'}
 
@@ -206,7 +206,35 @@ knitr::include_graphics(accfigpth)
 ```
 
 
-## Stereotypy
+## Stereotypy of door selections
+
+```{r, load_cacc_mod_comps, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+
+load('../../data/derivatives/stereo_loo.Rda')
+load('../../data/derivatives/stereo_mind_loo.Rda')
+load('../../data/derivatives/stereo_mind_bis_loo.Rda')
+load('../../data/derivatives/stereo_winplusmind_dmindint/stereo_winplusmind_dmindint.Rda')
+stereo_results <- print(mndbd_dm, digits = 2)
+
+```
+### Model Selection
+ 
+The model that best accounted for the experimental factors contained main fixed effects of block and drug, and random effects for block x drug. Although this model was only closely preferred to the next most complex model that contained a block x drug interaction (ELPD diff = `r sprintf("%1.2f", stereo_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", stereo_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"]/stereo_comp["fxbdrgint_bdrgsubrfx", "se_diff"])`), it was strongly preferred to all other models (min ELPD diff = `r sprintf("%1.2f", stereo_comp["fxbdrg_bsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", stereo_comp["fxbdrg_bsubrfx", "elpd_diff"]/stereo_comp["fxbdrg_bsubrfx", "se_diff"])`). Adding mindfulness scores improved the predictive accuracy of the model; the winning model contained an additional main effect of mindfulness and a drug x mindfulness interaction (ELPD diff = `r sprintf("%1.2f", stereo_mind_loo["fxbdrg_rfxbdrg", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", stereo_mind_loo["fxbdrg_rfxbdrg", "elpd_diff"]/stereo_mind_loo["fxbdrg_rfxbdrg", "se_diff"])`). Adding BIS scores did not improve the predictive accuracy of the model (ELPD diff = `r sprintf("%1.2f", stereo_mind_bis_loo["mndbdbis_bm", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", stereo_mind_bis_loo["mndbdbis_bm", "elpd_diff"]/stereo_mind_bis_loo["mndbdbis_bm", "se_diff"])`). Note that although we draw inferences over parameters from the winning model, our inferences are the same as if we had used the more complex model that includes the BIS scores.
+
+### The impact of drug and mindfulness on stereotypy
+
+```{r, corvarwithacc, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+# use this code chunk to correlate variance with overall accuracy
+
+
+
+```
+
+
+In line with the notion that mindfulness and dopamine interact to impact the formation of sterotypical door selections, we observed a reliable drug x mindfulness interaction (mean impact = `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","u-95% CI"])`, Fig \ref{fig:XXX}X). To better understand this interaction, we computed a score for each participant that reflected the mean variance change due to the drug session ($\mu$ acc[DA - P]). Note that a positive score indicates that performance was better in the DA session relative to placebo. Next we examined the relationship between drug-induced variability changes and mindfulness scores. As can be seen in Fig \ref{fig:XXX}X, there was a negative relationship between drug-induced variance changes and mindfulness; participants scoring higher for mindfulness showed lower variance for the DA relative to the placebo session, individuals scoring low on mindfulness showed higher variance on the DA relative to the placebo session. 
+
+
+Thus the impact of DA on the establishment of task-relevant eye-movement sequences is dependent on the mindfulness state of the individual.
 
 LaTeX command can be used to reference other section. See Section \ref{sec:headings}.
 However, you can also use **bookdown** extensions mechanism for this.

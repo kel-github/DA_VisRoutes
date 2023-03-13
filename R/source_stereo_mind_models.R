@@ -44,16 +44,19 @@ for (j in 1:length(rfs)){
 # perform model comparisons
 ###-----------------------------------------------------
 ftmplt = '../data/derivatives/%s/%s.Rda'
-load(file=sprintf(ftmplt, 'stereo_model-fxbdrg-brfx', 'stereo_model-fxbdrg-brfx'))
+load(file=sprintf(ftmplt, 'stereo_model-fxbdrg-bdrgsubrfx', 'stereo_model-fxbdrg-bdrgsubrfx'))
 load(file=sprintf(ftmplt, 'stereo_winplusmind', 'stereo_winplusmind'))
 load(file=sprintf(ftmplt, 'stereo_winplusmind_bmindint', 'stereo_winplusmind_bmindint'))
 load(file=sprintf(ftmplt, 'stereo_winplusmind_dmindint', 'stereo_winplusmind_dmindint'))
 load(file=sprintf(ftmplt, 'stereo_winplusmind_bdmindint', 'stereo_winplusmind_bdmindint'))
 
-loo_compare(fxbdrg_bsubrfx, mndbd, mndbd_bm, mndbd_dm, mndbd_bdm)
+loo_compare(fxbdrg_rfxbdrg, mndbd, mndbd_bm, mndbd_dm, mndbd_bdm)
 # elpd_diff se_diff
 # mndbd_dm          0.0       0.0 'stereo_winplusmind_dmindint'
 # mndbd_bdm        -0.4       1.5 
 # mndbd_bm         -2.2       3.1 
 # mndbd            -2.3       3.0 
 # fxbdrg_bsubrfx -133.3      17.4 
+
+stereo_mind_loo <- loo_compare(fxbdrg_rfxbdrg, mndbd, mndbd_bm, mndbd_dm, mndbd_bdm)
+save(stereo_mind_loo, file="../data/derivatives/stereo_mind_loo.Rda")
