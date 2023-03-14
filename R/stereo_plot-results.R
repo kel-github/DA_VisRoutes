@@ -134,8 +134,9 @@ mu_bdrug_dat$b.x <- rep(unique(sum_dat$b.x),
 mu_bdrug_pred$b.x <- rep(unique(sum_dat$b.x), 
                          times=length(mu_bdrug_pred$b.x)/length(unique(sum_dat$b.x)))
 
-## next question to answer - whether to plot on log scale 
-## or on accuary?
+# save the summary stats for reporting
+save(mu_bdrug_pred, mu_bdrug_dat, dm, file="../data/derivatives/stereo_descriptives.Rda")
+
 
 ###############################################################
 #### set up for full plot
