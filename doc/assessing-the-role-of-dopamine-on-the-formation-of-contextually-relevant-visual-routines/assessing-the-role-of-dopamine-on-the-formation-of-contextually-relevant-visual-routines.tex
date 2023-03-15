@@ -146,6 +146,17 @@ Enter the text of your abstract here.
 ##     ar
 \end{verbatim}
 
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
+## v ggplot2 3.4.0     v purrr   1.0.1
+## v tibble  3.1.8     v dplyr   1.1.0
+## v tidyr   1.3.0     v stringr 1.5.0
+## v readr   2.1.3     v forcats 1.0.0
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
@@ -477,31 +488,39 @@ accuracy}\label{the-effect-of-drug-and-mindfulness-on-accuracy}}
 Having established the best model to account for the data, we next
 determine the influence of DA and mindfulness on accuracy by making
 inference over the resulting parameters. Accuracy data plotted by block
-x drug session (DA va placebo) are shown in Fig \ref{fig:accFig}A. In
-line with the notion that dopamine and mindfulness interact to support
-the learning of target doors, the drug x mindfulness parameter reliably
-differed from zero (mean log odds = -0.11, 95\% CI{[}-0.16, -0.06{]},see
-Fig @ref(fig:accfig)E). To better understand this interaction, we
-computed a score for each participant that reflected the mean accuracy
-change due to the drug session (\(\mu\) acc{[}DA - P{]}). Note that a
-positive score indicates that performance was better in the DA session
-relative to placebo. Next we examined the relationship between
-drug-induced accuracy changes and mindfulness scores. As can be seen in
-Fig \ref{fig:accfig}B, there was a positive relationship between
+x drug session (DA va placebo) are shown in Fig \ref{fig:accfig}A.
+Critically, the influence of drug on accuracy was impacted by
+mindfulness scores. The drug x mindfulness parameter differed reliably
+from zero (mean log odds = -0.11, 95\% CI{[}-0.16, -0.06{]}, see Fig
+\ref(fig:accfig)E). To better understand this interaction, we computed a
+score for each participant that reflected the mean accuracy change due
+to the drug session (\(\mu\) acc{[}DA - P{]}). Note that a positive
+score indicates that performance was better in the DA session relative
+to placebo. Next we examined the relationship between drug-induced
+accuracy changes and mindfulness scores. As can be seen in Fig
+\ref{fig:accfig}B, there was a positive relationship between
 drug-induced accuracy changes and mindfulness; participants scoring
 higher for mindfulness showed higher accuracy for the DA relative to the
-placebo session, individuals scoring low on mindfulness showed poorer
-accuracy on the DA relative to the placebo session. Thus the impact of
-DA on the establishment of task-relevant eye-movement sequences is
-dependent on the mindfulness state of the individual.
+placebo session, for example, those scoring in the highest quartile
+showed mean accuracy scores of 0.67 (95\%CI{[}0.65, 0.70{]}) during the
+DA session, relative to mean accuracy scores of 0.62 (95\% CI{[}0.60,
+0.63{]}) during the placebo session. Individuals scoring low on
+mindfulness showed the opposite pattern (DA mean accuracy = 0.61, 95\%
+CI{[}0.60, 0.63{]}, placebo mean accuracy = 0.68, 95\%CI{[}0.66,
+0.69{]}), note that Fig \ref{fig:accfig}B shows the difference between
+these accuracy scores). Thus the impact of DA on the establishment of
+task-relevant eye-movements is dependent on the mindfulness state of the
+individual.
 
-In demonstration that participant learned the target door locations over
-the course of the sessions, accuracy reliably increased over blocks
-(mean log odds = 0.15, 95\% CI{[}0.09, 0.22, Fig \ref{fig:accfig}C).
-There was the suggestion of a main effect of the drug intervention (mean
-log odds = 0.04, 95\% CI{[}-0.00, 0.09, Fig \ref{fig:accfig}D), however,
-the impact of drug on accuracy is presumably better explained by the
-drug x mindfulness interaction.
+Participants learned the target door locations over the course of the
+sessions, accuracy reliably increased over blocks. Mean accuracy in
+block 1 was 0.57 (95\% CI{[}0.55, 0.59{]}), relative to a block 8 mean
+of 0.70 (95\% CI{[}0.68, 0.72{]}). The model showed that accuracy
+increased by block with an average log odds of = 0.15, (95\% CI{[}0.09,
+0.22, Fig \ref{fig:accfig}C). There was also the suggestion of a main
+effect of the drug intervention (mean log odds = 0.04, 95\% CI{[}-0.001,
+0.09, Fig \ref{fig:accfig}D), however, the impact of drug on accuracy is
+presumably better explained by the drug x mindfulness interaction.
 
 \begin{figure}
 
@@ -539,15 +558,20 @@ accuracy}\label{drug-and-not-mindfulness-impacts-contextual-accuracy}}
 Having established the best model to account for the data, we next
 determined the influence of DA and mindfulness on accuracy by making
 inference over the resulting model parameters (see Fig
-\ref{fig:caccfig}. DA reduced contextual accuracy; the log-odds of
+\ref{fig:caccfig}. DA reduced contextual accuracy; accuracy was on
+average 0.64 (95\% CI {[}0.63, 0.65{]}) for the DA session, and 0.66
+(95\% CI {[}0.65, 0.68{]}) for the placebo session. The log-odds of
 selecting a target door that was specific to the current context
-increased in the placebo session, relative to the DA session (mean log
-odds = 0.07, 95\% CI{[}0.01, 0.13, Fig \ref{fig:caccfig}A\&B).
+increased by (mean log odds = 0.07, 95\% CI{[}0.01, 0.13, Fig
+\ref{fig:caccfig}A\&B) for the placebo session, relative to the DA
+session.
 
-In demonstration that participants learned to make contextually accurate
-door selections over the course of the sessions, contextual accuracy
-reliably increased over blocks (mean log odds = 0.13, 95\% CI{[}0.07,
-0.19, Fig \ref{fig:caccfig}C). In contrast to the overall accuracy data,
+Participants learned to make contextually accurate door selections over
+the course of the sessions; Mean accuracy in block 1 was 0.59 (95\%
+CI{[}0.58, 0.61{]}), relative to a block 8 mean of 0.69 (95\% CI{[}0.67,
+0.71{]}). The model showed that contextual accuracy increased by a mean
+log odds of 0.13 (95\% CI{[}0.07, 0.19) over each block (Fig
+\ref{fig:caccfig}C). In contrast to the overall accuracy data,
 mindfulness did not have a reliable impact on contextual accuracy (mean
 log odds = 0.04, 95\% CI{[}-0.04, 0.15{]}).
 
@@ -605,9 +629,9 @@ the course of the experiment (block mean \(\beta\) = 0.32, 95\%
 CI{[}0.20, 0.43, Fig \ref{fig:XXX}X). In line with the interaction of
 drug x mindfulness reported above, the main effect of mindfulness
 suggested a negative relationship with variability (mindfulness mean
-\(\beta\) = -0.15, 95\% CI{[}-0.26, -0.05, Fig \ref{fig:XXX}X). Thus
-more mindful individuals showed less sterotypy than less mindful
-individuals.
+\(\beta\) = -0.15, 95\% CI{[}-0.26, -0.05, Fig \ref{fig:XXX}X). Higher
+mindfulness scores predicted less stereotypy in door-selection patterns
+relative to low mindfulness scores.
 
 Thus the impact of DA on the establishment of task-relevant eye-movement
 sequences is dependent on the mindfulness state of the individual.

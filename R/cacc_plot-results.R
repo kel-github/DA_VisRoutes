@@ -99,7 +99,7 @@ mu_bdrug_dat$b.x <- as.numeric(mu_bdrug_dat$b.x)
 mu_bdrug_pred$b.x <- as.numeric(mu_bdrug_pred$b.x)
 
 # save the summary stats for reporting
-save(mu_bdrug_pred, mu_bdrug_dat, file="../data/derivatives/cacc_descriptives.Rda")
+save(sum_dat, mu_bdrug_pred, mu_bdrug_dat, file="../data/derivatives/cacc_descriptives.Rda")
 
 ###############################################################
 #### set up for full plot
