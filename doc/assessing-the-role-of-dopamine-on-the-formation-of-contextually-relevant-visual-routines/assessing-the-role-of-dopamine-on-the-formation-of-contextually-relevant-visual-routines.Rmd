@@ -267,6 +267,31 @@ The model that best accounted for the experimental factors contained main fixed 
 
 ### The impact of drug and mindfulness on stereotypy
 
+```{r, stereo_descriptives, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+## Here I grab the summary stats saved in the plotting file
+load("../../data/derivatives/stereo_descriptives.Rda")
+
+
+# summarise mindfulness interaction
+qs <- with(dm, quantile(m, c(0.25, 0.75)))
+sum_dat$qs <- 0
+sum_dat$qs[sum_dat$m.x < qs[1]] <- 1
+sum_dat$qs[sum_dat$m.x > qs[2]] <- 2
+sum_dat$qs <- as.factor(sum_dat$qs)
+
+qs_sum <- Rmisc::summarySEwithin(data=sum_dat, measurevar="pred_v",
+                                          withinvars=c("drug", "qs"),
+                                          idvar="sub")
+qs_sum <- qs_sum %>% mutate(lower=pred_v-ci, upper=pred_v+ci)
+
+# summarise block 1 vs block 8
+#b_dat <- Rmisc::summarySEwithin(data=sum_dat, measurevar = "p",
+#                                withinvars="b.x",
+#                                idvar="sub")
+#b_dat <- b_dat %>% mutate(upper=p+ci, lower=p-ci)
+```
+
+
 ```{r, corvarwithacc, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
 # use this code chunk to correlate variance with overall accuracy
 
@@ -275,10 +300,11 @@ The model that best accounted for the experimental factors contained main fixed 
 ```
 
 
-In line with the notion that mindfulness and dopamine interact to impact the formation of stereotypical door selections, we observed a reliable drug x mindfulness interaction (mean $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","u-95% CI"])`, Fig \ref{fig:XXX}X). To better understand this interaction, we computed a score for each participant that reflected the mean variance change due to the drug session ($\mu$ acc[DA - P]). Note that a positive score indicates that performance was better in the DA session relative to placebo. Next we examined the relationship between drug-induced variability changes and mindfulness scores. As can be seen in Fig \ref{fig:XXX}X, there was a negative relationship between drug-induced variance changes and mindfulness; participants scoring higher for mindfulness showed lower variance for the DA relative to the placebo session, individuals scoring low on mindfulness showed higher variance on the DA relative to the placebo session. 
-Participants developed more stereotypical patterns of door selections over the course of the experiment, as evidenced by a reliable increase in variance over the course of the experiment (block mean $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["b","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["b","u-95% CI"])`, Fig \ref{fig:XXX}X). In line with the interaction of drug x mindfulness reported above, the main effect of mindfulness suggested a negative relationship with variability (mindfulness mean $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["m","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["m","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["m","u-95% CI"])`, Fig \ref{fig:XXX}X). Higher mindfulness scores predicted less stereotypy in door-selection patterns relative to low mindfulness scores.
+In line with the notion that mindfulness and dopamine interact to impact the formation of stereotypical door selections, we observed a reliable drug x mindfulness interaction (mean $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","u-95% CI"])`, Fig \ref{fig:XXX}X). Participants scoring higher for mindfulness showed lower stereotypy for the DA relative to the placebo session, for example, those scoring in the highest quartile showed mean log variance scores of `r sprintf("%1.2f", qs_sum$pred_v[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])` (95%CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])`]) during the DA session, relative to mean log variance scores of `r sprintf("%1.2f", qs_sum$pred_v[qs_sum$drug == "placebo" & qs_sum$qs == "2"])` (95% CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "placebo" & qs_sum$qs == "2"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "placebo" & qs_sum$qs == "2"])`]) during the placebo session. Individuals scoring low on mindfulness (lowest quartile) showed the opposite pattern (DA mean accuracy = `r sprintf("%1.2f", qs_sum$pred_v[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`, 95% CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`], placebo mean accuracy = `r sprintf("%1.2f", qs_sum$p[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`, 95%CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`]). To visualise this interaction, we computed a mean variance change score between drug sessions for each participant ($\mu$ acc[DA - P]). Note that a positive score indicates that performance was better in the DA session relative to placebo. As can be seen in Fig \ref{fig:XXX}X, there was a negative relationship between drug-induced variance changes and mindfulness.
 
-
+```{r}
+# Participants developed more stereotypical patterns of door selections over the course of the experiment, as evidenced by a reliable increase in variance over the course of the experiment (block mean $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["b","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["b","u-95% CI"])`, Fig \ref{fig:XXX}X). In line with the interaction of drug x mindfulness reported above, the main effect of mindfulness suggested a negative relationship with variability (mindfulness mean $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["m","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["m","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["m","u-95% CI"])`, Fig \ref{fig:XXX}X). Higher mindfulness scores predicted less stereotypy in door-selection patterns relative to low mindfulness scores.
+```
 
 
 Thus the impact of DA on the establishment of task-relevant eye-movement sequences is dependent on the mindfulness state of the individual.

@@ -113,6 +113,8 @@ dm <- sum_dat %>% group_by(sub, drug) %>%
 dm <- dm %>% inner_join(mind_sum, dm, by="sub")
 dm$m <- scale(dm$m)
 
+
+
 ###############################################################
 # DATA 4 PLOTS 
 ###############################################################
@@ -135,7 +137,7 @@ mu_bdrug_pred$b.x <- rep(unique(sum_dat$b.x),
                          times=length(mu_bdrug_pred$b.x)/length(unique(sum_dat$b.x)))
 
 # save the summary stats for reporting
-save(mu_bdrug_pred, mu_bdrug_dat, dm, file="../data/derivatives/stereo_descriptives.Rda")
+save(sum_dat, mu_bdrug_pred, mu_bdrug_dat, dm, file="../data/derivatives/stereo_descriptives.Rda")
 
 
 ###############################################################

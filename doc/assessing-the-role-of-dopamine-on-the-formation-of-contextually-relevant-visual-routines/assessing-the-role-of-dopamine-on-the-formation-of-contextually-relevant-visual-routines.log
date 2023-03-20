@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.3.9)  16 MAR 2023 10:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.3.9)  21 MAR 2023 10:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -545,51 +545,36 @@ Underfull \hbox (badness 2245) in paragraph at lines 342--360
 \T1/lmr/m/n/10 (+20) (\T1/lmr/bx/n/10 (+20) standevelopmentteamRStanInterfaceStan2023?\T1/lmr/m/n/10 (+20) ). We used the de-fault weakly in-for-ma-tive
  []
 
-
-Underfull \vbox (badness 1082) has occurred while \output is active []
-
 [4] [5]
-
-LaTeX Warning: Reference `(' on page 6 undefined on input line 495.
-
-<../../images/acc_fig.pdf, id=414, 341.275pt x 341.275pt>
+<../../images/acc_fig.pdf, id=415, 341.275pt x 341.275pt>
 File: ../../images/acc_fig.pdf Graphic file (type pdf)
 <use ../../images/acc_fig.pdf>
-Package pdftex.def Info: ../../images/acc_fig.pdf  used on input line 527.
+Package pdftex.def Info: ../../images/acc_fig.pdf  used on input line 528.
 (pdftex.def)             Requested size: 328.82706pt x 328.84921pt.
 [6]
-<../../images/cacc_fig.pdf, id=428, 341.275pt x 341.275pt>
+<../../images/cacc_fig.pdf, id=429, 341.275pt x 341.275pt>
 File: ../../images/cacc_fig.pdf Graphic file (type pdf)
 <use ../../images/cacc_fig.pdf>
-Package pdftex.def Info: ../../images/cacc_fig.pdf  used on input line 580.
+Package pdftex.def Info: ../../images/cacc_fig.pdf  used on input line 581.
 (pdftex.def)             Requested size: 328.82706pt x 328.84921pt.
 
-LaTeX Warning: Reference `fig:XXX' on page 7 undefined on input line 615.
+LaTeX Warning: Reference `fig:XXX' on page 7 undefined on input line 616.
 
 
-LaTeX Warning: Reference `fig:XXX' on page 7 undefined on input line 621.
-
-
-LaTeX Warning: Reference `fig:XXX' on page 7 undefined on input line 629.
-
-
-LaTeX Warning: Reference `fig:XXX' on page 7 undefined on input line 632.
+LaTeX Warning: Reference `fig:XXX' on page 7 undefined on input line 628.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [7 <../../images/acc_fig.pdf>]
 
-LaTeX Warning: Reference `sec:headings' on page 8 undefined on input line 640.
-
-
-Underfull \vbox (badness 6608) has occurred while \output is active []
+LaTeX Warning: Reference `sec:headings' on page 8 undefined on input line 635.
 
 [8 <../../images/cacc_fig.pdf>]
-<assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines_files/figure-latex/fig2-1.pdf, id=465, 469.755pt x 325.215pt>
+<assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines_files/figure-latex/fig2-1.pdf, id=466, 469.755pt x 325.215pt>
 File: assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines_files/figure-latex/fig2-1.pdf Graphic file (type pdf)
 <use assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines_files/figure-latex/fig2-1.pdf>
-Package pdftex.def Info: assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines_files/figure-latex/fig2-1.pdf  used on input line 716.
+Package pdftex.def Info: assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines_files/figure-latex/fig2-1.pdf  used on input line 711.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [9] [10 <./assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines_files/figure-latex/fig2-1.pdf>]
 No file assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines.bbl.
@@ -604,18 +589,18 @@ Package rerunfilecheck Info: File `assessing-the-role-of-dopamine-on-the-formati
 (rerunfilecheck)             Checksum: 6E51B22DE51075FB1578A83D672664D7;4502.
  ) 
 Here is how much of TeX's memory you used:
- 12222 strings out of 477984
- 201179 string characters out of 5839136
+ 12213 strings out of 477984
+ 201092 string characters out of 5839136
  1874388 words of memory out of 5000000
- 31967 multiletter control sequences out of 15000+600000
- 580131 words of font info for 152 fonts, out of 8000000 for 9000
+ 31966 multiletter control sequences out of 15000+600000
+ 579799 words of font info for 148 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,12n,76p,1085b,550s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,76p,1085b,552s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/home/kgarner/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/home/kgarner/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/home/kgarner/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/home/kgarner/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/home/kgarner/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/home/kgarner/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}</home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></home/kgarner/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
-Output written on assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines.pdf (11 pages, 425554 bytes).
+Output written on assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines.pdf (11 pages, 424900 bytes).
 PDF statistics:
- 606 PDF objects out of 1000 (max. 8388607)
- 541 compressed objects within 6 object streams
+ 607 PDF objects out of 1000 (max. 8388607)
+ 542 compressed objects within 6 object streams
  82 named destinations out of 1000 (max. 500000)
  38133 words of extra memory for PDF output out of 42996 (max. 10000000)
 
