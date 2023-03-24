@@ -65,47 +65,7 @@ formation of task-relevant eye-movement patterns}
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
-% From pandoc table feature
-\usepackage{longtable,booktabs,array}
-\usepackage{calc} % for calculating minipage widths
-% Correct order of tables after \paragraph or \subparagraph
-\usepackage{etoolbox}
-\makeatletter
-\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
-\makeatother
-% Allow footnotes in longtable head/foot
-\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
-\makesavenoteenv{longtable}
 
-% Pandoc citation processing
-\newlength{\cslhangindent}
-\setlength{\cslhangindent}{1.5em}
-\newlength{\csllabelwidth}
-\setlength{\csllabelwidth}{3em}
-\newlength{\cslentryspacingunit} % times entry-spacing
-\setlength{\cslentryspacingunit}{\parskip}
-% for Pandoc 2.8 to 2.10.1
-\newenvironment{cslreferences}%
-  {}%
-  {\par}
-% For Pandoc 2.11+
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
-  % turn on hanging indent if param 1 is 1
-  \ifodd #1
-  \let\oldpar\par
-  \def\par{\hangindent=\cslhangindent\oldpar}
-  \fi
-  % set entry spacing
-  \setlength{\parskip}{#2\cslentryspacingunit}
- }%
- {}
-\usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
-\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 \begin{document}
 \maketitle
@@ -563,12 +523,12 @@ inference over the resulting model parameters (see Fig
 average 0.64 (95\% CI {[}0.63, 0.65{]}) for the DA session, and 0.66
 (95\% CI {[}0.65, 0.68{]}) for the placebo session. The log-odds of
 selecting a target door that was specific to the current context
-increased by (mean log odds = 0.07, 95\% CI{[}0.01, 0.13, Fig
+increased by a mean log odds of 0.07 (95\% CI{[}0.01, 0.13, Fig
 \ref{fig:caccfig}A\&B) for the placebo session, relative to the DA
 session.
 
 Participants learned to make contextually accurate door selections over
-the course of the sessions; Mean accuracy in block 1 was 0.59 (95\%
+the course of the sessions; mean accuracy in block 1 was 0.59 (95\%
 CI{[}0.58, 0.61{]}), relative to a block 8 mean of 0.69 (95\% CI{[}0.67,
 0.71{]}). The model showed that contextual accuracy increased by a mean
 log odds of 0.13 (95\% CI{[}0.07, 0.19) over each block (Fig
@@ -613,11 +573,11 @@ stereotypy}\label{the-impact-of-drug-and-mindfulness-on-stereotypy}}
 In line with the notion that mindfulness and dopamine interact to impact
 the formation of stereotypical door selections, we observed a reliable
 drug x mindfulness interaction (mean \(\beta\) = 0.11, 95\% CI{[}0.02,
-0.21, Fig \ref{fig:XXX}X). Participants scoring higher for mindfulness
-showed lower stereotypy for the DA relative to the placebo session, for
-example, those scoring in the highest quartile showed mean log variance
-scores of -8.74 (95\%CI{[}-8.80, -8.68{]}) during the DA session,
-relative to mean log variance scores of -8.68 (95\% CI{[}-8.74,
+0.21, Fig \ref{fig:stereofig}). Participants scoring higher for
+mindfulness showed lower stereotypy for the DA relative to the placebo
+session, for example, those scoring in the highest quartile showed mean
+log variance scores of -8.74 (95\%CI{[}-8.80, -8.68{]}) during the DA
+session, relative to mean log variance scores of -8.68 (95\% CI{[}-8.74,
 -8.62{]}) during the placebo session. Individuals scoring low on
 mindfulness (lowest quartile) showed the opposite pattern (DA mean
 accuracy = -8.69, 95\% CI{[}-8.75, -8.63{]}, placebo mean accuracy =
@@ -625,239 +585,30 @@ accuracy = -8.69, 95\% CI{[}-8.75, -8.63{]}, placebo mean accuracy =
 computed a mean variance change score between drug sessions for each
 participant (\(\mu\) acc{[}DA - P{]}). Note that a positive score
 indicates that performance was better in the DA session relative to
-placebo. As can be seen in Fig \ref{fig:XXX}X, there was a negative
-relationship between drug-induced variance changes and mindfulness.
+placebo. As can be seen in Fig \ref{fig:stereofig}B, there was a
+negative relationship between drug-induced variance changes and
+mindfulness. Thus the impact of DA on the establishment of stereptypical
+eye-movement sequences is dependent on the mindfulness state of the
+individual.
 
-Thus the impact of DA on the establishment of task-relevant eye-movement
-sequences is dependent on the mindfulness state of the individual.
-
-LaTeX command can be used to reference other section. See Section
-\ref{sec:headings}. However, you can also use \textbf{bookdown}
-extensions mechanism for this.
-
-\hypertarget{headings-second-level}{%
-\subsection{Headings: second level}\label{headings-second-level}}
-
-You can use equation in blocks
-
-\[
-\xi _{ij}(t)=P(x_{t}=i,x_{t+1}=j|y,v,w;\theta)= {\frac {\alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}{\sum _{i=1}^{N} \sum _{j=1}^{N} \alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}}
-\]
-
-But also inline i.e \(z=x+y\)
-
-\hypertarget{headings-third-level}{%
-\subsubsection{Headings: third level}\label{headings-third-level}}
-
-Another paragraph.
-
-\hypertarget{examples-of-citations-figures-tables-references}{%
-\section{Examples of citations, figures, tables,
-references}\label{examples-of-citations-figures-tables-references}}
-
-\label{sec:others}
-
-You can insert references. Here is some text (Kour and Saabne 2014b,
-2014a) and see Hadash et al. (2018).
-
-The documentation for \verb+natbib+ may be found at
-
-You can use custom blocks with LaTeX support from \textbf{rmarkdown} to
-create environment.
-
-\begin{center}
-\url{http://mirrors.ctan.org/macros/latex/contrib/natbib/natnotes.pdf\%7D}
-
-\end{center}
-
-Of note is the command \verb+\citet+, which produces citations
-appropriate for use in inline text.
-
-You can insert LaTeX environment directly too.
-
-\begin{verbatim}
-   \citet{hasselmo} investigated\dots
-\end{verbatim}
-
-produces
-
-\begin{quote}
-  Hasselmo, et al.\ (1995) investigated\dots
-\end{quote}
-
-\begin{center}
-  \url{https://www.ctan.org/pkg/booktabs}
-\end{center}
-
-\hypertarget{figures}{%
-\subsection{Figures}\label{figures}}
-
-You can insert figure using LaTeX directly.
-
-See Figure \ref{fig:fig1}. Here is how you add footnotes. {[}\^{}Sample
-of the first footnote.{]}
-
-\begin{figure}
-  \centering
-  \fbox{\rule[-.5cm]{4cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
-  \caption{Sample figure caption.}
-  \label{fig:fig1}
-\end{figure}
-
-But you can also do that using R.
+Participants developed more stereotypical patterns of door selections
+over the course of the experiment, as evidenced by a reliable increase
+in variance over blocks (mean increase per block: \(\beta\) = 0.32, 95\%
+CI{[}0.20, 0.43, Fig \ref{fig:stereofig}C). In line with the interaction
+of drug x mindfulness reported above, the main effect of mindfulness
+suggested a negative relationship with variability (mindfulness mean
+\(\beta\) = -0.15, 95\% CI{[}-0.26, -0.05, Fig \ref{fig:stereofig}D).
+Higher mindfulness scores predicted less stereotypy in door-selection
+patterns relative to low mindfulness scores.
 
 \begin{figure}
 
-{\centering \includegraphics{assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines_files/figure-latex/fig2-1} 
+{\centering \includegraphics[width=0.7\linewidth]{../../images/s_fig} 
 
 }
 
-\caption{Another sample figure}\label{fig:fig2}
+\caption{The influence of dopamine and mindfulness on door selection stereotypy. A) Accuracy (acc) data by block and drug. Circles reflect observed average variance (of the transition matrices), dotted lines show the fit of the winning model. B) The association between trait mindfulness (x-axis) and the impact of drug on variance [DA-P]. The bottom row shows posterior densities (in log odds) estimated for C) the main effect of block (b), D) the main effect of DA, and E) the drug x mindfulness (m) interaction. DA = dopamine, P = placebo, d = density. Error bars reflect within-subject standard error of the mean [SE].}\label{fig:stereofig}
 \end{figure}
-
-You can use \textbf{bookdown} to allow references for Tables and
-Figures.
-
-\hypertarget{tables}{%
-\subsection{Tables}\label{tables}}
-
-Below we can see how to use tables.
-
-See awesome Table\textasciitilde{}\ref{tab:table} which is written
-directly in LaTeX in source Rmd file.
-
-\begin{table}
- \caption{Sample table title}
-  \centering
-  \begin{tabular}{lll}
-    \toprule
-    \multicolumn{2}{c}{Part}                   \\
-    \cmidrule(r){1-2}
-    Name     & Description     & Size ($\mu$m) \\
-    \midrule
-    Dendrite & Input terminal  & $\sim$100     \\
-    Axon     & Output terminal & $\sim$10      \\
-    Soma     & Cell body       & up to $10^6$  \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:table}
-\end{table}
-
-You can also use R code for that.
-
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.2687}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0746}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0597}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0746}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0597}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0746}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0746}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0746}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0448}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0448}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0746}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0746}}@{}}
-\caption{Head of mtcars table}\tabularnewline
-\toprule()
-\begin{minipage}[b]{\linewidth}\raggedright
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-mpg
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-cyl
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-disp
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-hp
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-drat
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-wt
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-qsec
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-vs
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-am
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-gear
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-carb
-\end{minipage} \\
-\midrule()
-\endfirsthead
-\toprule()
-\begin{minipage}[b]{\linewidth}\raggedright
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-mpg
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-cyl
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-disp
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-hp
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-drat
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-wt
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-qsec
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-vs
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-am
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-gear
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-carb
-\end{minipage} \\
-\midrule()
-\endhead
-Mazda RX4 & 21.0 & 6 & 160 & 110 & 3.90 & 2.62 & 16.5 & 0 & 1 & 4 & 4 \\
-Mazda RX4 Wag & 21.0 & 6 & 160 & 110 & 3.90 & 2.88 & 17.0 & 0 & 1 & 4 &
-4 \\
-Datsun 710 & 22.8 & 4 & 108 & 93 & 3.85 & 2.32 & 18.6 & 1 & 1 & 4 & 1 \\
-Hornet 4 Drive & 21.4 & 6 & 258 & 110 & 3.08 & 3.21 & 19.4 & 1 & 0 & 3 &
-1 \\
-Hornet Sportabout & 18.7 & 8 & 360 & 175 & 3.15 & 3.44 & 17.0 & 0 & 0 &
-3 & 2 \\
-Valiant & 18.1 & 6 & 225 & 105 & 2.76 & 3.46 & 20.2 & 1 & 0 & 3 & 1 \\
-\bottomrule()
-\end{longtable}
-
-\hypertarget{lists}{%
-\subsection{Lists}\label{lists}}
-
-\begin{itemize}
-\tightlist
-\item
-  Item 1
-\item
-  Item 2
-\item
-  Item 3
-\end{itemize}
-
-\hypertarget{refs}{}
-\begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-hadash2018estimate}{}}%
-Hadash, Guy, Einat Kermany, Boaz Carmeli, Ofer Lavi, George Kour, and
-Alon Jacovi. 2018. {``Estimate and Replace: A Novel Approach to
-Integrating Deep Neural Networks with Existing Applications.''}
-\emph{arXiv Preprint arXiv:1804.09028}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-kour2014fast}{}}%
-Kour, George, and Raid Saabne. 2014a. {``Fast Classification of
-Handwritten on-Line Arabic Characters.''} In \emph{Soft Computing and
-Pattern Recognition (SoCPaR), 2014 6th International Conference of},
-312--18. IEEE.
-
-\leavevmode\vadjust pre{\hypertarget{ref-kour2014real}{}}%
----------. 2014b. {``Real-Time Segmentation of on-Line Handwritten
-Arabic Script.''} In \emph{Frontiers in Handwriting Recognition (ICFHR),
-2014 14th International Conference on}, 417--22. IEEE.
-
-\end{CSLReferences}
 
 \bibliographystyle{unsrt}
 \bibliography{references.bib}

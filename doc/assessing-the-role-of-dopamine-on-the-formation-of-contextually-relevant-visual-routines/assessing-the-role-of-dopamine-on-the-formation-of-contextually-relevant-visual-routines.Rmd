@@ -193,6 +193,12 @@ b_dat <- Rmisc::summarySEwithin(data=sum_dat, measurevar = "p",
                                 withinvars="b.x",
                                 idvar="sub")
 b_dat <- b_dat %>% mutate(upper=p+ci, lower=p-ci)
+
+acc_dat_4_correlation_w_stereo <- sum_dat %>% group_by(sub) %>% summarise(mu_acc = mean(obs))
+tmp <- sum_dat %>% group_by(sub, drug) %>% summarise(mu_acc = mean(obs)) %>% 
+                          group_by(sub) %>% summarise(delta = mu_acc[drug == "levodopa"] -
+                                                              mu_acc[drug == "placebo"]) 
+acc_dat_4_correlation_w_stereo <- inner_join(acc_dat_4_correlation_w_stereo, tmp)
 ```
 
 Having established the best model to account for the data, we next determine the influence of DA and mindfulness on accuracy by making inference over the resulting parameters. Accuracy data plotted by block x drug session (DA va placebo) are shown in Fig \ref{fig:accfig}A. Critically, the influence of drug on accuracy was impacted by mindfulness scores. The drug x mindfulness parameter differed reliably from zero (mean log odds = `r sprintf("%1.2f", acc_results$fixed["drugplacebo:m","Estimate"])`, 95% CI[`r sprintf("%1.2f", acc_results$fixed["drugplacebo:m","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["drugplacebo:m","u-95% CI"])`], see Fig \ref{fig:accfig}E). To better understand this interaction, we computed a score for each participant that reflected the mean accuracy change due to the drug session ($\mu$ acc[DA - P]). Note that a positive score indicates that performance was better in the DA session relative to placebo. Next we examined the relationship between drug-induced accuracy changes and mindfulness scores. As can be seen in Fig \ref{fig:accfig}B, there was a positive relationship between drug-induced accuracy changes and mindfulness; participants scoring higher for mindfulness showed higher accuracy for the DA relative to the placebo session, for example, those scoring in the highest quartile showed mean accuracy scores of `r sprintf("%1.2f", qs_sum$p[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])` (95%CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])`]) during the DA session, relative to mean accuracy scores of `r sprintf("%1.2f", qs_sum$p[qs_sum$drug == "placebo" & qs_sum$qs == "2"])` (95% CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "placebo" & qs_sum$qs == "2"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "placebo" & qs_sum$qs == "2"])`]) during the placebo session. Individuals scoring low on mindfulness showed the opposite pattern (DA mean accuracy = `r sprintf("%1.2f", qs_sum$p[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`, 95% CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`], placebo mean accuracy = `r sprintf("%1.2f", qs_sum$p[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`, 95%CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`]), note that Fig \ref{fig:accfig}B shows the difference between these accuracy scores). Thus the impact of DA on the establishment of task-relevant eye-movements is dependent on the mindfulness state of the individual.
@@ -239,9 +245,9 @@ b_dat <- Rmisc::summarySEwithin(data=sum_dat, measurevar = "p",
 b_dat <- b_dat %>% mutate(upper=p+ci, lower=p-ci)
 ```
 
-Having established the best model to account for the data, we next determined the influence of DA and mindfulness on accuracy by making inference over the resulting model parameters (see Fig \ref{fig:caccfig}. DA reduced contextual accuracy; accuracy was on average `r sprintf("%1.2f", overall_acc_by_drug$p[overall_acc_by_drug$drug == "levodopa"])` (95% CI [`r sprintf("%1.2f", overall_acc_by_drug$lower[overall_acc_by_drug$drug == "levodopa"])`, `r sprintf("%1.2f", overall_acc_by_drug$upper[overall_acc_by_drug$drug == "levodopa"])`]) for the DA session, and `r sprintf("%1.2f", overall_acc_by_drug$p[overall_acc_by_drug$drug == "placebo"])` (95% CI [`r sprintf("%1.2f", overall_acc_by_drug$lower[overall_acc_by_drug$drug == "placebo"])`, `r sprintf("%1.2f", overall_acc_by_drug$upper[overall_acc_by_drug$drug == "placebo"])`]) for the placebo session. The log-odds of selecting a target door that was specific to the current context increased by (mean log odds = `r sprintf("%1.2f", cacc_results$fixed["drugplacebo","Estimate"])`, 95% CI[`r sprintf("%1.2f", cacc_results$fixed["drugplacebo","l-95% CI"])`, `r sprintf("%1.2f", cacc_results$fixed["drugplacebo","u-95% CI"])`, Fig \ref{fig:caccfig}A&B) for the placebo session, relative to the DA session. 
+Having established the best model to account for the data, we next determined the influence of DA and mindfulness on accuracy by making inference over the resulting model parameters (see Fig \ref{fig:caccfig}. DA reduced contextual accuracy; accuracy was on average `r sprintf("%1.2f", overall_acc_by_drug$p[overall_acc_by_drug$drug == "levodopa"])` (95% CI [`r sprintf("%1.2f", overall_acc_by_drug$lower[overall_acc_by_drug$drug == "levodopa"])`, `r sprintf("%1.2f", overall_acc_by_drug$upper[overall_acc_by_drug$drug == "levodopa"])`]) for the DA session, and `r sprintf("%1.2f", overall_acc_by_drug$p[overall_acc_by_drug$drug == "placebo"])` (95% CI [`r sprintf("%1.2f", overall_acc_by_drug$lower[overall_acc_by_drug$drug == "placebo"])`, `r sprintf("%1.2f", overall_acc_by_drug$upper[overall_acc_by_drug$drug == "placebo"])`]) for the placebo session. The log-odds of selecting a target door that was specific to the current context increased by a mean log odds of `r sprintf("%1.2f", cacc_results$fixed["drugplacebo","Estimate"])` (95% CI[`r sprintf("%1.2f", cacc_results$fixed["drugplacebo","l-95% CI"])`, `r sprintf("%1.2f", cacc_results$fixed["drugplacebo","u-95% CI"])`, Fig \ref{fig:caccfig}A&B) for the placebo session, relative to the DA session. 
 
-Participants learned to make contextually accurate door selections over the course of the sessions; Mean accuracy in block 1 was `r sprintf("%1.2f", b_dat$p[b_dat$b.x == "0"])` (95% CI[`r sprintf("%1.2f", b_dat$lower[b_dat$b.x == "0"])`, `r sprintf("%1.2f", b_dat$upper[b_dat$b.x == "0"])`]), relative to a block 8 mean of `r sprintf("%1.2f", b_dat$p[b_dat$b.x == "7"])` (95% CI[`r sprintf("%1.2f", b_dat$lower[b_dat$b.x == "7"])`, `r sprintf("%1.2f", b_dat$upper[b_dat$b.x == "7"])`]). The model showed that contextual accuracy increased by a mean log odds of `r sprintf("%1.2f", cacc_results$fixed["b","Estimate"])` (95% CI[`r sprintf("%1.2f", cacc_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", cacc_results$fixed["b","u-95% CI"])`) over each block (Fig \ref{fig:caccfig}C). In contrast to the overall accuracy data, mindfulness did not have a reliable impact on contextual accuracy (mean log odds = `r sprintf("%1.2f", cacc_results$fixed["m","Estimate"])`, 95% CI[`r sprintf("%1.2f", cacc_results$fixed["m","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["m","u-95% CI"])`]). 
+Participants learned to make contextually accurate door selections over the course of the sessions; mean accuracy in block 1 was `r sprintf("%1.2f", b_dat$p[b_dat$b.x == "0"])` (95% CI[`r sprintf("%1.2f", b_dat$lower[b_dat$b.x == "0"])`, `r sprintf("%1.2f", b_dat$upper[b_dat$b.x == "0"])`]), relative to a block 8 mean of `r sprintf("%1.2f", b_dat$p[b_dat$b.x == "7"])` (95% CI[`r sprintf("%1.2f", b_dat$lower[b_dat$b.x == "7"])`, `r sprintf("%1.2f", b_dat$upper[b_dat$b.x == "7"])`]). The model showed that contextual accuracy increased by a mean log odds of `r sprintf("%1.2f", cacc_results$fixed["b","Estimate"])` (95% CI[`r sprintf("%1.2f", cacc_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", cacc_results$fixed["b","u-95% CI"])`) over each block (Fig \ref{fig:caccfig}C). In contrast to the overall accuracy data, mindfulness did not have a reliable impact on contextual accuracy (mean log odds = `r sprintf("%1.2f", cacc_results$fixed["m","Estimate"])`, 95% CI[`r sprintf("%1.2f", cacc_results$fixed["m","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["m","u-95% CI"])`]). 
 
 ```{r, caccfig, out.width='70%', fig.cap='The influence of dopamine and mindfulness on contextual accuracy. A) Accuracy (acc) data by block and drug. Circles reflect observed average accuracy, dotted lines show the fit of the winning model. B) Estimated posterior density (in log odds) for the main effect of drug (DA vs P), D) same as in B, but for the main effect of block. DA = dopamine, P = placebo, b = block, d = density. Error bars reflect within-subject standard error of the mean [SE].'}
 
@@ -271,13 +277,13 @@ The model that best accounted for the experimental factors contained main fixed 
 ## Here I grab the summary stats saved in the plotting file
 load("../../data/derivatives/stereo_descriptives.Rda")
 
-
 # summarise mindfulness interaction
 qs <- with(dm, quantile(m, c(0.25, 0.75)))
 sum_dat$qs <- 0
 sum_dat$qs[sum_dat$m.x < qs[1]] <- 1
 sum_dat$qs[sum_dat$m.x > qs[2]] <- 2
 sum_dat$qs <- as.factor(sum_dat$qs)
+sum_dat$pred_v <- exp(sum_dat$pred_v)
 
 qs_sum <- Rmisc::summarySEwithin(data=sum_dat, measurevar="pred_v",
                                           withinvars=c("drug", "qs"),
@@ -289,131 +295,34 @@ qs_sum <- qs_sum %>% mutate(lower=pred_v-ci, upper=pred_v+ci)
 #                                withinvars="b.x",
 #                                idvar="sub")
 #b_dat <- b_dat %>% mutate(upper=p+ci, lower=p-ci)
+stereo_dat_4_correlation_w_acc <- sum_dat %>% group_by(sub) %>% summarise(mu_v = mean(v), m = m.x[1], qs = qs[1])
+tmp <- sum_dat %>% group_by(sub, drug) %>% summarise(mu_v = mean(v)) %>%
+                     group_by(sub) %>% summarise(delta_v = mu_v[drug == "levodopa"] -
+                                                           mu_v[drug == "placebo"])
+stereo_dat_4_correlation_w_acc <- inner_join(stereo_dat_4_correlation_w_acc, tmp)
 ```
 
+In line with the notion that mindfulness and dopamine interact to impact the formation of stereotypical door selections, we observed a reliable drug x mindfulness interaction (mean $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","u-95% CI"])`, Fig \ref{fig:stereofig}). Participants scoring higher for mindfulness showed lower stereotypy for the DA relative to the placebo session, for example, those scoring in the highest quartile showed mean log variance scores of `r sprintf("%1.2f", qs_sum$pred_v[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])` (95%CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])`]) during the DA session, relative to mean log variance scores of `r sprintf("%1.2f", qs_sum$pred_v[qs_sum$drug == "placebo" & qs_sum$qs == "2"])` (95% CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "placebo" & qs_sum$qs == "2"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "placebo" & qs_sum$qs == "2"])`]) during the placebo session. Individuals scoring low on mindfulness (lowest quartile) showed the opposite pattern (DA mean accuracy = `r sprintf("%1.2f", qs_sum$pred_v[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`, 95% CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`], placebo mean accuracy = `r sprintf("%1.2f", qs_sum$p[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`, 95%CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`]). To visualise this interaction, we computed a mean variance change score between drug sessions for each participant ($\mu$ acc[DA - P]). Note that a positive score indicates that performance was better in the DA session relative to placebo. As can be seen in Fig \ref{fig:stereofig}B, there was a negative relationship between drug-induced variance changes and mindfulness. Thus the impact of DA on the establishment of stereptypical eye-movement sequences is dependent on the mindfulness state of the individual.
+
+Participants developed more stereotypical patterns of door selections over the course of the experiment, as evidenced by a reliable increase in variance over blocks (mean increase per block: $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["b","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["b","u-95% CI"])`, Fig \ref{fig:stereofig}C). In line with the interaction of drug x mindfulness reported above, the main effect of mindfulness suggested a negative relationship with variability (mindfulness mean $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["m","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["m","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["m","u-95% CI"])`, Fig \ref{fig:stereofig}D). Higher mindfulness scores predicted less stereotypy in door-selection patterns relative to low mindfulness scores.  
+
+```{r, stereofig, out.width='70%', fig.cap='The influence of dopamine and mindfulness on door selection stereotypy. A) Accuracy (acc) data by block and drug. Circles reflect observed average variance (of the transition matrices), dotted lines show the fit of the winning model. B) The association between trait mindfulness (x-axis) and the impact of drug on variance [DA-P]. The bottom row shows posterior densities (in log odds) estimated for C) the main effect of block (b), D) the main effect of DA, and E) the drug x mindfulness (m) interaction. DA = dopamine, P = placebo, d = density. Error bars reflect within-subject standard error of the mean [SE].'}
+
+stereofigpth <- '../../images/s_fig.pdf'
+knitr::include_graphics(stereofigpth)
+```
 
 ```{r, corvarwithacc, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
 # use this code chunk to correlate variance with overall accuracy
 
-
+df <- inner_join(acc_dat_4_correlation_w_stereo, stereo_dat_4_correlation_w_acc, by = "sub")
+cor_results <- with(df, cor.test())
 
 ```
 
+### On the relationship between accuracy and stereotypy
 
-In line with the notion that mindfulness and dopamine interact to impact the formation of stereotypical door selections, we observed a reliable drug x mindfulness interaction (mean $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","u-95% CI"])`, Fig \ref{fig:XXX}X). Participants scoring higher for mindfulness showed lower stereotypy for the DA relative to the placebo session, for example, those scoring in the highest quartile showed mean log variance scores of `r sprintf("%1.2f", qs_sum$pred_v[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])` (95%CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])`]) during the DA session, relative to mean log variance scores of `r sprintf("%1.2f", qs_sum$pred_v[qs_sum$drug == "placebo" & qs_sum$qs == "2"])` (95% CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "placebo" & qs_sum$qs == "2"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "placebo" & qs_sum$qs == "2"])`]) during the placebo session. Individuals scoring low on mindfulness (lowest quartile) showed the opposite pattern (DA mean accuracy = `r sprintf("%1.2f", qs_sum$pred_v[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`, 95% CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`], placebo mean accuracy = `r sprintf("%1.2f", qs_sum$p[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`, 95%CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`]). To visualise this interaction, we computed a mean variance change score between drug sessions for each participant ($\mu$ acc[DA - P]). Note that a positive score indicates that performance was better in the DA session relative to placebo. As can be seen in Fig \ref{fig:XXX}X, there was a negative relationship between drug-induced variance changes and mindfulness.
-
-```{r}
-# Participants developed more stereotypical patterns of door selections over the course of the experiment, as evidenced by a reliable increase in variance over the course of the experiment (block mean $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["b","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["b","u-95% CI"])`, Fig \ref{fig:XXX}X). In line with the interaction of drug x mindfulness reported above, the main effect of mindfulness suggested a negative relationship with variability (mindfulness mean $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["m","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["m","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["m","u-95% CI"])`, Fig \ref{fig:XXX}X). Higher mindfulness scores predicted less stereotypy in door-selection patterns relative to low mindfulness scores.
-```
+As both overall accuracy and stereotypy were found to be influenced by mindfulness and drug session, we conducted an exploratory analysis to characterise the relationship between accuracy and stereotypy. Although accuracy and stereotypy showed opposing relationships with mindfulness and drug - higher mindfulness scores were associated with a deleterious impact of DA on accuracy and a concomitant increase in stereotypy - we sought to determine whether these opposing effects could be attributed to the same underlying factor, such as an overall accuracy/stereotypy trade-off. A correlation analysis on the mean accuracy and stereotypy data did not lend support to this possibility, instead accuracy and stereotypy were positively correlated (insert test here). This suggests that the opposing pattern of results cannot be simply attributed to a general accuracy/stereotypy trade off in the data. To further rule this out, we added accuracy scores as a regressor to the winning stereotypy model. Adding accuracy scores served to increase the estimated drug x mindfulness interaction ()
 
 
-Thus the impact of DA on the establishment of task-relevant eye-movement sequences is dependent on the mindfulness state of the individual.
 
-LaTeX command can be used to reference other section. See Section \ref{sec:headings}.
-However, you can also use **bookdown** extensions mechanism for this.
-
-## Headings: second level
-
-You can use equation in blocks
-
-$$
-\xi _{ij}(t)=P(x_{t}=i,x_{t+1}=j|y,v,w;\theta)= {\frac {\alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}{\sum _{i=1}^{N} \sum _{j=1}^{N} \alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}}
-$$
-
-But also inline i.e $z=x+y$
-
-### Headings: third level
-
-Another paragraph. 
-
-
-# Examples of citations, figures, tables, references
-\label{sec:others}
-
-You can insert references. Here is some text [@kour2014real; @kour2014fast] and see @hadash2018estimate.
-
-The documentation for \verb+natbib+ may be found at
-
-You can use custom blocks with LaTeX support from **rmarkdown** to create environment.
-
-::: {.center latex=true}
-  <http://mirrors.ctan.org/macros/latex/contrib/natbib/natnotes.pdf}>
-:::
-
-Of note is the command \verb+\citet+, which produces citations
-appropriate for use in inline text.  
-
-You can insert LaTeX environment directly too.
-
-\begin{verbatim}
-   \citet{hasselmo} investigated\dots
-\end{verbatim}
-
-produces
-
-\begin{quote}
-  Hasselmo, et al.\ (1995) investigated\dots
-\end{quote}
-
-\begin{center}
-  \url{https://www.ctan.org/pkg/booktabs}
-\end{center}
-
-
-## Figures
-
-You can insert figure using LaTeX directly. 
-
-See Figure \ref{fig:fig1}. Here is how you add footnotes. [^Sample of the first footnote.]
-
-\begin{figure}
-  \centering
-  \fbox{\rule[-.5cm]{4cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
-  \caption{Sample figure caption.}
-  \label{fig:fig1}
-\end{figure}
-
-But you can also do that using R.
-
-```{r fig2, fig.cap = "Another sample figure"}
-plot(mtcars$mpg)
-```
-
-You can use **bookdown** to allow references for Tables and Figures.
-
-
-## Tables
-
-Below we can see how to use tables. 
-
-See awesome Table~\ref{tab:table} which is written directly in LaTeX in source Rmd file.
-
-\begin{table}
- \caption{Sample table title}
-  \centering
-  \begin{tabular}{lll}
-    \toprule
-    \multicolumn{2}{c}{Part}                   \\
-    \cmidrule(r){1-2}
-    Name     & Description     & Size ($\mu$m) \\
-    \midrule
-    Dendrite & Input terminal  & $\sim$100     \\
-    Axon     & Output terminal & $\sim$10      \\
-    Soma     & Cell body       & up to $10^6$  \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:table}
-\end{table}
-
-You can also use R code for that.
-
-```{r}
-knitr::kable(head(mtcars), caption = "Head of mtcars table")
-```
-
-
-## Lists
-
-- Item 1
-- Item 2 
-- Item 3
