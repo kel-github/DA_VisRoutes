@@ -108,10 +108,10 @@ Enter the text of your abstract here.
 
 \begin{verbatim}
 ## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
-## v ggplot2 3.4.0     v purrr   1.0.1
-## v tibble  3.1.8     v dplyr   1.1.0
-## v tidyr   1.3.0     v stringr 1.5.0
-## v readr   2.1.3     v forcats 1.0.0
+## v ggplot2 3.3.6     v purrr   0.3.4
+## v tibble  3.1.8     v dplyr   1.0.9
+## v tidyr   1.2.0     v stringr 1.4.1
+## v readr   2.1.2     v forcats 0.5.2
 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
@@ -520,17 +520,17 @@ Having established the best model to account for the data, we next
 determined the influence of DA and mindfulness on accuracy by making
 inference over the resulting model parameters (see Fig
 \ref{fig:caccfig}. DA reduced contextual accuracy; accuracy was on
-average 0.64 (95\% CI {[}0.63, 0.65{]}) for the DA session, and 0.66
-(95\% CI {[}0.65, 0.68{]}) for the placebo session. The log-odds of
+average 0.64 (95\% CI {[}0.63, 0.65{]}) for the DA session, and 0.65
+(95\% CI {[}0.64, 0.66{]}) for the placebo session. The log-odds of
 selecting a target door that was specific to the current context
 increased by a mean log odds of 0.07 (95\% CI{[}0.01, 0.13, Fig
 \ref{fig:caccfig}A\&B) for the placebo session, relative to the DA
 session.
 
 Participants learned to make contextually accurate door selections over
-the course of the sessions; mean accuracy in block 1 was 0.59 (95\%
-CI{[}0.58, 0.61{]}), relative to a block 8 mean of 0.69 (95\% CI{[}0.67,
-0.71{]}). The model showed that contextual accuracy increased by a mean
+the course of the sessions; mean accuracy in block 1 was 0.57 (95\%
+CI{[}0.55, 0.59{]}), relative to a block 8 mean of 0.70 (95\% CI{[}0.68,
+0.72{]}). The model showed that contextual accuracy increased by a mean
 log odds of 0.13 (95\% CI{[}0.07, 0.19) over each block (Fig
 \ref{fig:caccfig}C). In contrast to the overall accuracy data,
 mindfulness did not have a reliable impact on contextual accuracy (mean
@@ -609,6 +609,40 @@ patterns relative to low mindfulness scores.
 
 \caption{The influence of dopamine and mindfulness on door selection stereotypy. A) Accuracy (acc) data by block and drug. Circles reflect observed average variance (of the transition matrices), dotted lines show the fit of the winning model. B) The association between trait mindfulness (x-axis) and the impact of drug on variance [DA-P]. The bottom row shows posterior densities (in log odds) estimated for C) the main effect of block (b), D) the main effect of DA, and E) the drug x mindfulness (m) interaction. DA = dopamine, P = placebo, d = density. Error bars reflect within-subject standard error of the mean [SE].}\label{fig:stereofig}
 \end{figure}
+
+\hypertarget{on-the-relationship-between-accuracy-and-stereotypy}{%
+\subsubsection{On the relationship between accuracy and
+stereotypy}\label{on-the-relationship-between-accuracy-and-stereotypy}}
+
+Accuracy and stereotypy showed opposing relationships with mindfulness
+and DA - higher mindfulness scores were associated with a beneficial
+influence of DA on accuracy, and lower levels of stereotypy, relative to
+placebo, whereas individuals scoring low on mindfulness showed a
+deleterious influence of DA on accuracy, coupled with increased
+stereotypy, relative to placebo. As accuracy and stereotypy are
+possibly, but not necessarily related (highly accurate individuals may
+show high variance over transition probabilities as they are selecting
+only the correct target doors, but also individuals may form inaccurate
+transition preferences), we next sought to ensure that the observed
+influences of DA and mindfulness was not being driven by the same
+information in the data. First we reasoned that such a pattern of
+results could be observed if the measures of accuracy and stereotypy
+reflected a direct trade off; i.e.~as accuracy goes up, stereotypy goes
+down. A correlation analysis ruled out this possibility. We computed
+mean accuracy and stereotypy scores for each participant, collapsing
+across all experimental factors, and found that accuracy and stereotypy
+were positively related (\(r\mathrm{(}\) 37 \(\mathrm{)}\)
+
+We sought to determine whether these opposing effects could be
+attributed to the same underlying factor, such as an overall
+accuracy/stereotypy trade-off. A correlation analysis on the mean
+accuracy and stereotypy data did not support this idea, instead accuracy
+and stereotypy were positively correlated (insert test here). This
+suggests that the opposing pattern of results cannot be simply
+attributed to a general accuracy/stereotypy trade off in the data. To
+further rule this out, we added accuracy scores as a regressor to the
+winning stereotypy model. Adding accuracy scores served to increase the
+estimated drug x mindfulness interaction ()
 
 \bibliographystyle{unsrt}
 \bibliography{references.bib}
