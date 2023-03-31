@@ -112,9 +112,9 @@ hist(err_dat$err)
 # first I am just going to do a bayesian one sample t-test, comparing to a null
 # value of .33
 library(BayesFactor)
-bf <- ttestBF(x=err_dat$err, nullInterval = c(.33, Inf))
+bf <- ttestBF(x=err_dat$err, nullInterval = c(.33, 1))
 bf
-t.test(x=err_dat$err, alternative="greater", mu=.33)
+tt <- t.test(x=err_dat$err, alternative="greater", mu=.33)
 
 desc_stats_err <- err_dat %>% summarise(mu = mean(err),
                                         med = median(err),
@@ -123,4 +123,4 @@ desc_stats_err <- err_dat %>% summarise(mu = mean(err),
                                         ci = 1.96*(sd/sqrt(N))) %>%
                               mutate(upper = mu+ci,
                                      lower = mu-ci)
-save(desc_stats_err, bf, file = sprintf('../data/derivatives/sanity_check_contextual.Rda'))
+save(desc_stats_err, bf, tt, file = sprintf('../data/derivatives/sanity_check_contextual.Rda'))

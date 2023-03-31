@@ -108,10 +108,10 @@ Enter the text of your abstract here.
 
 \begin{verbatim}
 ## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
-## v ggplot2 3.4.0     v purrr   1.0.1
-## v tibble  3.1.8     v dplyr   1.1.0
-## v tidyr   1.3.0     v stringr 1.5.0
-## v readr   2.1.3     v forcats 1.0.0
+## v ggplot2 3.3.6     v purrr   0.3.4
+## v tibble  3.1.8     v dplyr   1.0.9
+## v tidyr   1.2.0     v stringr 1.4.1
+## v readr   2.1.2     v forcats 0.5.2
 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
@@ -419,7 +419,8 @@ default priors (\textbf{rouderDefaultBayesFactors2012?}).
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-HERE I INSERT THE BRIEFEST OVER VIEW OF ALL THE RESULTS
+Overall, mindfulness and DA interacted to show opposing effects on
+accuracy and stereotypy, whereas only DA modulated contextual accuracy.
 
 \hypertarget{accuracy-1}{%
 \subsection{Accuracy}\label{accuracy-1}}
@@ -547,6 +548,37 @@ log odds = 0.04, 95\% CI{[}-0.04, 0.15{]}).
 \caption{The influence of dopamine and mindfulness on contextual accuracy. A) Accuracy (acc) data by block and drug. Circles reflect observed average accuracy, dotted lines show the fit of the winning model. B) Estimated posterior density (in log odds) for the main effect of drug (DA vs P), D) same as in B, but for the main effect of block. DA = dopamine, P = placebo, b = block, d = density. Error bars reflect within-subject standard error of the mean [SE].}\label{fig:caccfig}
 \end{figure}
 
+\hypertarget{contextual-accuracy-control-analysis}{%
+\paragraph{Contextual Accuracy Control
+Analysis}\label{contextual-accuracy-control-analysis}}
+
+DA influences contextual accuracy, which indexes the likelihood of cc
+door selections, given the set of cc and oc door selections. As we
+exclude door selections for locations that never have a target behind
+them in either context (n) from the computation of contextual accuracy,
+it is important to verify that contextual accuracy scores do indeed
+reflect difficulty in selecting appropriately from the experimental set
+of task relevant behaviours (cc + oc), and that the current findings are
+not driven by another factor such as a general task learning deficit. To
+address this, we reasoned that if contextual accuracy scores reflected a
+general deficit, then `error' door selections (i.e.~non-cc selections)
+should be drawn at random from the remaining doors (oc = 4 \& n = 8).
+Therefore, when considering only oc and n door selections, a general
+deficit interpretation suggests that oc doors should be selected from
+this total set (oc + n) with \(p\) = \(\overline{.333}\), i.e.~at
+chance. If contextual accuracy scores do tap a specific difficulty in
+selecting contextually relevant behaviours from the set of all
+task-relevant behaviours, then oc doors should instead be selected more
+than chance. To test this, we computed for each participant the
+probability of oc selections, given the set of oc and n (\(p_{oc}\)),
+and performed a one-sided t-test, against a null value of \(p\) = .333.
+(Note that we opted to use an NHST approach as we had a point null
+hypothesis). The \(p_{oc}\) data was unlikely under the null hypothesis
+(mean = 0.37, 95\% CI{[}0.35, 0.39{]}, \(t\)(38) = 3.62, \(p\) = 0.0004.
+Therefore, the influence of DA on contextual accuracy cannot be fully
+explained by a general learning deficit. We return to this point in the
+discussion.
+
 \hypertarget{stereotypy-of-door-selections}{%
 \subsection{Stereotypy of door
 selections}\label{stereotypy-of-door-selections}}
@@ -574,11 +606,11 @@ stereotypy}\label{the-impact-of-drug-and-mindfulness-on-stereotypy}}
 
 In line with the notion that mindfulness and dopamine interact to impact
 the formation of stereotypical door selections, we observed a reliable
-drug x mindfulness interaction (mean \(\beta\) = 0.11, 95\% CI{[}0.02,
-0.21, Fig \ref{fig:stereofig}). Participants scoring higher for
-mindfulness showed lower stereotypy for the DA relative to the placebo
-session, for example, those scoring in the highest quartile showed mean
-log variance scores of -8.74 (95\%CI{[}-8.80, -8.68{]}) during the DA
+drug x mindfulness interaction on stereotypy (mean \(\beta\) = 0.11,
+95\% CI{[}0.02, 0.21, Fig \ref{fig:stereofig}). Mindfulness scores
+modulated the stereotypy difference between the DA and placebo sessions;
+for example, those scoring in the highest quartile showed mean log
+variance scores of -8.74 (95\%CI{[}-8.80, -8.68{]}) during the DA
 session, relative to mean log variance scores of -8.68 (95\% CI{[}-8.74,
 -8.62{]}) during the placebo session. Individuals scoring low on
 mindfulness (lowest quartile) showed the opposite pattern (DA mean
@@ -600,8 +632,8 @@ CI{[}0.20, 0.43, Fig \ref{fig:stereofig}C). In line with the interaction
 of drug x mindfulness reported above, the main effect of mindfulness
 suggested a negative relationship with variability (mindfulness mean
 \(\beta\) = -0.15, 95\% CI{[}-0.26, -0.05, Fig \ref{fig:stereofig}D).
-Higher mindfulness scores predicted less stereotypy in door-selection
-patterns relative to low mindfulness scores.
+Overall, higher mindfulness scores predicted less stereotypy in
+door-selection patterns relative to low mindfulness scores.
 
 \begin{figure}
 
@@ -613,7 +645,7 @@ patterns relative to low mindfulness scores.
 \end{figure}
 
 \hypertarget{on-the-relationship-between-accuracy-and-stereotypy}{%
-\subsubsection{On the relationship between accuracy and
+\paragraph{On the relationship between accuracy and
 stereotypy}\label{on-the-relationship-between-accuracy-and-stereotypy}}
 
 Accuracy and stereotypy showed opposing relationships with mindfulness
@@ -650,37 +682,6 @@ eye-movement sequences.
 \hypertarget{blinding-check}{%
 \subsection{Blinding check}\label{blinding-check}}
 
-\begin{verbatim}
-## Loading required package: BayesFactor
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: coda
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: Matrix
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'Matrix'
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:tidyr':
-## 
-##     expand, pack, unpack
-\end{verbatim}
-
-\begin{verbatim}
-## ************
-## Welcome to BayesFactor 0.9.12-4.4. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).
-## 
-## Type BFManual() to open the manual.
-## ************
-\end{verbatim}
-
 Next we checked if participants knew whether they had received Levodopa
 or placebo across the two sessions. Participants were asked to report at
 the end of each session whether they thought they had received Levodopa
@@ -715,9 +716,41 @@ time-point and drug. This model was barely preferred to the next best
 model which contained a time-point x drug interaction (BF = 1.7
 ±5.69\%), but was strongly preferred to the random intercept model (BF =
 5011975 ±3.76\%). Overall, mean BVP was lower in the Levodopa session
-(mean = 2.181.511261, 95\% CI{[}2.180.257101, 2.182.765421{]}), relative
-to placebo (mean = 2.184.482473, 95\% CI{[}2.183.460904,
-2.185.504042{]}).
+(mean = 2.181.511261, 95\% CI{[}80.3, 82.8{]}), relative to placebo
+(mean = 84.5, 95\% CI{[}83.5, 2.185.504042{]}).
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+Summary of results - overall capacity to learn task relevant behaviours
+(cc \& oc) is influenced by DA, and this influence in modulated by trait
+mindfulness. People with higher levels of mindfulness appear to benefit
+from an increase in DA, whereas those low in mindfulness suffer from DA.
+- contextual accuracy - the ability to appropriately select from the
+full set of potentially relevant behaviours, according to context, is
+modulated by DA levels. This effect appears to be general, we found no
+modulation of it. Therefore, dopamine may help acquire task relevant
+behaviours, but it may also cause problems by making more relevant
+behaviours more competitive for representation. - stereotypy -
+stereotypy was modulated by
+
+\begin{itemize}
+\item
+  contextual accuracy - likely that for some participants it did reflect
+  a general learning deficit, but there is a contextual effect there.
+\item
+  stereotypy - due to non accurate door selections - see difficulty
+  selecting from the relevant set of behaviours and increasing
+  stereotypy - future work can look at motivating factors (e.g.~reward)
+  and how this effects the habitual use of behaviours that are task
+  relevant in some contexts but not others. (The example in the intro
+  will be opening a drawer).
+\item
+  BVP - different, could it contribute to the results. It was
+  unnoticeable to participants.
+\item
+  relationship to ADHD?
+\end{itemize}
 
 \bibliographystyle{unsrt}
 \bibliography{references.bib}
