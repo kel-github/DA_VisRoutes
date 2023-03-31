@@ -108,10 +108,10 @@ Enter the text of your abstract here.
 
 \begin{verbatim}
 ## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
-## v ggplot2 3.3.6     v purrr   0.3.4
-## v tibble  3.1.8     v dplyr   1.0.9
-## v tidyr   1.2.0     v stringr 1.4.1
-## v readr   2.1.2     v forcats 0.5.2
+## v ggplot2 3.4.0     v purrr   1.0.1
+## v tibble  3.1.8     v dplyr   1.1.0
+## v tidyr   1.3.0     v stringr 1.5.0
+## v readr   2.1.3     v forcats 1.0.0
 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
@@ -145,10 +145,11 @@ consent was obtained at the start of the first session.
 \subsection{Procedure}\label{procedure}}
 
 Participants attended two sessions, spaced approximately 1 week apart.
-After initial blood pressure and mood assessments, participants received
-either placebo (vitamin C) or Levodopa (Madopar 125: 100 mg Levodopa and
-25 mg Benserazide Hydrochloride), crushed and dispersed in orange juice,
-now referred to as the `placebo' and `DA' sessions respectively. The
+After initial blood pressure (BP) and mood assessments
+(\textbf{bondUseAnalogueScales1974?}), participants received either
+placebo (vitamin C) or Levodopa (Madopar 125: 100 mg Levodopa and 25 mg
+Benserazide Hydrochloride), crushed and dispersed in orange juice, now
+referred to as the `placebo' and `DA' sessions respectively. The
 solution was prepared by an experimenter who did not administer the
 remaining experimental procedures. This protocol was sufficient to
 achieve double blinding in previous work
@@ -160,13 +161,12 @@ Impulsivity Scale {[}BIS;
 (\textbf{pattonFactorStructureBarratt1995?}){]}, as trait impulsivity
 scores are associated with midbrain dopamine D2/D3 receptor
 availability. Around 30 minutes after drug administration, participants
-completed a second blood pressure and mood rating assessment.
-Participants then completed the practice stage of the task, so that the
-experimental stage began approximately 40 minutes after drug ingestion,
-within the window of peak plasma availability. At the end of the
-session, participants completed the final blood pressure and mood rating
-assessment and were asked whether they thought they had been given the
-active or placebo drug.
+completed a second BP and mood rating assessment. Participants then
+completed the practice stage of the task, so that the experimental stage
+began approximately 40 minutes after drug ingestion, within the window
+of peak plasma availability. At the end of the session, participants
+completed the final BP and mood rating assessment and were asked whether
+they thought they had been given the active or placebo drug.
 
 \hypertarget{apparatus}{%
 \subsection{Apparatus}\label{apparatus}}
@@ -408,11 +408,13 @@ described for the accuracy data above.
 \subsection{Blinding analyses}\label{blinding-analyses}}
 
 To determine whether awareness of the dopamine intervention could have
-contributed to the findings, the probability of participant and
-experimenter ratings were compared to the expected values assuming
-chance guessing, using a binomial model. Blood-pressure and mood
-measures were compared using {[}insert whether paired t-test or
-Mann-Whitney U test{]}.
+contributed to the findings, the probability of participant ratings were
+compared to the expected values assuming chance guessing, using a Chi
+Square test. BP and mood ratings were each subject to a session (DA vs
+placebo) x timepoint (pre-drug, pre-experiment, post-experiment)
+Bayesian repeated measures ANOVA, implemented using the BayesFactor
+package for R (\textbf{moreyBayesFactorComputationBayes2015?}) using the
+default priors (\textbf{rouderDefaultBayesFactors2012?}).
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -520,17 +522,17 @@ Having established the best model to account for the data, we next
 determined the influence of DA and mindfulness on accuracy by making
 inference over the resulting model parameters (see Fig
 \ref{fig:caccfig}. DA reduced contextual accuracy; accuracy was on
-average 0.64 (95\% CI {[}0.63, 0.65{]}) for the DA session, and 0.65
-(95\% CI {[}0.64, 0.66{]}) for the placebo session. The log-odds of
+average 0.64 (95\% CI {[}0.63, 0.65{]}) for the DA session, and 0.66
+(95\% CI {[}0.65, 0.68{]}) for the placebo session. The log-odds of
 selecting a target door that was specific to the current context
 increased by a mean log odds of 0.07 (95\% CI{[}0.01, 0.13, Fig
 \ref{fig:caccfig}A\&B) for the placebo session, relative to the DA
 session.
 
 Participants learned to make contextually accurate door selections over
-the course of the sessions; mean accuracy in block 1 was 0.57 (95\%
-CI{[}0.55, 0.59{]}), relative to a block 8 mean of 0.70 (95\% CI{[}0.68,
-0.72{]}). The model showed that contextual accuracy increased by a mean
+the course of the sessions; mean accuracy in block 1 was 0.59 (95\%
+CI{[}0.58, 0.61{]}), relative to a block 8 mean of 0.69 (95\% CI{[}0.67,
+0.71{]}). The model showed that contextual accuracy increased by a mean
 log odds of 0.13 (95\% CI{[}0.07, 0.19) over each block (Fig
 \ref{fig:caccfig}C). In contrast to the overall accuracy data,
 mindfulness did not have a reliable impact on contextual accuracy (mean
@@ -587,7 +589,7 @@ participant (\(\mu\) acc{[}DA - P{]}). Note that a positive score
 indicates that performance was better in the DA session relative to
 placebo. As can be seen in Fig \ref{fig:stereofig}B, there was a
 negative relationship between drug-induced variance changes and
-mindfulness. Thus the impact of DA on the establishment of stereptypical
+mindfulness. Thus the impact of DA on the establishment of stereotypical
 eye-movement sequences is dependent on the mindfulness state of the
 individual.
 
@@ -631,18 +633,91 @@ reflected a direct trade off; i.e.~as accuracy goes up, stereotypy goes
 down. A correlation analysis ruled out this possibility. We computed
 mean accuracy and stereotypy scores for each participant, collapsing
 across all experimental factors, and found that accuracy and stereotypy
-were positively related (\(r\mathrm{(}\) 37 \(\mathrm{)}\)
+were positively related (\(r\)(37) = 0.72, \(p\) = 2.45e-07). Next, to
+rule out the contribution of accuracy to the stereotypy results, we
+added mean accuracy, computed for each block and drug condition, as a
+regressor to the winning model. Adding accuracy as a regressor both
+clearly improved the predictive accuracy of the model (ELPD diff =
+-110.26, ELPD:SE = -6.12), and served to increase certainty in the
+mindfulness x drug interaction. Specifically, the estimated influence of
+the interaction increased from \(\beta\) = 0.11 to \(\beta\) = 0.22
+(95\% CI{[}0.14, 0.29{]}). Note that the pattern of remaining results
+were also consistent between the two models. Therefore, the data support
+the notion that mindfulness and DA interact to differently influence
+accuracy and stereotypy when participants perform task-relevant
+eye-movement sequences.
 
-We sought to determine whether these opposing effects could be
-attributed to the same underlying factor, such as an overall
-accuracy/stereotypy trade-off. A correlation analysis on the mean
-accuracy and stereotypy data did not support this idea, instead accuracy
-and stereotypy were positively correlated (insert test here). This
-suggests that the opposing pattern of results cannot be simply
-attributed to a general accuracy/stereotypy trade off in the data. To
-further rule this out, we added accuracy scores as a regressor to the
-winning stereotypy model. Adding accuracy scores served to increase the
-estimated drug x mindfulness interaction ()
+\hypertarget{blinding-check}{%
+\subsection{Blinding check}\label{blinding-check}}
+
+\begin{verbatim}
+## Loading required package: BayesFactor
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: coda
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: Matrix
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'Matrix'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:tidyr':
+## 
+##     expand, pack, unpack
+\end{verbatim}
+
+\begin{verbatim}
+## ************
+## Welcome to BayesFactor 0.9.12-4.4. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).
+## 
+## Type BFManual() to open the manual.
+## ************
+\end{verbatim}
+
+Next we checked if participants knew whether they had received Levodopa
+or placebo across the two sessions. Participants were asked to report at
+the end of each session whether they thought they had received Levodopa
+or placebo. Participant responses were coded as either correct for both
+sessions (cc: observed N = 7), correct for one session and incorrect for
+the other (ci: N = 11), or incorrect for both sessions (ii: N = 8). The
+probability of the observed guesses was not statistically unlikely given
+the null distribution of chance performance (the null hypothesis
+specified \(p\)= .25, .5, .25 for cc, ci, ii respectively, \(\chi^2\)(2,
+26) = 0.69, \(p\) =0.71). Note that we were unable to include all the
+participants in this analysis owing to missing data. Specifically, due
+to a miscommunication in the research team, the blinding check questions
+contained `Don't know' as a possible response, for which we are unable
+to generate a null hypothesis. We therefore only include participants
+who made a guess using the Levodopa and placebo options across both
+sessions.
+
+\hypertarget{mood-and-blood-pressure}{%
+\subsection{Mood and Blood Pressure}\label{mood-and-blood-pressure}}
+
+We also sought to determine whether DA influenced physiological factors
+such as mood and BP. For mood, the winning model contained a main effect
+of time-point and no other fixed effects. This model was preferred
+relative to next best model, which contained an additional main effect
+of drug (BF = 3.76, ±2.14\%) and was substantially preferred over the
+null random intercept model (BF = 514549 ±1.23\%).
+
+Mean blood pressure was computed using the formula: Mean BVP = diastolic
+blood pressure (DBP) + 1/3 {[}systolic blood pressure (SBP) -- DBP{]}.
+For mean BVP, the winning model contained main effects of both
+time-point and drug. This model was barely preferred to the next best
+model which contained a time-point x drug interaction (BF = 1.7
+±5.69\%), but was strongly preferred to the random intercept model (BF =
+5011975 ±3.76\%). Overall, mean BVP was lower in the Levodopa session
+(mean = 2.181.511261, 95\% CI{[}2.180.257101, 2.182.765421{]}), relative
+to placebo (mean = 2.184.482473, 95\% CI{[}2.183.460904,
+2.185.504042{]}).
 
 \bibliographystyle{unsrt}
 \bibliography{references.bib}

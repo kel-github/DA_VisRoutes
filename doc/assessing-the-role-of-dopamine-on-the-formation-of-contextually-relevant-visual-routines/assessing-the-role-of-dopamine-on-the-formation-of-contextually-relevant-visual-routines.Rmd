@@ -68,7 +68,7 @@ A total of 40 participants (mean age: 24.5, sd: 5, 30 female, 10 male) were recr
 
 ## Procedure
 
-Participants attended two sessions, spaced approximately 1 week apart. After initial blood pressure and mood assessments, participants received either placebo (vitamin C) or Levodopa (Madopar 125: 100 mg Levodopa and 25 mg Benserazide Hydrochloride), crushed and dispersed in orange juice, now referred to as the 'placebo' and 'DA' sessions respectively. The solution was prepared by an experimenter who did not administer the remaining experimental procedures. This protocol was sufficient to achieve double blinding in previous work [@chowdhuryDopamineModulatesEpisodic2012; @chowdhuryDopamineRestoresReward2013]. Participants then completed the Five Facet Mindfulness Questionnaire [@baerUsingSelfReportAssessment2006] and the Barratt Impulsivity Scale [BIS; @pattonFactorStructureBarratt1995], as trait impulsivity scores are associated with midbrain dopamine D2/D3 receptor availability. Around 30 minutes after drug administration, participants completed a second blood pressure and mood rating assessment. Participants then completed the practice stage of the task, so that the experimental stage began approximately 40 minutes after drug ingestion, within the window of peak plasma availability. At the end of the session, participants completed the final blood pressure and mood rating assessment and were asked whether they thought they had been given the active or placebo drug.
+Participants attended two sessions, spaced approximately 1 week apart. After initial blood pressure (BP) and mood assessments [@bondUseAnalogueScales1974], participants received either placebo (vitamin C) or Levodopa (Madopar 125: 100 mg Levodopa and 25 mg Benserazide Hydrochloride), crushed and dispersed in orange juice, now referred to as the 'placebo' and 'DA' sessions respectively. The solution was prepared by an experimenter who did not administer the remaining experimental procedures. This protocol was sufficient to achieve double blinding in previous work [@chowdhuryDopamineModulatesEpisodic2012; @chowdhuryDopamineRestoresReward2013]. Participants then completed the Five Facet Mindfulness Questionnaire [@baerUsingSelfReportAssessment2006] and the Barratt Impulsivity Scale [BIS; @pattonFactorStructureBarratt1995], as trait impulsivity scores are associated with midbrain dopamine D2/D3 receptor availability. Around 30 minutes after drug administration, participants completed a second BP and mood rating assessment. Participants then completed the practice stage of the task, so that the experimental stage began approximately 40 minutes after drug ingestion, within the window of peak plasma availability. At the end of the session, participants completed the final BP and mood rating assessment and were asked whether they thought they had been given the active or placebo drug.
 
 ## Apparatus
 
@@ -142,11 +142,11 @@ The resulting variance scores were subject to a comparable Bayesian mixture mode
 
 ## Blinding analyses
 
-To determine whether awareness of the dopamine intervention could have contributed to the findings, the probability of participant and experimenter ratings were compared to the expected values assuming chance guessing, using a binomial model. Blood-pressure and mood measures were compared using [insert whether paired t-test or Mann-Whitney U test].
+To determine whether awareness of the dopamine intervention could have contributed to the findings, the probability of participant ratings were compared to the expected values assuming chance guessing, using a Chi Square test. BP and mood ratings were each subject to a session (DA vs placebo) x timepoint (pre-drug, pre-experiment, post-experiment) Bayesian repeated measures ANOVA, implemented using the BayesFactor package for R [@moreyBayesFactorComputationBayes2015] using the default priors [@rouderDefaultBayesFactors2012].
 
 # Results
 
-HERE I INSERT THE BRIEFEST OVER VIEW OF ALL THE RESULTS
+Overall, mindfulness and DA interacted to show opposing effects on accuracy and stereotypy, whereas only DA modulated contextual accuracy.
 
 ## Accuracy 
 
@@ -255,6 +255,9 @@ caccfigpth <- '../../images/cacc_fig.pdf'
 knitr::include_graphics(caccfigpth)
 ```
 
+#### Contextual Accuracy Control Analysis
+
+DA influences contextual accuracy, which indexes how likely participants were to open doors that served as target locations for the other context. However, as we exclude non-relevant door selections from the computation of contextual accuracy, it is important to verify that these scores do indeed reflect contextual accuracy, and that the current findings cannot be driven by another factor such as participants were poorer to learn the task overall in the DA session. To address this, we reasoned that if the current data reflected a general impoverished learning effect, then non-
 
 ## Stereotypy of door selections
 
@@ -322,14 +325,33 @@ cor_p <- cor_results$p.value
 load('../../data/derivatives/stereo_winplusmindplusacc_dmindint/stereo_winplusmindplusacc_dmindint.Rda')
 stereo_w_acc_mod_comp <- loo_compare(mndbd_dm, mndbdacc_dm)
 stereo_update_results <-  print(mndbdacc_dm, digits = 2)
+
+# Note to self: should code some DAGs so I can work out some potential underlying causal structures
 ```
 
-### On the relationship between accuracy and stereotypy
+#### On the relationship between accuracy and stereotypy
 
-Accuracy and stereotypy showed opposing relationships with mindfulness and DA - higher mindfulness scores were associated with a beneficial influence of DA on accuracy, and lower levels of stereotypy, relative to placebo, whereas individuals scoring low on mindfulness showed a deleterious influence of DA on accuracy, coupled with increased stereotypy, relative to placebo. As accuracy and stereotypy are possibly, but not necessarily related (highly accurate individuals may show high variance over transition probabilities as they are selecting only the correct target doors, but also individuals may form inaccurate transition preferences), we next sought to ensure that the observed influences of DA and mindfulness was not being driven by the same information in the data. First we reasoned that such a pattern of results could be observed if the measures of accuracy and stereotypy reflected a direct trade off; i.e. as accuracy goes up, stereotypy goes down. A correlation analysis ruled out this possibility. We computed mean accuracy and stereotypy scores for each participant, collapsing across all experimental factors, and found that accuracy and stereotypy were positively related ($r\mathrm{(}$ `r sprintf("%d", cor_df)` $\mathrm{)} = $ `r sprintf("%.2f", cor_cor)`, $p = $ `r sprintf("%1.2e", cor_p)`). Next, to rule out the contribution of accuracy to the stereotypy results, we added mean accuracy, computed for each block and drug condition, as a regressor to the winning model. Adding accuracy as a regressor both clearly improved the predictive accuracy of the model (ELPD diff = `r sprintf("%1.2f", stereo_w_acc_mod_comp["mndbd_dm", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", stereo_w_acc_mod_comp["mndbd_dm", "elpd_diff"]/stereo_w_acc_mod_comp["mndbd_dm","se_diff"])`), and served to increase certainty in the mindfulness x drug interaction. Specifically, the estimated influence of the interaction increased from $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","Estimate"])` to $\beta$ = `r sprintf("%1.2f", stereo_update_results$fixed["drugplacebo:m","Estimate"])` (95% CI[`r sprintf("%1.2f", stereo_update_results$fixed["drugplacebo:m","l-95% CI"])`, `r sprintf("%1.2f", stereo_update_results$fixed["drugplacebo:m","u-95% CI"])`]). Note that the pattern of remaining results were also consistent between the two models. Therefore, the data support the notion that mindfulness and DA interact to differently influence accuracy and stereotypy when participants perform task-relevant eye-movement sequences. 
+Accuracy and stereotypy showed opposing relationships with mindfulness and DA - higher mindfulness scores were associated with a beneficial influence of DA on accuracy, and lower levels of stereotypy, relative to placebo, whereas individuals scoring low on mindfulness showed a deleterious influence of DA on accuracy, coupled with increased stereotypy, relative to placebo. As accuracy and stereotypy are possibly, but not necessarily related (highly accurate individuals may show high variance over transition probabilities as they are selecting only the correct target doors, but also individuals may form inaccurate transition preferences), we next sought to ensure that the observed influences of DA and mindfulness was not being driven by the same information in the data. First we reasoned that such a pattern of results could be observed if the measures of accuracy and stereotypy reflected a direct trade off; i.e. as accuracy goes up, stereotypy goes down. A correlation analysis ruled out this possibility. We computed mean accuracy and stereotypy scores for each participant, collapsing across all experimental factors, and found that accuracy and stereotypy were positively related ($r$(`r sprintf("%d", cor_df)`) = `r sprintf("%.2f", cor_cor)`, $p$ = `r sprintf("%1.2e", cor_p)`). Next, to rule out the contribution of accuracy to the stereotypy results, we added mean accuracy, computed for each block and drug condition, as a regressor to the winning model. Adding accuracy as a regressor both clearly improved the predictive accuracy of the model (ELPD diff = `r sprintf("%1.2f", stereo_w_acc_mod_comp["mndbd_dm", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", stereo_w_acc_mod_comp["mndbd_dm", "elpd_diff"]/stereo_w_acc_mod_comp["mndbd_dm","se_diff"])`), and served to increase certainty in the mindfulness x drug interaction. Specifically, the estimated influence of the interaction increased from $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","Estimate"])` to $\beta$ = `r sprintf("%1.2f", stereo_update_results$fixed["drugplacebo:m","Estimate"])` (95% CI[`r sprintf("%1.2f", stereo_update_results$fixed["drugplacebo:m","l-95% CI"])`, `r sprintf("%1.2f", stereo_update_results$fixed["drugplacebo:m","u-95% CI"])`]). Note that the pattern of remaining results were also consistent between the two models. Therefore, the data support the notion that mindfulness and DA interact to differently influence accuracy and stereotypy when participants perform task-relevant eye-movement sequences. 
 
 ## Blinding check
 
+```{r}
 
+load("../../data/derivatives/manip_checks.Rda")
+mood_win <- mood[1]/mood[3]
+
+```
+
+Next we checked if participants knew whether they had received Levodopa or placebo across the two sessions. Participants were asked to report at the end of each session whether they thought they had received Levodopa or placebo. Participant responses were coded as either correct for both sessions (cc: observed N = `r sprintf("%.0f", counts["cc"])`), correct for one session and incorrect for the other (ci: N = `r sprintf("%.0f", counts["ic"])`), or incorrect for both sessions (ii: N = `r sprintf("%.0f", counts["ii"])`). The probability of the observed guesses was not statistically unlikely given the null distribution of chance performance (the null hypothesis specified $p$= .25, .5, .25 for cc, ci, ii respectively,  $\chi^2$(`r length(counts)-1`, `r n`) = `r sprintf("%1.2f", test_statistic)`, $p$ =`r sprintf("%.2f", p_value)`). Note that we were unable to include all the participants in this analysis owing to missing data. Specifically, due to a miscommunication in the research team, the blinding check questions contained 'Don't know' as a possible response, for which we are unable to generate a null hypothesis. We therefore only include participants who made a guess using the Levodopa and placebo options across both sessions.
+
+## Mood and Blood Pressure
+
+We also sought to determine whether DA influenced physiological factors such as mood and BP. For mood, the winning model contained a main effect of time-point and no other fixed effects. This model was preferred relative to next best model, which contained an additional main effect of drug (BF = 3.76, ±2.14%) and was substantially preferred over the null random intercept model (BF = 514549 ±1.23%). 
+
+Mean blood pressure was computed using the formula: Mean BVP = diastolic blood pressure (DBP) + 1/3 [systolic blood pressure (SBP) – DBP]. For mean BVP, the winning model contained main effects of both time-point and drug. This model was barely preferred to the next best model which contained a time-point x drug interaction (BF = 1.7 ±5.69%), but was strongly preferred to the random intercept model (BF = 5011975 ±3.76%). Overall, mean BVP was lower in the Levodopa session (mean = `r sprintf("2.1%f", bvp_drug$bvp[bvp_drug$drug == "levodopa"])`, 95% CI[`r sprintf("2.1%f", bvp_drug$lower[bvp_drug$drug == "levodopa"])`, `r sprintf("2.1%f", bvp_drug$upper[bvp_drug$drug == "levodopa"])`]), relative to placebo (mean = `r sprintf("2.1%f", bvp_drug$bvp[bvp_drug$drug == "placebo"])`, 95% CI[`r sprintf("2.1%f", bvp_drug$lower[bvp_drug$drug == "placebo"])`, `r sprintf("2.1%f", bvp_drug$upper[bvp_drug$drug == "placebo"])`]).
+
+U2H - check variance has been changed to stereotypy
+
+# Discussion
 
 

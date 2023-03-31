@@ -70,12 +70,19 @@ counts <- gss %>% mutate(correct = as.numeric(code == dcode)) %>% group_by(sub) 
                            ic = sum(sumd == 1),
                            ii = sum(sumd == 0))
 
-prob_test <- dmultinom(counts, prob=c(.25, .5, .25))
+null_hypothesis <- c(.25, .5, .25)
+expected_counts <- null_hypothesis*sum(counts)
+
+# now take the test statistic 
+test_statistic <- sum((counts - expected_counts)^2 / expected_counts)
+
+# now compute the probability of getting these data if the null is true
+p_value <- 1 - pchisq(test_statistic, df = length(null_hypothesis) - 1)
+n <- sum(counts)
 
 # now plot theoretical against the null
 ptst_4plt <- rbind(counts/sum(counts), c(.25, .5, .25))
 rownames(ptst_4plt) <- c("observed", "expected")
-
 ptst_4plt <- as.matrix(ptst_4plt)
 
 pdf(sprintf("../images/blinding_obsvexp_fig.pdf"),
@@ -162,4 +169,4 @@ mood <- anovaBF(mood ~ drug*tp + sub, data=md, whichRandom = "sub", progress=TRU
 plot(mood)
 
 # save the appropriate datas for referencing in the doc
-save(mood, bvp, md, gss, counts, file="../data/derivatives/manip_checks.Rda")
+save(mood, bvp, bvp_drug, md, gss, counts, test_statistic, n, p_value, file="../data/derivatives/manip_checks.Rda")
