@@ -57,6 +57,7 @@ options(digits = 3, width = 88, knitr.graphics.auto_pdf = TRUE,
 
 # Introduction
 
+JoN - 600 words
 Here goes an introduction text
 
 # Methods
@@ -359,15 +360,44 @@ Mean blood pressure was computed using the formula: Mean BVP = diastolic blood p
 
 # Discussion
 
-Summary of results
-- overall capacity to learn task relevant behaviours (cc & oc) is influenced by DA, and this influence in modulated by trait mindfulness. People with higher levels of mindfulness appear to benefit from an increase in DA, whereas those low in mindfulness suffer from DA.
-- contextual accuracy - the ability to appropriately select from the full set of potentially relevant behaviours, according to context, is modulated by DA levels. This effect appears to be general, we found no modulation of it. Therefore, dopamine may help acquire task relevant behaviours, but it may also cause problems by making more relevant behaviours more competitive for representation.
-- stereotypy - stereotypy was impacted by dopamine, however this impact was modulated by mindfulness. People with higher levels of mindfulness showed lower levels of stereotypy (and higher accuracy), whereas people with lower levels of mindfulness showed higher levels of stereotypy. This finding could not be accounted for by accuracy (indeed accounting for accuracy (cc) strengthened the effect); this suggests that the DA impact on stereotypy relates to the perseverative use of non-context relevant behaviours. Interestingly, DA appeared to reduce this perseveration in high mindfulness individuals, but exacerbates it in individuals with low levels of mindfulness.
+We investigated the impact of mindfulness and dopamine on the formation of task relevant behaviour sets, the ability to select from learned behaviours according to context, and the stereotypical nature of behaviour deployment. Participants used their eyes to open doors in a gaze-contingent display, and were offered the opportunity to learn that coloured contexts signalled that targets would appear behind some doors and not others. Manipulating dopamine levels in healthy participants influenced all three phenomena of interest. For overall accuracy and stereotypy, the impact of increased dopamine interacted with trait mindfulness. Higher trait mindfulness was associated with a beneficial influence of increased dopamine, with higher overall accuracy and a concomitant decrease in behavioural stereotypy. Lower trait mindfulness resulted in a deleterious impact of increased dopamine, with lower overall accuracy and higher stereotypy. In contrast, we detected an influence of dopamine, and not mindfulness, on contextual accuracy. Overall, increasing dopamine reduced contextual accuracy, and made individuals more likely to select task-relevant behaviours from the wrong context. These results support the hypothesis that dopamine function impacts the excitation of task-relevant behaviours according to the current context. The data also support the hypothesis that the extent to which we learn task-relevant behaviours, and become routine in their execution, depends at least in part on interaction between the systems that underpin mindfulness and dopamine function in the human brain.
 
-- contextual accuracy - likely that for some participants it did reflect a general learning deficit, but there is a contextual effect there.
+- Mindfulness, dopamine and the accuracy/stereotypy trade-off
+Mindfulness work - check Reuben and Heleen's stuff
+https://www.sciencedirect.com/science/article/pii/S1697260023000170
+https://direct.mit.edu/jocn/article/34/4/655/109216/Leveraging-Spiking-Deep-Neural-Networks-to
+https://www.biorxiv.org/content/10.1101/2022.11.15.516581v1.abstract
+https://www.sciencedirect.com/science/article/pii/S014976342100261X
 
-- stereotypy - due to non accurate door selections - see difficulty selecting from the relevant set of behaviours and increasing stereotypy - future work can look at motivating factors (e.g. reward) and how this effects the habitual use of behaviours that are task relevant in some contexts but not others. (The example in the intro will be opening a drawer).
+Graybiel work
+https://www.sciencedirect.com/science/article/pii/S0896627315006418
+https://www.pnas.org/doi/abs/10.1073/pnas.1013470107
+https://www.frontiersin.org/articles/10.3389/fnsys.2015.00185/full
+Related
+https://www.sciencedirect.com/science/article/pii/S0896627318306755
+https://www.sciencedirect.com/science/article/pii/S0896627322000617
+https://direct.mit.edu/jocn/article/34/7/1103/110007/Caught-in-the-ACTS-Defining-Abstract-Cognitive
+https://direct.mit.edu/jocn/article/34/8/1307/111231/Hierarchical-Reinforcement-Learning-Sequential
 
+- Contextual accuracy
+Songbird work
+https://www.sciencedirect.com/science/article/pii/S0306452214008720
+https://www.sciencedirect.com/science/article/pii/S0959438820301173
+https://academic.oup.com/ilarjournal/article/51/4/362/676057
+https://www.sciencedirect.com/science/article/pii/S0959438821000131
+https://www.sciencedirect.com/science/article/pii/S0149763421004759
+https://www.biorxiv.org/content/10.1101/2022.09.09.507372v1.abstract
+https://www.sciencedirect.com/science/article/pii/S2211124722003187
+
+- What I think the mechanisms are that we have found, but what we need to disambiguate in future work
+
+Limitations
 - BVP - different, could it contribute to the results. It was unnoticeable to participants.
+- potential relationship between accuracy/stereotypy
+- power of the blinding test
 
-- relationship to ADHD?
+wider speculations 
+- relationship to keeping on track, goal relevant behaviour system
+- relationship to clinical syndromes such as ADHD?
+
+Conclusions
