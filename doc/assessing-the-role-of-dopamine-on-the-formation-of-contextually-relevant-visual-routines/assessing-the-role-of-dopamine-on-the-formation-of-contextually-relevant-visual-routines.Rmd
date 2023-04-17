@@ -59,8 +59,10 @@ options(digits = 3, width = 88, knitr.graphics.auto_pdf = TRUE,
 
 # Introduction
 
-JoN - 600 words
-Here goes an introduction text
+Context - actor/critic - birds. 150
+Within a stable context: Sequence/stereotypy - Graybiel. 150
+Dopamine and mindfulness - obvs, plus Montague, and I guess Reuben 200
+Goal to assess the trade-off in one study.
 
 # Methods
 \label{sec:Methods}
@@ -378,32 +380,35 @@ Mean blood pressure was computed using the formula: Mean BVP = diastolic blood p
 
 # Discussion
 
-We investigated the impact of mindfulness and dopamine on the formation of task relevant behaviour sets, the ability to select from learned behaviours according to context, and the stereotypical nature of behaviour deployment. [DESIGN PARADIGM NOVEL ASSESSMENT OF X]. Participants used their eyes to open doors in a gaze-contingent display, and were offered the opportunity to learn that coloured contexts signalled that targets would appear behind some doors and not others. Manipulating dopamine levels in healthy participants influenced all three phenomena of interest. For overall accuracy and stereotypy, the impact of increased dopamine interacted with trait mindfulness. Higher trait mindfulness was associated with a beneficial influence of increased dopamine, with higher overall accuracy and a concomitant decrease in stereotypy. Lower trait mindfulness resulted in a deleterious impact of increased dopamine, with lower overall accuracy and higher stereotypy. In contrast, we detected an influence of dopamine, and not mindfulness, on contextual accuracy. Overall, increasing dopamine reduced contextual accuracy, and made individuals more likely to select task-relevant behaviours from the wrong context. These results support the hypothesis that dopamine function impacts the excitation of task-relevant behaviours according to the current context. The data also support the hypothesis that the extent to which we learn task-relevant behaviours, and become routine in their execution, depends at least in part on interaction between the systems that underpin mindfulness and dopamine function in the human brain.
+1500 words
+SUMMARY: 150
+We investigated the impact of trait mindfulness and dopamine function on the learning of multiple task-relevant behaviour sets, and on the stereotypy of their deployment. Participants used their eyes to open doors in a gaze-contingent display, the colour of which signalled likely target locations. Mindfulness modulated the impact of L-Dopa on performance. Increasing mindfulness was associated with a positive impact of L-Dopa on accuracy, and a negative impact of L-Dopa on stereotypy. L-Dopa negatively impacted setting-accuracy regardless of trait mindfulness. These results quantify for the first time, how increasing systemic dopamine availability induces a trade-off between accuracy and stereotypy. Moreover, increasing dopamine availability increases the likelihood of behavioural confusion between settings. These findings carry implications for recent theories regarding how the brain establishes and switches between task-relevant behavioural routines, which we outline below.
 
-Interpretation of mechanisms.
-Learning: high mindfulness -> reward signals were effective in shaping the correct behaviour - attention paid to the task set, and what should be rewarding is ambiguated well from other behaviours (appropriate crediting). 
+Mindfulness - 
+What could cause mindfulness to modulate the impact of dopamine availability on accuracy and stereotypy? Our measure of overall accuracy charted how often eye-movements were directed to doors that were possible target locations (rewarded), relative to doors where targets were never found (non-rewarded). For stereotypy, the interactive influence of mindfulness and L-Dopa was found to be larger when accounting for setting-accuracy, suggesting that dopamine availability served to promote behavioural routines that contained erroneous door-selections in low mindfulness scorers. As mindfulness and dopamine interacted to increase accuracy and reduce stereotypy, it is unlikely that the current results can be attributed to a dopamine-induced increase in random exploration in low-mindfulness individuals [ref k-armed bandit], as this would cause both accuracy and stereotypy to decrease with mindfulness scores. Collectively, this set of findings shows that something is changing in the brain across levels of mindfulness that impacts how dopamine influences the formation of behavioural policies for a given task-setting.
 
-Low mindfulness could therefore be hampered by either a failure to credit something in memory, or may have failed to maintain a representation of their actions that they could appropriately credit (actor). Information provision for compression - see Niv review paper for discussion of the studies.
+WHAT IS CHANGING? 
+150 - incentive salience - quality of information
 
-Or, over-generalisation of crediting of actions. As a representation of actions taken is clearly a driver of behaviour (see discussion of stereotypy below), it is likely that over-crediting may be at play. 
-- Say something about active inference and RL learning here - https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002327
-https://academic.oup.com/nc/article/2021/1/niab018/6358635?login=true
-https://www.frontiersin.org/articles/10.3389/fpsyg.2020.539726/full
-- Actor-critic framework? https://pubmed.ncbi.nlm.nih.gov/12371510/
-- https://link.springer.com/chapter/10.1007/978-3-030-41188-6_1
-https://www.scopus.com/record/display.uri?eid=2-s2.0-85150962700&origin=inward&txGid=74537b14d3da6232813476a56ce1a2fa
-https://www.nature.com/articles/nature03015
-Mindfulness - turns down prediction errors - https://www.nature.com/articles/s41598-019-43474-2 - and increases responses to rewards in insula, independent of predictability - i.e. less susceptible to volatility
+Cost function - Graybiel work 150
+5. they are learning, but they have settled on a suboptimal policy, that is good enough (Brett's learning literature)
 
-References: L-Dopa reduces prediction error to threat in the NACC - https://elifesciences.org/articles/65280
+Phasic dopamine responses - alternate is the dopamine/precision hypothesis 150
 
+Which leads us to contextual accuracy 150
+
+ The relationship of the brain's dopamine availability to this process appears, from the current data, to be dependent on trait mindfulness. 
+
+Interpretation of mechanisms.125
+Learning: high mindfulness -> reward signals were effective in shaping the correct behaviour - attention paid to the task set, and what should be rewarding is ambiguated well from other behaviours (appropriate crediting - actor critic framework - critic). Montague - mindfulness - prediction errors reduced - better response to reward stimuli.
+
+Low mindfulness could therefore be hampered by either a failure to credit something in memory, or may have failed to maintain a representation of their actions that they could appropriately credit (actor). Or, an over-generalisation of crediting of actions. Information provision for compression - see Niv review paper for discussion of the studies. these interpretations suggest L-Dopa and mindfulness may have impacted phasic dopamine responses. 125
+
+STEREOTYPY 250
 Learning and stereotypy - 
 Stereotypy -
 1. low mind = low acc + high stereo
-2. this effect appears related to responses outside what is relevant for the contextual set
-3. but does, more than chance, reflect movement between states from the other relevant set
-4. thus, people are building a policy that is applied across both contexts
-5. they are learning, but they have settled on a suboptimal policy, that is good enough
+
 6. This could be due to crediting outweighing other functions, such as computing energetic cost for
 trying all the doors (could be 2 sides of the same coin).
 If Graybiel paper isn't here then it should be
@@ -413,21 +418,21 @@ Stereotypy: fits with mindfulness views of clinical syndromes: https://www.scien
 Might be a strategy to improve representation: https://www.sciencedirect.com/science/article/pii/S0896627322000617
 LDopa reduces peserveration of choice in PD patients: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3376711/
 Or, could be due to insufficient precision in 
-a context parameter - i.e. not updating based on changes to the world.
+a context parameter - i.e. not updating based on changes to the world. Friston precision - tonic - but not as previously assumed.
 
-
-Contextual accuracy - the data suggest that over-crediting may up-weight actions that lead to successful outcomes more than general actions. i.e. increased dopamine meant that all participants were likely to select doors from the wrong context. We know they were more likely to select doors from the wrong context, cos control analysis. This suggests that increasing dopamine either reduces context specificity - i.e. how sure the system is in any given context, or that dopamine causes hyper-crediting of actions that have lead to successful outcomes, making them more likely to break through in other, similar contexts.
+SETTING ACCURACY - 250
+Contextual accuracy - the data suggest that over-crediting may up-weight actions that lead to successful outcomes more than upweighting all actions. i.e. increased dopamine meant that all participants were likely to select doors from the wrong context. We know they were more likely to select doors from the wrong context, cos control analysis. This suggests that increasing dopamine either reduces context specificity - i.e. how sure the system is in any given context (e.g. Friston stuff, Context RL model), or that dopamine causes hyper-crediting of actions that have lead to successful outcomes, making them more likely to break through in other, similar contexts.
 https://direct.mit.edu/jocn/article/34/8/1307/111231/Hierarchical-Reinforcement-Learning-Sequential Hierarchal RL
 https://www.pnas.org/doi/abs/10.1073/pnas.1611146114
+Can cite Friston here to say that the hypothesised relationship between increased tonic dopamine and precision is not as monotonic as previously assumed.
 
-
-
-
+200
 Limitations
 - BVP - different, could it contribute to the results. It was unnoticeable to participants.
 - potential relationship between accuracy/stereotypy
 - power of the blinding test
 
+250
 wider speculations 
 - relationship to keeping on track, goal relevant behaviour system
 - relationship to clinical syndromes such as ADHD?
@@ -435,4 +440,4 @@ wider speculations
 - D1 & D2 - https://www.sciencedirect.com/science/article/pii/S0896627318306755
 - Beyond basal ganglia
 
-Conclusions
+Conclusions - 150
