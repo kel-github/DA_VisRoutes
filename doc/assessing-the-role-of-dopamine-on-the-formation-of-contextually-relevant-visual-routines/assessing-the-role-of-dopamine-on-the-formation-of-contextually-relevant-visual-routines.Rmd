@@ -60,6 +60,35 @@ options(digits = 3, width = 88, knitr.graphics.auto_pdf = TRUE,
 JoN - 600 words
 Here goes an introduction text
 
+Overview:
+3. we learn to deploy sets of task-relevant behaviours in stereotyped ways. (I think the narrative will go 3 -> 2 -> 1).
+2. we must keep task-relevant behaviours contexually appropriate, even though they may be easily confusable.
+1. we must use experience to learn task-relevant behaviours
+
+_Dopamine_
+- obviously important - reinforces successful behaviours to increase their future probability in the same state - i.e. learning. - need to consider 
+- also important for 2 - songbirds (see papers below)
+see https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7430502/ for setting in humans - but no consideration of the balance of habit (stereotypy) and context.
+- also important for 3 - see Deschroers et al work. - but less consideration of confusion
+  - also here - tonic dopamine may drive the acquaition of stereotypical/habitual responding in a desire to speed up action and attain more reward - https://nyaspubs.onlinelibrary.wiley.com/doi/abs/10.1196/annals.1390.018?casa_token=hvk9kHF_wFwAAAAA:2ykcybgrRv20LzpzcorTYQ_7y18v_ZRN92l9fYxmhh2-pf58FDxzJjDj5ZmNejMVVXVPmMbGJ3Tv7tALXw
+- add successor representation/RL here? - but no active manipulation of dopamine
+
+_Mindfulness_
+- Ability to stay on task has been linked to mindfulness - e.g. wandering away from task set to focus on something else - whether it relates to context mixing remains to be determined.
+https://www.sciencedirect.com/science/article/pii/S2352250X18301714?casa_token=flMXMBk7zNUAAAAA:i0XTu9MN85Cn92T7OINd7ghsx7sQMzsYZcaQGmMlFWMJjb-IXZZHBVUYjYYL7wTixQ33D3w-hoEg
+https://www.sciencedirect.com/science/article/pii/S0005791622000994
+Theory that mindfulness contributes to flexibility in behaviour - i.e. not becoming too rigid https://www.sciencedirect.com/science/article/pii/S1697260023000170
+- mindfulness - relates to mindwandering eye-movements (number of) - https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0210862
+_Tying them together_
+The two may interact to influence these phenomena. 
+https://www.frontiersin.org/articles/10.3389/fpsyg.2015.00090/full
+
+_Aims_
+1. Develop a paradigm that allows us to observe the phemomena of interest
+2. Test the impact of dopamine and trait mindfulness on these phenomena
+3. 
+
+
 # Methods
 \label{sec:Methods}
 
@@ -390,6 +419,8 @@ https://www.biorxiv.org/content/10.1101/2022.09.09.507372v1.abstract
 https://www.sciencedirect.com/science/article/pii/S2211124722003187
 
 - What I think the mechanisms are that we have found, but what we need to disambiguate in future work
+ - other - dopamine can improve when distraction is task-irrelevant - https://link.springer.com/article/10.1007/s00213-004-1899-2
+ - no effect of mindfulness on attention - https://www.sciencedirect.com/science/article/pii/S0191886914001159?via%3Dihub
 
 Limitations
 - BVP - different, could it contribute to the results. It was unnoticeable to participants.
@@ -399,5 +430,6 @@ Limitations
 wider speculations 
 - relationship to keeping on track, goal relevant behaviour system
 - relationship to clinical syndromes such as ADHD?
+- mindulness interventions for staying on task/maintaining contextually relevant behaviours
 
 Conclusions
