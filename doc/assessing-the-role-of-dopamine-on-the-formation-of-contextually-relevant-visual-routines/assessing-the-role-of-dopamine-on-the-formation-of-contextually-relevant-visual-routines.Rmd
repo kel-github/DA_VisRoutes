@@ -1,5 +1,5 @@
 ---
-title: Assessing the influence of dopamine and mindfulness on the formation of task-relevant eye-movement patterns
+title: Assessing the influence of dopamine and mindfulness on the formation of task-relevant eye-movement routines
 authors:
   - name: Kelly G. Garner
     department: School of Psychology
@@ -27,7 +27,9 @@ authors:
     affiliation: The University of Queensland
     location: St. Lucia, QLD
 abstract: |
-  Enter the text of your abstract here.
+  Given experience in cluttered but stable visual environments, our eye-movements adapt to form personal, or stereotyped, routines that frequent the locations most likely to offer task-relevant information, yet disambiguate between highly comparable task-environments - such as searching for ones keys at home or in the office. Although theoretical insights and empirical data suggest that both dopamine function and mindfulness may be important modulators of the formation and maintenance of such stereotyped routines, quantification of their joint impact remains to be explored in healthy humans. We addressed these questions by combining a pharmacological manipulation with a novel paradigm. Over two sessions, participants observed a gaze contingent display comprised of a 4 x 4 grid of doors, and were instructed to use their eyes to open doors in order to find hidden animal targets. Within each session, doors appeared in either one of two colours, and participants were told that depending on the colour, the animals would have different places they preferred to hide. We derived measures for how well participants learned the target locations overall (accuracy), how stereotypical was their deployment of eye-movement routines (stereotypy), and how well eye-movements disambiguated the task-environments (task-relevant accuracy). Participants received either Maladopar (dopamine precursor) or placebo (vitamin C) across the 2 sessions, under double-blind conditions. Dopamine and trait mindfulness (assessed by questionnaire) interacted to influence both accuracy and stereotypy. Increasing dopamine improved accuracy and reduce stereotypy for individuals scoring high for mindfulness, and induced the opposite pattern for low mindfulness scorers. Dopamine also decreased task-relevant accuracy across all levels of mindfulness. Overall, the data suggest that mindfulness modulates the impact of increased dopamine on the formation of stereotyped eye-movement routines; individuals scoring low for mindfulness may settle on suboptimal routines at the expense of learning. Furthermore, increasing dopamine increases the likelihood of confusion between task-relevant behaviours, regardless of mindfulness state. These findings provide a link between non-human and human models regarding the influence of dopamine on the formation of task-relevant eye-movements, and provide novel insights into modulating factors when humans use experience to build adaptive repertoires.  
+  
+
 keywords:
   - blah
   - blee
@@ -57,8 +59,10 @@ options(digits = 3, width = 88, knitr.graphics.auto_pdf = TRUE,
 
 # Introduction
 
-JoN - 600 words
-Here goes an introduction text
+Context - actor/critic - birds. 150
+Within a stable context: Sequence/stereotypy - Graybiel. 150
+Dopamine and mindfulness - obvs, plus Montague, and I guess Reuben 200
+Goal to assess the trade-off in one study.
 
 Overview:
 3. we learn to deploy sets of task-relevant behaviours in stereotyped ways. (I think the narrative will go 3 -> 2 -> 1).
@@ -387,49 +391,45 @@ We also sought to determine whether DA influenced physiological factors such as 
 
 Mean blood pressure was computed using the formula: Mean BVP = diastolic blood pressure (DBP) + 1/3 [systolic blood pressure (SBP) – DBP]. For mean BVP, the winning model contained main effects of both time-point and drug. This model was barely preferred to the next best model which contained a time-point x drug interaction (BF = 1.7 ±5.69%), but was strongly preferred to the random intercept model (BF = 5011975 ±3.76%). Overall, mean BVP was lower in the Levodopa session (mean = `r sprintf("2.1%f", bvp_drug$bvp[bvp_drug$drug == "levodopa"])`, 95% CI[`r sprintf("%2.1f", bvp_drug$lower[bvp_drug$drug == "levodopa"])`, `r sprintf("%2.1f", bvp_drug$upper[bvp_drug$drug == "levodopa"])`]), relative to placebo (mean = `r sprintf("%2.1f", bvp_drug$bvp[bvp_drug$drug == "placebo"])`, 95% CI[`r sprintf("%2.1f", bvp_drug$lower[bvp_drug$drug == "placebo"])`, `r sprintf("2.1%f", bvp_drug$upper[bvp_drug$drug == "placebo"])`]).
 
+```{r, correlation_m_and_bis, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+
+  load(sprintf('../../data/derivatives/%s_dat4_model.Rda', data_names[i]))
+  load('../../data/derivatives/mind_scores.Rda')
+  mind_sum$sub <- as.factor(mind_sum$sub)
+  acc_dat <- inner_join(acc_dat, mind_sum, by="sub")
+  load('../../data/derivatives/bis_scores.Rda')
+  bis_sum$sub <- as.factor(bis_sum$sub)
+  acc_dat <- inner_join(acc_dat, bis_sum, by="sub")
+  cor_mbis_dat <- acc_dat %>% group_by(sub) %>%
+                     summarise(m = m[1],
+                               bis = bis[1])
+  r <- cor.test(cor_mbis_dat$m, cor_mbis_dat$bis) # -0.23 and not significant
+
+```
+
 # Discussion
 
-We investigated the impact of mindfulness and dopamine on the formation of task relevant behaviour sets, the ability to select from learned behaviours according to context, and the stereotypical nature of behaviour deployment. Participants used their eyes to open doors in a gaze-contingent display, and were offered the opportunity to learn that coloured contexts signalled that targets would appear behind some doors and not others. Manipulating dopamine levels in healthy participants influenced all three phenomena of interest. For overall accuracy and stereotypy, the impact of increased dopamine interacted with trait mindfulness. Higher trait mindfulness was associated with a beneficial influence of increased dopamine, with higher overall accuracy and a concomitant decrease in behavioural stereotypy. Lower trait mindfulness resulted in a deleterious impact of increased dopamine, with lower overall accuracy and higher stereotypy. In contrast, we detected an influence of dopamine, and not mindfulness, on contextual accuracy. Overall, increasing dopamine reduced contextual accuracy, and made individuals more likely to select task-relevant behaviours from the wrong context. These results support the hypothesis that dopamine function impacts the excitation of task-relevant behaviours according to the current context. The data also support the hypothesis that the extent to which we learn task-relevant behaviours, and become routine in their execution, depends at least in part on interaction between the systems that underpin mindfulness and dopamine function in the human brain.
+We investigated the impact of trait mindfulness and dopamine function on the learning of task-relevant behaviour sets, and on the stereotypy of their deployment. Participants used their eyes to open doors in a gaze-contingent display, the colour of which signalled likely target locations. Mindfulness modulated the impact of L-Dopa on performance. Increasing mindfulness was associated with a positive impact of L-Dopa on accuracy, and a negative impact of L-Dopa on stereotypy. L-Dopa negatively impacted setting-accuracy regardless of trait mindfulness. These results quantify for the first time, how increasing systemic dopamine availability induces a trade-off between accuracy and stereotypy. Moreover, increasing dopamine availability increases the likelihood of behavioural confusion between settings. These findings carry implications for our theoretical understanding of how the brain establishes and switches between task-relevant behavioural routines, which we outline below.
 
-- Mindfulness, dopamine and the accuracy/stereotypy trade-off
-Mindfulness work - check Reuben and Heleen's stuff
-https://www.sciencedirect.com/science/article/pii/S1697260023000170
-https://direct.mit.edu/jocn/article/34/4/655/109216/Leveraging-Spiking-Deep-Neural-Networks-to
-https://www.biorxiv.org/content/10.1101/2022.11.15.516581v1.abstract
-https://www.sciencedirect.com/science/article/pii/S014976342100261X
+What could cause mindfulness to modulate the impact of dopamine availability on accuracy and stereotypy? Our measure of overall accuracy charted how often eye-movements were directed to doors that were possible target locations for either setting (rewarded), relative to doors where targets were never found (non-rewarded). For stereotypy, the interactive influence of mindfulness and L-Dopa was found to be larger when accounting for setting-accuracy, suggesting that dopamine availability served to promote behavioural routines that contained erroneous door-selections in low mindfulness scorers. As mindfulness and dopamine interacted to increase accuracy and reduce stereotypy, it is unlikely that the current results can be attributed to a dopamine-induced increase in random exploration in low-mindfulness individuals [ref k-armed bandit], as this would cause both accuracy and stereotypy to decrease with mindfulness scores. Collectively, this set of findings shows that something is changing in the brain across levels of mindfulness that impacts how dopamine influences the formation of behavioural policies for a given task-setting.
 
-Graybiel work
-https://www.sciencedirect.com/science/article/pii/S0896627315006418
-https://www.pnas.org/doi/abs/10.1073/pnas.1013470107
-https://www.frontiersin.org/articles/10.3389/fnsys.2015.00185/full
-Related
-https://www.sciencedirect.com/science/article/pii/S0896627318306755
-https://www.sciencedirect.com/science/article/pii/S0896627322000617
-https://direct.mit.edu/jocn/article/34/7/1103/110007/Caught-in-the-ACTS-Defining-Abstract-Cognitive
-https://direct.mit.edu/jocn/article/34/8/1307/111231/Hierarchical-Reinforcement-Learning-Sequential
+This then begs the question of what could be changing across levels of mindfulness to induce this differential impact of dopamine availability on accuracy and stereotypy. It could be that trait mindfulness modulates the impact of dopamine signals during the formation of incentive salience - the association of sensory inputs to their reward significance [@berridgeWhatRoleDopamine1998]. These results accord with previous findings that mindfulness interventions may act to promote more consistent neural responses to the attainment of reward, as assessed by changes in the BOLD signal, regardless of the predictability of that reward [@kirkShorttermMindfulnessPractice2019]. Thus mindfulness may act in the current task to promote a steady representation of possible target locations even when a location has already been searched prior to target onset, potentially causing surprise. Specifically, mindfulness may promote the use of dopamine to appropriately tag relevant potential target locations in a manner that is resistant to local statistical variability in target onset.
 
-- Contextual accuracy
-Songbird work
-https://www.sciencedirect.com/science/article/pii/S0306452214008720
-https://www.sciencedirect.com/science/article/pii/S0959438820301173
-https://academic.oup.com/ilarjournal/article/51/4/362/676057
-https://www.sciencedirect.com/science/article/pii/S0959438821000131
-https://www.sciencedirect.com/science/article/pii/S0149763421004759
-https://www.biorxiv.org/content/10.1101/2022.09.09.507372v1.abstract
-https://www.sciencedirect.com/science/article/pii/S2211124722003187
+How could mindfulness and dopamine act in concert to modulate encoding of target-relevant locations? Mindfulness has been associated with maintenance of present information in current mental experience [@laukkonenManyOneMeditation2021a] at the expense of information related to the non-present, such as ruminating on previous experiences [@bucknerSelfprojectionBrain2007]. It has been separately proposed that the relaying of sensory-response information from cortex to striatum reflects a process of reinforcement-driven dimensionality-reduction [@bar-gadReinforcementdrivenDimensionalityReduction2000a; beyelerNeuralCorrelatesSparse2019a]. If low mindfulness causes current events to be represented with low fidelity, this could induce noise into the information that is relayed from  cortex to the striatum. This could in-turn promote vulnerability towards developing suboptimal policies under conditions of increased dopamine availability, as increased dopamine may induce stronger entrenchment of noisy inputs during data reduction. This interpretation accords with recent theoretical assertions that working memory, a construct related to the current contents of mental experience, is a critical component of reinforcement learning [@yooHowWorkingMemory2022]. 
+This account may explain why individuals low in mindfulness showed both higher stereotypy and lower accuracy with increased dopamine availability. The output activity of dopaminergic cells in macaque caudate nucleus have been shown to modulate eye-movements towards reward-related stimuli [@kunimatsuCaudalPartPutamen2019; @amitaOptogeneticManipulationValuecoding2020b; @nakamuraRoleDopaminePrimate2006], and neural activity in this region is sensitive to the cost of stereotypical eye-movement sequences in the macaque brain [@desrochersOptimalHabitsCan2010, @desrochersHabitLearningNaive2015], i.e. how long a sequence was relative to the expected sequence used to attain reward. If the consequence of low mindfulness is the relay of imprecise representations of current behaviours from cortex to striatum, this would presumably challenge the computation of cost-functions used to guide effort made in pursuit of rewards, potentially motivating convergence to a suboptimal strategy. These results therefore expand our understanding of how dopamine signalling may drive habitual behavioural sequences, by demonstrating the importance of behaviour-trait qualities that pertain to awareness of the current moment.
 
-- What I think the mechanisms are that we have found, but what we need to disambiguate in future work
- - other - dopamine can improve when distraction is task-irrelevant - https://link.springer.com/article/10.1007/s00213-004-1899-2
- - no effect of mindfulness on attention - https://www.sciencedirect.com/science/article/pii/S0191886914001159?via%3Dihub
+This interpretation is based on assumptions that L-Dopa impacted phasic dopamine signalling in the striatum [@willuhnExcessiveCocaineUse2014], or up-weighted cortical-striatal synaptic plasticity via a paracrine effect [@albinMissingShortLong2017]. There are theoretical frameworks that posit a role for tonic dopamine in the deployment of contextually relevant sequences. It has been proposed that tonic dopamine signals the precision of an agent's internal model of actions and sensory consequences [@fitzgeraldDopamineRewardLearning2015; @fristonDopamineAffordanceActive2012], assuming a positive monotonic relationship between dopamine and precision. Mindfulness practice has also been associated to the modulation of comparable precision parameters [@laukkonenManyOneMeditation2021a]. Interpreted via this lens, the current findings suggest a nuanced relationship between variability in internal models and dopaminergic precision signals; it is possible that increased tonic dopamine can induce overestimates of precision, or that the relationship between tonic dopamine and precision signalling is not necessarily monotonic. 
 
-Limitations
-- BVP - different, could it contribute to the results. It was unnoticeable to participants.
-- potential relationship between accuracy/stereotypy
-- power of the blinding test
+Indeed, the finding that L-Dopa served to reduce setting-accuracy, regardless of mindfulness state, suggests that our results may not be explainable under the assumption of a monotonic relationship between tonic dopamine and precision signalling, as such lapses would presumably be induced in-part by variability in certainty over the current task-set. Setting-accuracy reduced with dopamine availability, increasing the probability of a door-selection from the wrong behavioural set. These findings complement others showing that ingestion of a D2/D3 agonist promotes task-switching impairments [@mehtaImpairedSetshiftingDissociable2004]. The current data suggest that L-Dopa either acted to reduce certainty over what is the relevant task-set, or may have induced hyper-crediting of target-door locations so that they were competitive for selection within each task-set. This interpretation fits with previous work showing that the output of dopaminergic neurons from songbird Area X may act to excite the range of behaviours that are appropriate for a given task-set [@budzilloDopaminergicModulationBasal2017]. It is, however, also possible, that dopamine availability prohibited the learning of each context, rather than causing context confusion. We shall seek to disambiguate between these possibilities in future work.
 
+The current work is not without limitations. A difference was found in mean BVP between the L-Dopa and placebo, suggesting more general physiological differences between the sessions. However, participants were not able to detect whether they had received L-Dopa or placebo above what would be expected by chance. Therefore, the physiological changes appeared to not be subjectively detectable, lowering the likelihood that they impacted the results. Note that although the power of our blinding test was lowered owing to missing data, the remaining N was comparable to sample sizes from previous investigations into the impact of dopaminergic pharmacological intervention on decision-making, that employed comparable blinding tests [@leowDopamineIncreasesAccuracy2023a; @pineDopamineTimeImpulsivity2010; @wunderlichDopamineEnhancesModelBased2012]. 
+
+250
 wider speculations 
 - relationship to keeping on track, goal relevant behaviour system
 - relationship to clinical syndromes such as ADHD?
-- mindulness interventions for staying on task/maintaining contextually relevant behaviours
+- mindfulness vs BIS
+- D1 & D2 - https://www.sciencedirect.com/science/article/pii/S0896627318306755
+- Beyond basal ganglia
 
-Conclusions
+Conclusions - 150
