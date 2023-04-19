@@ -424,6 +424,8 @@ Indeed, the finding that L-Dopa served to reduce setting-accuracy, regardless of
 
 The current work is not without limitations. A difference was found in mean BVP between the L-Dopa and placebo, suggesting more general physiological differences between the sessions. However, participants were not able to detect whether they had received L-Dopa or placebo above what would be expected by chance. Therefore, the physiological changes appeared to not be subjectively detectable, lowering the likelihood that they impacted the results. Note that although the power of our blinding test was lowered owing to missing data, the remaining N was comparable to sample sizes from previous investigations into the impact of dopaminergic pharmacological intervention on decision-making, that employed comparable blinding tests [@leowDopamineIncreasesAccuracy2023a; @pineDopamineTimeImpulsivity2010; @wunderlichDopamineEnhancesModelBased2012]. 
 
+Although accuracy and stereotypy theoretically need not be correlated, we did find a moderate positive correlation between the two measures. Critically, the modulatory influence of mindfulness and dopamine on stereotypy was found to be larger after accounting for accuracy. Furthermore, accuracy and stereotypy were at antithesis to each other with regard to the effects of mindfulness and dopamine availability. Nonetheless, further work should be done to verify the dissociable impact of dopamine and mindfulness on these two aspects of performance. We shall seek to achieve this in future studies by controlling task parameters to maintain accuracy, while examining modulations to stereotypy. 
+
 250
 wider speculations 
 - relationship to keeping on track, goal relevant behaviour system
