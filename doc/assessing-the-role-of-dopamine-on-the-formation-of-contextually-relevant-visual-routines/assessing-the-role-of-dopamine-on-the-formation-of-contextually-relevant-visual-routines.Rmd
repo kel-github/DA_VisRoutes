@@ -419,6 +419,7 @@ Might be a strategy to improve representation: https://www.sciencedirect.com/sci
 LDopa reduces peserveration of choice in PD patients: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3376711/
 Or, could be due to insufficient precision in 
 a context parameter - i.e. not updating based on changes to the world. Friston precision - tonic - but not as previously assumed.
+Greater mindfulness = better at reversal learning https://www.nature.com/articles/s41598-018-24001-1 - greater mindfulness, bet
 
 SETTING ACCURACY - 250
 Contextual accuracy - the data suggest that over-crediting may up-weight actions that lead to successful outcomes more than upweighting all actions. i.e. increased dopamine meant that all participants were likely to select doors from the wrong context. We know they were more likely to select doors from the wrong context, cos control analysis. This suggests that increasing dopamine either reduces context specificity - i.e. how sure the system is in any given context (e.g. Friston stuff, Context RL model), or that dopamine causes hyper-crediting of actions that have lead to successful outcomes, making them more likely to break through in other, similar contexts.
