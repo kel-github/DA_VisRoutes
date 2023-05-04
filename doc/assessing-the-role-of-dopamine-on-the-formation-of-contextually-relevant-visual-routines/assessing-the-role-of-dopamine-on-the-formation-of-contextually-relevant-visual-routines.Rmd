@@ -14,6 +14,10 @@ authors:
     department: School of Psychology
     affiliation: The University of Queensland
     location: St. Lucia, QLD
+  - name: Christopher Nolan
+    department: School of Psychology
+    affiliation: The University of New South Wales
+    location: Sydney, UNSW
   - name: Ole Jensen
     department: Center for Human Brain Health
     affiliation: University of Birmingham
@@ -59,7 +63,9 @@ options(digits = 3, width = 88, knitr.graphics.auto_pdf = TRUE,
 
 # Introduction
 
-Introduction notes:
+Humans often develop stereotypical ways of performing tasks, given sufficient exposure to a consistent task environment; for example, most people follow their own routine to search their home for their keys. As well as learning and developing task-relevant routines, humans are regularly able to not mix-up task routines despite striking similarities in behaviours and task-settings; for example, not confusing the search for keys with the behaviours required to instead search for a lost hat. Despite a growing awareness that dopaminergic signalling in cortical-striatal circuitry 
+
+likely underpins the brain's capacity to form and deploy task-relevant routines [birds, monkeys], an understanding of how dopamine and  [NEED A WAY TO LEAD WITH WHAT MINDFULNESS DOES].
 
 Learning a task-relevant routine - something we do - general intro - 80
 
