@@ -63,11 +63,16 @@ options(digits = 3, width = 88, knitr.graphics.auto_pdf = TRUE,
 
 # Introduction
 
-General high-level description of relevant behaviours of interest.
+650 words max
 
-This is a learning problem. Theoretical assumptions are that we have successful outcomes and we update our representations to tag them with incentive salience. However, we vary wildly in our ability to come up with good routines (cite clinical) and a deeper theoretical understanding is required.
+168
+Humans often develop stereotypical ways of performing tasks, given sufficient exposure to a consistent task environment; for example, most people follow their own routine to search their home for their keys. Humans are also able to segregate such routines despite striking similarities in performed actions and task-settings; for example, humans tend not to confuse the procedures required to search for keys with other search processes that happen at home, such as looking for the remote control. Our success in forming and segregating such routines is presumably underpinned by a capacity to associate successful actions with a representation of the relevant task and situational cues [@sutton2018reinforcement]. Although the basic computational underpinnings of this process are relatively well characterised [@sutton2018reinforcement], it remains to be understood why humans vary wildly in their capacity to form successful routines across task settings; for example, a rigid adherence to learned routines in the face of changing tasks and outcomes is thought to contribute to a range of pathologies and maladaptive behaviour patterns [@verhoevenRoleHabitsMaladaptive2018; @giommiFlexibleSelfPsychopathology2023]. 
 
-Two seemingly disparate but potentially deeply related factors are dopamine availability and mindfulness. Demonstrate how they are each thought to be important and how they are potentially linked theoretically.
+Here we sought to investigate the impact of systemic dopamine availability and trait-mindfulness on performance in a novel task environment that allowed the formation of idiopathic task-relevant routines. Dopamine availability and mindfulness may appear seemingly disparate, however there is evidence to suggest that the two may be linked to each other and to the learning processes that support task-relevant routine formation. For example, the firing activity of striatal dopaminergic cells has been shown to correspond to reward prediction errors that signal the success of chosen actions [@schultz1997neural], the length of an action sequence relative to the average used to attain reward [@desrochersOptimalHabitsCan2010; @desrochersHabitLearningNaive2015], and to situational task cues [@budzilloDopaminergicModulationBasal2017]. Therefore, striatal dopaminergic signalling may contribute to the cost functions that determine whether a set of actions should be modified or repeated, and the task-setting parameters that determine the situational relevance of action sets. Mindfulness has been shown to modulate rates of operant behaviours learned under contingencies that promote goal-directed rather than habitual responses [@chenEffectBriefMindfulness2023]. THIS BIT NEEDS TO HAVE BIG HABIT, OPERANT, AND THEN RPE.
+
+DA -> reward prediction error, plus habit formation and settings.
+Mindfulness -> associated with habit formation and rigidity, but also has been shown to modulate RPE's, suggesting a relationship.
+
 
 Yet the quantitative impact of the two is unclear. It could be that both boost at all levels of the hierarchy (e.g. Friston/Reuben). It could be that the relationship is dependent on mindfulness - current contents and reinforcement. Also S-R links may be made independent of mindfulness, while only task switching is impacted.
 
