@@ -131,6 +131,7 @@ The analysis was designed to assess the learning of the target locations given t
 # get the number of participants who would have been excluded if we'd gone with the original criteria
 load('../../data/derivatives/accuracy.Rda')
 n_potential_exclude <- length(unique(door_acc_sum$sub[door_acc_sum$excl == 1]))
+
 ```
 
 Doors were marked as selected if participants gazed at them for a duration of at least 300 ms. We assumed that a door could not be selected twice consecutively, and collapsed any consecutive selections into a single door selection. Last, as the final door selection of every trial was fixed (i.e. finding the target location ends the trial), we removed the final selection from each trial for the sequence analysis defined below. We excluded data from one participant whose total number of door selections was greater than 3 standard deviations from the mean across both sessions. The remaining 39 datasets were retained for all of the analyses. Note that this is more inclusive than our pre-registered plan for data exclusions^[https://osf.io/2y6pk]. Based on pilot data, we had planned to exclude participants who scored < 65% accuracy over the course of a session. Analysis of the final sample suggested that this was too stringent, as this resulted in the exclusion of `r sprintf("%d", n_potential_exclude)` of 40 participants. 
