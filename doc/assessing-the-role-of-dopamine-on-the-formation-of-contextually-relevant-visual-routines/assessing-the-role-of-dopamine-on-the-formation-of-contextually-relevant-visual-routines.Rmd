@@ -79,26 +79,6 @@ What could be the modulatory influence of mindfulness on the formation and deplo
 
 Thus, using a novel task designed to test the formation and deployment of task-relevant saccadic routines in humans, we sought to test whether elevating dopamine availability increased suboptimal routine formation, and whether increased dopamine positively or negatively modulated switching between routines. Last we sought to test whether higher levels of trait mindfulness offered a buffering effect against the impacts of increased dopamine availability. To preview the results, L-Dopa decreased accuracy and promoted routine formation in individuals with low trait-mindfulness, whereas high trait-mindfulness was associated with the opposite pattern. Regardless of mindfulness, dopamine hampered switching between routines by increasing routine confusion.  
 
-
-
-role for mindfulness 
-
-A common theoretical framework that has been used to account for the function of dopamine in task-switching and reward-learning, and the impact of mindfulness on task-relevant sensory processing. In the case of the latter, mindfulness is assumed to reduce uncertainty regarding 
-
-computational notion of uncertainty used to explain the function of tonic dopamine in task-switching has also been used to account for the impact of mindfulness on sensory information processing; mindfulness reduces uncertainty regarding task-relevant sensory signals, increasing their priority over non-sensory or non-relevant signals. 
-
-These theoretical and empirical insights suggest that both dopamine and mindfulness modulate the functions that underpin the formation and deployment of task-relevant routines, yet it remains an open question whether their quantitative impact can be observed in humans, and whether or not their impact is convergent. Using a novel task designed to assess the formation and deployment of task-relevant eye-movement routines in healthy humans, we sought to quantify the impact of administration of L-Dopa, a precursor to dopamine that increases dopamine availability, and to determine whether this impact was modulated by trait mindfulness. In line with previous findings that L-Dopa inflates positive reward prediction errors [nat paper], the mismatch signal for sequences - leading to a vulnerability to 
-
-
-we hypothesised that L-Dopa would promote the crediting of actions as successful, leading to erroneous repetition of unsuccessful actions.     
-
-
-In line with previous theory We hypothesised that increasing dopamine availability would 
-
-
-Using a novel task designed to assess the formation and deployment of task-relevant eye-movement routines in humans, we sought to map the joint modulatory impact of increased dopamine availability and mindfulness. 
-We expected a) that increased dopamine will cause hyper-crediting of events as successful, which is good for high mindfulness but bad for low mindfulness. b) Dopamine will cause an increased transition to habit - thus high mindfulness = transition to good routines, low mindfulness = transition to suboptimal routines, and c) that dopamine will create confusion over task contexts, which will be alleviated by mindfulness, owing to better encoding of sensory cues.
-
 # Methods
 \label{sec:Methods}
 
