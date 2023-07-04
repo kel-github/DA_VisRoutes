@@ -70,5 +70,5 @@ load("../data/derivatives/cacc_winplusmind/cacc_winplusmind.Rda")
 load("../data/derivatives/cacc_mindwin_bis/cacc_mindwin_bis.Rda")
 loo_compare(mnd, acc_mindwin_bis)
 #               elpd_diff se_diff
-# mnd              0.0       0.0   
-# acc_mindwin_bis -0.7       0.5  
+# mnd             0.0       0.0    
+# acc_mindwin_bis 0.0       0.5  
