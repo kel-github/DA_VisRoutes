@@ -59,10 +59,6 @@ load(file=sprintf(ftmplt, 'stereo_model-fxbdrgint-brfx', 'stereo_model-fxbdrgint
 loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg, 
             fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx) #,
 
-# fxbdrg_rfxbdrg          0.0       0.0 # 'stereo_model-fxbdrg-bdrgsubrfx' # plotted this guy it looks great
-# fxbdrgint_bdrgsubrfx   -0.9       0.3 
-# fxbdrg_bsubrfx       -113.2      16.2 
-# fxb_bsubrfx          -113.2      16.6 
-# fxbdrgint_bsubrfx    -113.5      16.2 
-# bsubrfx              -114.5      16.5 
-# fxb_subint           -188.8      18.6 
+stereo_comp <- loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg, 
+                        fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx)
+save(stereo_comp, file="../data/derivatives/stereo_loo.Rda")

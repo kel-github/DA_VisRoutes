@@ -57,10 +57,14 @@ loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg,
             fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx) #,
 
 #                       elpd_diff se_diff
-# fxbdrgint_bdrgsubrfx    0.0       0.0 
-# fxbdrg_rfxbdrg          0.0       0.4 
-# fxbdrg_bsubrfx       -553.3      66.3 
-# fxbdrgint_bsubrfx    -553.9      66.2 
-# fxb_bsubrfx          -570.5      68.3 
-# bsubrfx              -571.1      68.3 
-# fxb_subint           -868.1      91.0 
+# fxbdrg_rfxbdrg          0.0       0.0 
+# fxbdrgint_bdrgsubrfx   -0.7       0.4 
+# fxbdrg_bsubrfx       -553.8      66.3 
+# fxbdrgint_bsubrfx    -554.4      66.1 
+# fxb_bsubrfx          -570.3      68.2 
+# bsubrfx              -571.3      68.2 
+# fxb_subint           -868.8      91.0 
+
+cacc_comp <- loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg, 
+                        fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx)
+save(cacc_comp, file="../data/derivatives/cacc_loo.Rda")

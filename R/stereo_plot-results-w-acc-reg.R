@@ -19,9 +19,9 @@ sub_var_dat$drug <- as.factor(sub_var_dat$drug) # makes no difference if fct or 
 sub_var_dat$m <- scale(sub_var_dat$m)
 
 # now load model
-load('../data/derivatives/stereo_winplusmind_dmindint/stereo_winplusmind_dmindint.Rda')
+load('../data/derivatives/stereo_winplusmindplusacc_dmindint/stereo_winplusmindplusacc_dmindint.Rda')
 
-mod <- mndbd_dm
+mod <- mndbdacc_dm
 dat_ylim <- c(-9.5, -8.25)
 dat_yseq <- seq(-9.5, -8.25, .25)
 dat_ylabs <- c("-9.5","","","","","-8.25")
@@ -34,7 +34,7 @@ cor_xlim <- c(-2.5, 3)
 cor_xseq <- seq(-2.5, 3, .5)
 cor_xlabs <- c("-2.5","","","","","0","","","","","","3")
 
-figinfo = 's'
+figinfo = 's_wacc_'
 w <- 12 # in cm
 h <- 12 # in cm
 
@@ -89,11 +89,13 @@ sum_dat <- inner_join(sub_var_dat, est, by="sub")
 sum_dat <- rbind(sum_dat %>% filter(drug == "levodopa") %>% 
                      mutate(pred_v = Intercept + b.y*b.x + 
                                                  m.y*m.x + 
+                                                 acc.x*acc.y + 
                                                 `b:druglevodopa`),
                  sum_dat %>% filter(drug == "placebo") %>%
                      mutate(pred_v = Intercept + b.y*b.x +  
                                                  drugplacebo + 
                                                  m.y*m.x + 
+                                                 acc.x*acc.y + 
                                                  `drugplacebo:m`*m.x +
                                                  `b:drugplacebo`)) %>% 
     mutate(resid = v - pred_v)
@@ -137,7 +139,7 @@ mu_bdrug_pred$b.x <- rep(unique(sum_dat$b.x),
                          times=length(mu_bdrug_pred$b.x)/length(unique(sum_dat$b.x)))
 
 # save the summary stats for reporting
-save(sum_dat, mu_bdrug_pred, mu_bdrug_dat, dm, file="../data/derivatives/stereo_descriptives.Rda")
+save(sum_dat, mu_bdrug_pred, mu_bdrug_dat, dm, file="../data/derivatives/stereo_acc_descriptives.Rda")
 
 
 ###############################################################
@@ -256,7 +258,7 @@ fig_label("D", cex = 2)
 fxdrg_draws <- posterior_samples(mod, pars="drugplacebo:m")
 plot(density(fxdrg_draws$b_drugplacebo),
      col=samples_col, main="", xlab="",
-     ylab="", bty="n", xlim=c(-0.15, 0.25), ylim=c(0,10), axes=F)
+     ylab="", bty="n", xlim=c(-0.15, 0.35), ylim=c(0,10), axes=F)
 axis(side=1, at = c(-0.15, 0, 0.25), labels=c("", "0", ".25"))
 axis(side=2, at=c(0, 10), labels=c("0", "10"), las=2)
 polygon(density(fxdrg_draws$b_drugplacebo), border=samples_col, col=samples_col)

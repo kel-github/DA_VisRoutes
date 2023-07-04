@@ -21,7 +21,7 @@ rm(list=ls())
 library(tidyverse)
 source('variability_exp_behav_data_wrangling_functions.R')
 
-not_new <- F # if T then load existing RData file with data
+not_new <- T # if T then load existing RData file with data
 ###-------------------------------------------------------
 ## LOAD DATA
 ###-------------------------------------------------------
@@ -110,15 +110,6 @@ door_acc_sum <- blocked_dat %>% group_by(sub, sess, drug, cond, b) %>%
                                 acc = tt/td) %>% # total on a target door
                 ungroup()
 
-# NOTE: ISSUE w RT EXTRACTION AS IS. AMEND THIS IF YOU DECIDE TO USE IT!
-# remove rts where the target appeared
-# blocked_dat <- blocked_dat %>% filter(onset != 999)
-# 
-# door_rts <- blocked_dat %>% group_by(sub, sess, drug, cond, b, door_type) %>%
-#                               summarise(mu_rt = mean(rt),
-#                                         med_rt = median(rt),
-#                                         var_rt = var(rt),
-#                                         sku = (mu_rt - med_rt)/sqrt(var(rt)) )
 
 ###-------------------------------------------------------
 ## NOTE: create regressor for those who scored < .65 at the final block
@@ -172,6 +163,7 @@ acc_dat %>% ggplot(aes(x=b, y=acc, group=sub, colour=drug)) +
 acc_dat$acc <- NULL
 # save summary
 save(acc_dat, file='../data/derivatives/acc_dat4_model.Rda')
+
 
 ###-------------------------------------------------------
 ## NOW MAKE CONTEXT ACC SUMMARY FOR MODELLING

@@ -48,3 +48,5 @@ loo_compare(mndbd_dm, mndbdbis_bm)
 # elpd_diff se_diff
 # mndbd_dm     0.0       0.0   
 # mndbdbis_bm -0.5       0.4 
+stereo_mind_bis_loo <- loo_compare(mndbd_dm, mndbdbis_bm)
+save(stereo_mind_bis_loo, file="../data/derivatives/stereo_mind_bis_loo.Rda")

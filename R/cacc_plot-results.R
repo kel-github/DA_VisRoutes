@@ -1,11 +1,9 @@
 ## plot the accuracy data, model fits and parameters
 ####################################################
 rm(list=ls())
-library(vioplot)
 library(brms)
 library(Rmisc)
 library(tidyverse)
-library(modeest)
 source('fig_label.R')
 
 ##############################################################
@@ -100,6 +98,9 @@ mu_bdrug_pred <- summarySEwithin(data=sum_dat, measurevar="p",
 mu_bdrug_dat$b.x <- as.numeric(mu_bdrug_dat$b.x)
 mu_bdrug_pred$b.x <- as.numeric(mu_bdrug_pred$b.x)
 
+# save the summary stats for reporting
+save(sum_dat, mu_bdrug_pred, mu_bdrug_dat, file="../data/derivatives/cacc_descriptives.Rda")
+
 ###############################################################
 #### set up for full plot
 ###############################################################
@@ -111,7 +112,7 @@ plot.mat = matrix(c(1, 2, 1, 3),
 
 layout(plot.mat)
 
-par(las=1, mgp=c(2,1,0))
+par(las=1, mgp=c(2,1,0), mar=c(3,3,3,2))
 with(mu_bdrug_dat %>% filter(drug == "placebo"), 
                           plot(b.x, obs,
                                type = "p",
@@ -120,7 +121,7 @@ with(mu_bdrug_dat %>% filter(drug == "placebo"),
                                col=placebo_col,
                                bty="n",
                                xlab = "block",
-                               ylab = "acc",
+                               ylab = "c-acc",
                                axes =F))
 axis(side=1, at=1:8, tick=TRUE, labels=c("1", "","","","","","","8"))
 axis(side=2, at=dat_yseq, tick=TRUE, labels=dat_ylabs, las=2) #, labels=c())

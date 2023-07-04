@@ -117,6 +117,9 @@ mnddrgi <- sum_dat %>% group_by(sub, b.x) %>%
 mnddat <- sum_dat[,c("sub", "m.x")] %>% distinct()
 mnddrgi <- inner_join(mnddrgi, mnddat, by = "sub")
 
+# save the summary stats for reporting
+save(sum_dat, mu_bdrug_pred, mu_bdrug_dat, mnddrgi, file="../data/derivatives/acc_descriptives.Rda")
+
 ###############################################################
 #### set up for full plot
 ###############################################################
