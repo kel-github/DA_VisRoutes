@@ -1,11 +1,11 @@
 ---
-title: Assessing the influence of dopamine and mindfulness on the formation of task-relevant eye-movement routines
+title: Assessing the influence of dopamine and mindfulness on task-relevant eye-movement routines
 authors:
   - name: Kelly G. Garner
     department: School of Psychology
     affiliation: University of New South Wales
     location: Sydney, NSW
-    email: insert.unsw@here.edu.au
+    email: kelly.grace.garner@unsw.edu.au
   - name: Li-Ann Leow
     department: School of Psychology
     affiliation: The University of Queensland
@@ -31,20 +31,21 @@ authors:
     affiliation: The University of Queensland
     location: St. Lucia, QLD
 abstract: |
-  Given experience in cluttered but stable visual environments, our eye-movements adapt to form stereotyped routines that frequent the locations most likely to offer task-relevant information, while not confusing routines between similar task-environments. Theoretical insights and empirical data suggest that dopamine function and mindfulness may be important modulators of the formation and deployment of such routines, yet quantification of their impact remains to be tested in healthy humans. Over two sessions, participants observed a gaze contingent display comprised of a 4 x 4 grid of doors, and were instructed to use their eyes to open doors in order to find hidden targets. Within each session, doors appeared in either one of two colours, with colour signalling differing likely target locations (task-settings). We derived measures for how well participants learned the target locations (accuracy), how routine was their deployment of eye-movements (stereotypy), and how much participants confused settings (setting accuracy). Participants received either Maladopar (dopamine precursor) or placebo (vitamin C) across the 2 sessions, administered under double-blind conditions. Dopamine and trait mindfulness (assessed by questionnaire) interacted to influence both accuracy and stereotypy. Increasing dopamine improved accuracy and reduced stereotypy for individuals scoring high for mindfulness, and induced the opposite pattern for low mindfulness scorers. Dopamine also disrupted task-switching invariant to mindfulness. The data suggest that mindfulness modulates the impact of dopamine on the formation of stereotyped eye-movement routines; individuals scoring low for mindfulness may settle on suboptimal routines at the expense of learning. Increasing dopamine promotes confusion between task-settings, regardless of mindfulness state. These findings provide a link between non-human and human models regarding the influence of dopamine on the formation of task-relevant eye-movement routines, and provide novel insights into modulating factors when humans use experience to build adaptive repertoires.  
+  Given experience in cluttered but stable visual environments, our eye-movements adapt to form stereotyped routines that frequent the locations most likely to offer task-relevant information, while not confusing routines between similar task-settings. Theoretical insights suggest that dopamine function and mindfulness may be important modulators of the formation and deployment of such routines, yet quantification of their impact remains to be tested in healthy humans. Over two sessions, participants observed a gaze contingent display comprised of a 4 x 4 grid of doors, and were instructed to use their eyes to open doors in order to find hidden targets. Within each session, doors appeared in either one of two colours, with colour signalling differing likely target locations (task-settings). We derived measures for how well participants learned the target locations (accuracy), how routine was their deployment of eye-movements (stereotypy), and how much participants confused settings (setting accuracy). Participants received either Maladopar (dopamine precursor) or placebo (vitamin C) across the 2 sessions, administered under double-blind conditions. Dopamine and trait mindfulness (assessed by questionnaire) interacted to influence both accuracy and stereotypy. Increasing dopamine improved accuracy and reduced stereotypy for individuals scoring high for mindfulness, and induced the opposite pattern for low mindfulness scorers. Dopamine also disrupted setting accuracy invariant to mindfulness. The data suggest that mindfulness modulates the impact of dopamine on the formation of stereotyped eye-movement routines; low mindfulness may cause settling on suboptimal routines at the expense of learning. Increasing dopamine promotes confusion between task-settings, regardless of mindfulness. These findings provide a link between non-human and human models regarding the influence of dopamine on the formation of task-relevant eye-movement routines, and provide novel insights into behaviour-trait factors that modulate the use of experience when building adaptive repertoires.  
   
 
 keywords:
-  - blah
-  - blee
-  - bloo
-  - these are optional and can be removed
+  - habit
+  - sequence
+  - dopamine
+  - mindfulness
+  - eye-movements
 bibliography: DAeyes.bib
 biblio-style: unsrt
 output: rticles::arxiv_article
 ---
 
-```{r knitr_options, echo=FALSE}
+```{r knitr_options, echo=FALSE, message=FALSE}
 library(knitr)
 library(brms)
 library(tidyverse)
@@ -406,8 +407,10 @@ In contrast to expectations, L-Dopa lead to an overall reduction in stereotypy i
 
 What then is the influence of dopamine on the cost/benefit computations that drive routine formation? In accordance with previous work with non-human primates [@desrochersOptimalHabitsCan2010; @desrochersHabitLearningNaive2015], the current data do suggest that dopamine is a modulator of the computations that drive routines in humans. However, the current data also show that the modulatory influence of dopamine is dependent on the behaviour-trait state of the individual. Specifically, increased dopamine appears to drive individuals low in mindfulness towards a stereotypical solution that is suboptimal in terms of accuracy, suggesting a poor evaluation of sequence costs relative to benefits. In contrast, individuals high in trait mindfulness show increased accuracy but reduced stereotypy, suggesting an appropriate crediting of successful actions, but also suggesting some volatility in their execution. While the current data demonstrate the applicability of dopamine signalling to the computations that underlie the formation of routines, the data also show further work is required to determine the internal state variables that determine whether increased dopamine availability will have a positive or negative impact on performance.
 
-The current work is not without limitations. A difference was found in mean BVP between the L-Dopa and placebo sessions, suggesting more general physiological differences between the sessions. However, participants were not able to detect whether they had received L-Dopa or placebo above what would be expected by chance. Therefore, the physiological changes appeared to not be subjectively detectable, lowering the likelihood that they impacted the results. Note that although the power of our blinding test was lowered owing to missing data, the remaining N was comparable to sample sizes from previous investigations into the impact of dopaminergic pharmacological intervention on decision-making, that employed comparable blinding tests [@leowDopamineIncreasesAccuracy2023a; @pineDopamineTimeImpulsivity2010; @wunderlichDopamineEnhancesModelBased2012]. 
+The current work is not without limitations. A difference was found in mean BVP between the L-Dopa and placebo sessions, suggesting more general physiological differences between the sessions. However, participants were not able to detect whether they had received L-Dopa or placebo above what would be expected by chance. Therefore, the physiological changes appeared to not be subjectively detectable, lowering the likelihood that they impacted the results. Note that although the power of our blinding test was lowered owing to missing data, the remaining N was comparable to sample sizes from previous investigations into the impact of dopaminergic pharmacological intervention on decision-making, that employed comparable blinding tests [@leowDopamineIncreasesAccuracy2023a; @pineDopamineTimeImpulsivity2010; @wunderlichDopamineEnhancesModelBased2012a]. 
 
 Although accuracy and stereotypy theoretically need not be correlated, we did find a moderate positive correlation between the two measures. Critically, the modulatory influence of mindfulness and dopamine on stereotypy was found to be larger after accounting for accuracy. Furthermore, accuracy and stereotypy were at antithesis to each other with regard to the demonstrated impacts of mindfulness and L-Dopa. Nonetheless, further work should be done to confirm the dissociable impact of dopamine and mindfulness on these two aspects of performance. We shall seek to achieve this in future studies by controlling task parameters to maintain accuracy, while examining modulations to stereotypy. 
   
-Conclusions - 150 
+We sought to determine the modulatory influence of dopamine availability and trait-mindfulness on the formation and deployment of task-relevant saccadic routines. We found evidence for theoretical assertions that dopamine and mindfulness share overlap in their locus of influence, but also demonstrated boundaries in that overlap. Mindfulness modulated the impact of dopamine on task-learning and routine development, with low mindfulness individuals being more likely to demonstrate impaired learning and increased stereotypy during task performance. Invariant to trait-mindfulness, L-Dopa increased the likelihood of confusion between task settings, suggesting that dopamine either hampers the binding of actions to situational cues, or promotes confusion between task-states. Collectively, these data suggest that the fidelity of situational representations interact with reinforcement learning systems to drive the formation of behavioural routines.  
+
+# References
