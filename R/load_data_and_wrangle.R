@@ -110,7 +110,15 @@ door_acc_sum <- blocked_dat %>% group_by(sub, sess, drug, cond, b) %>%
                                 acc = tt/td) %>% # total on a target door
                 ungroup()
 
-
+##### code for supplemental
+### remove sub 21, and plot setting accuracy by block x drug x cond
+# cacc <- door_acc_sum %>% filter(sub != 21) %>% mutate(sacc = cc/(cc+oc))
+# cacc$cond <- as.factor(cacc$cond)
+# cacc %>% group_by(drug, cond, b) %>%
+#               summarise(mu = mean(sacc)) %>%
+#               ggplot(aes(x=b, y = mu, group=cond, colour=cond)) +
+#               geom_line() + facet_wrap(~drug)
+# ggsave(filename = "../images/effect_of_cond_on_sacc.pdf")
 ###-------------------------------------------------------
 ## NOTE: create regressor for those who scored < .65 at the final block
 # probably not going to use this as the criteria is too strict
@@ -217,6 +225,9 @@ names(sub_var_dat)[length(names(sub_var_dat))] <- "v"
 names(sub_var_dat)[names(sub_var_dat) == "block"] <- "b" # acc parlance
 sub_var_dat <- sub_var_dat %>% group_by(sub, drug, b) %>% summarise(v = mean(v))
 
+pdf("../images/var_hist.pdf")
+hist(sub_var_dat$v, breaks = 25, main = "", xlab = "stereotypy")
+dev.off()
 ####### EXPLORATORY CODE CHECKING THE NATURE OF THE RELATIONSHIP BETWEEN
 # b AND v - e.g. power, linear etc
 # quick plot shows log log = straight line, therefore power

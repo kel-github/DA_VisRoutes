@@ -99,7 +99,7 @@
                                  ylab = "p",
                                  axes =F,
                                  xlim = c(0,3.5)))
-  axis(side=1, at=1:3, tick=TRUE, labels=c("cc", "n", "oc"))
+  axis(side=1, at=1:3, tick=TRUE, labels=c("cs", "n", "os"))
   axis(side=2, at=dat_yseq, tick=TRUE, labels=dat_ylabs, las=2) #, labels=c())
   with(mu_bdrug_dat %>% filter(drug == "placebo"), 
                                 arrows(x0 = 1:3 - adjust, 

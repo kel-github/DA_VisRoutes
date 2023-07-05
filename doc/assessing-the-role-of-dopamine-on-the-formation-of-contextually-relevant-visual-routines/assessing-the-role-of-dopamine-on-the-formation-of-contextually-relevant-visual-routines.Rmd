@@ -1,5 +1,5 @@
 ---
-title: Assessing the influence of dopamine and mindfulness on task-relevant eye-movement routines
+title: Assessing the influence of dopamine and mindfulness on routines in visual search
 authors:
   - name: Kelly G. Garner
     department: School of Psychology
@@ -122,7 +122,7 @@ Doors were marked as selected if participants gazed at them for a duration of at
 
 ## Accuracy
 
-We first sought to determine the extent to which L-Dopa and mindfulness influenced the learning of target locations across settings (accuracy). To compute a measure of accuracy, door selections were classified as target relevant (TR) for the current setting (i.e. the setting presented on trial_{t}, cs), the other setting from that session, not presented on trial_{t} (os), or neither (n). Note that early in task learning, an 'os' response is a reasonable guess and should not be classified as incorrect (i.e. n). The group level mean probabilities of cs, os and n responses are presented in supplementary Figure X. Data was grouped into blocks of 10 trials per setting, and grouped across settings, resulting in 8 blocks of 20 trials. We defined accuracy (acc) as the number of times participants selected a target door from either setting, relative to all door selections:
+We first sought to determine the extent to which L-Dopa and mindfulness influenced the learning of target locations across settings (accuracy). To compute a measure of accuracy, door selections were classified as target relevant (TR) for the current setting (i.e. the setting presented on trial_{t}, cs), the other setting from that session, not presented on trial_{t} (os), or neither (n). Note that early in task learning, an 'os' response is a reasonable guess and should not be classified as incorrect (i.e. n). The group level mean probabilities of cs, os and n responses are presented in supplementary Figure 1. Data was grouped into blocks of 10 trials per setting, and grouped across settings, resulting in 8 blocks of 20 trials. We defined accuracy (acc) as the number of times participants selected a target door from either setting, relative to all door selections:
 
 $$
 acc = \frac{\sum{(TR_{cs}, TR_{os})}}{\sum{(TR_{cs}, TR_{os}, n)}}
@@ -142,7 +142,7 @@ $$
 s\mathrm{-}acc = \frac{\sum{TR_{cs}}}{\sum{(TR_{cs}, TR_{os})}}
 $$
 
-We modelled the influence of L-Dopa and mindfulness on s-acc using the Bayesian mixed effects approach described above (Note that in the pre-registration document we had suggested to include a regressor for context. Visual inspection of the data showed that s-acc was highly comparable across contexts [see supplemental figures]. We therefore opted to simplify the model space and collapse over this factor). 
+We modelled the influence of L-Dopa and mindfulness on s-acc using the Bayesian mixed effects approach described above (Note that in the pre-registration document we had suggested to include a regressor for context. Visual inspection of the data showed that s-acc was highly comparable across contexts [see Supplemental Figure 2]. We therefore opted to simplify the model space and collapse over this factor). 
 
 ## Stereotypical door selections
 
@@ -156,7 +156,7 @@ load('../../data/derivatives/stereo_winplusmind_dmindint/stereo_winplusmind_dmin
 rm(mndbd_dm)
 ```
 
-The resulting stereotypy scores were subject to a comparable Bayesian mixture modelling approach as described above with a few key differences; the stereotypy scores were assumed to be drawn from a skewed normal distribution $\mathcal{N}(\mu, \sigma, \alpha)$ whose mean ($\mu$) was defined by the regression parameters (the distribution of variance scores can be found in the supplemental materials). $\sigma$ was assumed to be drawn from a Student's t distribution (df=3, location=0, scale=2.5), the skew parameter ($\alpha$) was assumed to be drawn from a normal distribution $\mathcal{N}(0,4)$. The remaining priors for the intercept, beta-coefficients and parameter covariance matrix were defined in the same manner as for the accuracy data models. As the log-log plot of variances vs block suggested a power function, analysis was performed on the logged data. This ensured that the relationship between block and variance values was best described by a straight line. Identification of the winning model proceeded as described for the accuracy data above. 
+The resulting stereotypy scores were subject to a comparable Bayesian mixture modelling approach as described above with a few key differences; the stereotypy scores were assumed to be drawn from a skewed normal distribution $\mathcal{N}(\mu, \sigma, \alpha)$ whose mean ($\mu$) was defined by the regression parameters (the distribution of stereotypy scores are presented in Supplemental Figure 3). $\sigma$ was assumed to be drawn from a Student's t distribution (df=3, location=0, scale=2.5), the skew parameter ($\alpha$) was assumed to be drawn from a normal distribution $\mathcal{N}(0,4)$. The remaining priors for the intercept, beta-coefficients and parameter covariance matrix were defined in the same manner as for the accuracy data models. As the log-log plot of variances vs block suggested a power function, analysis was performed on the logged data. This ensured that the relationship between block and variance values was best described by a straight line. Identification of the winning model proceeded as described for the accuracy data above. 
 
 ## Blinding analyses
 
@@ -267,7 +267,7 @@ We next determined the influence of DA and mindfulness on setting accuracy by ma
 
 Setting accuracy improved over the course of each session; mean accuracy in block 1 was `r sprintf("%1.2f", b_dat$p[b_dat$b.x == "0"])` (95% CI[`r sprintf("%1.2f", b_dat$lower[b_dat$b.x == "0"])`, `r sprintf("%1.2f", b_dat$upper[b_dat$b.x == "0"])`]), relative to block 8 (mean: `r sprintf("%1.2f", b_dat$p[b_dat$b.x == "7"])`, 95% CI[`r sprintf("%1.2f", b_dat$lower[b_dat$b.x == "7"])`, `r sprintf("%1.2f", b_dat$upper[b_dat$b.x == "7"])`]). The model showed that setting accuracy increased by a mean log odds of `r sprintf("%1.2f", cacc_results$fixed["b","Estimate"])` (95% CI[`r sprintf("%1.2f", cacc_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", cacc_results$fixed["b","u-95% CI"])`) over each block (Fig \ref{fig:caccfig}C). In contrast to the overall accuracy data, mindfulness did show a reliable impact on setting accuracy (mean log odds = `r sprintf("%1.2f", cacc_results$fixed["m","Estimate"])`, 95% CI[`r sprintf("%1.2f", cacc_results$fixed["m","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["m","u-95% CI"])`]). 
 
-```{r, caccfig, out.width='70%', fig.cap='The influence of dopamine and mindfulness on contextual accuracy. A) Accuracy (acc) data by block and drug. Circles reflect observed average accuracy, dotted lines show the fit of the winning model. B) Estimated posterior density (in log odds) for the main effect of drug (DA vs P), D) same as in B, but for the main effect of block. DA = dopamine, P = placebo, b = block, d = density. Error bars reflect within-subject standard error of the mean [SE].'}
+```{r, caccfig, out.width='70%', fig.cap='The influence of dopamine and mindfulness on setting accuracy. A) Accuracy (acc) data by block and drug. Circles reflect observed average accuracy, dotted lines show the fit of the winning model. B) Estimated posterior density (in log odds) for the main effect of drug (DA vs P), D) same as in B, but for the main effect of block. DA = dopamine, P = placebo, b = block, d = density. Error bars reflect within-subject standard error of the mean [SE].'}
 
 caccfigpth <- '../../images/cacc_fig.pdf'
 knitr::include_graphics(caccfigpth)
