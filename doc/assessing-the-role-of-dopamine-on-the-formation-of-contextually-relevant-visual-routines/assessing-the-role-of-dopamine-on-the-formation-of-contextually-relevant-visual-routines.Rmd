@@ -1,5 +1,5 @@
 ---
-title: Assessing the influence of dopamine and mindfulness on routines in visual search
+title: Assessing the influence of dopamine and mindfulness on the formation of routines in visual search
 authors:
   - name: Kelly G. Garner
     department: School of Psychology
