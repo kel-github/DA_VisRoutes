@@ -121,7 +121,7 @@ with(mu_bdrug_dat %>% filter(drug == "placebo"),
                                col=placebo_col,
                                bty="n",
                                xlab = "block",
-                               ylab = "c-acc",
+                               ylab = "s-acc",
                                axes =F))
 axis(side=1, at=1:8, tick=TRUE, labels=c("1", "","","","","","","8"))
 axis(side=2, at=dat_yseq, tick=TRUE, labels=dat_ylabs, las=2) #, labels=c())

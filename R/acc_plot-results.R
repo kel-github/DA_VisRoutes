@@ -229,7 +229,7 @@ fig_label("D", cex = 2)
 # posterior_samples is deprecated, use as_draws next time
 fxdrg_draws <- posterior_samples(mod, pars="b_drugplacebo:m")
 plot(density(fxdrg_draws$`b_drugplacebo:m`),
-     col=samples_col,main="", xlab="",
+     col=samples_col,main="", yalb="", xlab="",
      bty="n", xlim=c(-0.2, 0.1), axes=F)
 axis(side=1, at = c(-0.2, 0, 0.1), labels=c("-0.2", "0", ""))
 polygon(density(fxdrg_draws$b_drugplacebo), border=samples_col, col=samples_col)

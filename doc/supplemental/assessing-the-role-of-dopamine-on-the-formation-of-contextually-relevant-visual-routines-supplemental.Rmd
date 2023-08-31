@@ -1,0 +1,121 @@
+---
+title: "Assessing the influence of dopamine and mindfulness on routines in visual
+  search - supplemental materials"
+output: pdf_document
+---
+
+```{r knitr_options, echo=FALSE, message=FALSE}
+library(knitr)
+library(brms)
+library(tidyverse)
+# rstudio will set the folder where .Rmd file seats as work directory
+# set it back to the folder where .Rproj seats
+#opts_knit$set(root.dir = normalizePath("../")) 
+opts_chunk$set(fig.align = 'center', cache = FALSE, warning = FALSE,
+  message = TRUE, echo = FALSE)
+options(digits = 3, width = 88, knitr.graphics.auto_pdf = TRUE,
+        knitr.kable.NA = '')
+# knit_hooks$set(inline = function(x) {
+#   x <- sprintf("%1.2f", x)
+#   paste(x, collapse = ", ")
+# })
+```
+
+# Response types by drug session
+
+```{r, respfig, out.width='70%', fig.cap='Group average probability (p) for each response type for each session. Circles reflect observed average accuracy, error bars reflect within-subject standard error of the mean [SE]. DA = dopamine, P = placebo, cs = current setting, n = none, os = other setting'}
+
+typefigpth <- '../../images/type_fig.pdf'
+knitr::include_graphics(typefigpth)
+```
+
+# Model comparison tables
+
+The first set of tables show the outcomes from the first stage of the LOO model selection procedure, where we identified the best combination of the block (b) and drug (drg) factors to explain the data. fx = fixed effects, rfx = random effects. Note that all models contained a subject intercept term.
+
+```{r, acc_vals, echo = FALSE, message = FALSE}
+
+acc_mods <- tibble(model = c("fx-b+drg_rfx-b+drg", "fx-b x drg_rfx-b+drg", "fx-b+drg_rfx-b", "fx-b x drg_rfx-b", "rfx-b", "fx-b_rfx-b", "fx-b"),
+                   elpd_diff = c(0.0, -0.2, -674.1, -674.8, -677.8, -679.3, -1224.6),
+                   se_diff = c(0.0, 0.5, 80.8, 80.5, 81.3, 81.7, 118.0))
+
+acc_w_mind_mods <- tibble(model = c("m x b x drg + m", "b x m + m", "drg x m + m", "b x m + m", "+ m", "b + drg"),
+                          elpd_diff = c(0.0, 0.0, -0.2, -11.8, -11.9, -12.0),
+                          se_diff = c(0.0, 0.7, 0.8, 6.4, 6.4, 6.4))
+
+acc_mind_win_w_bis <- tibble(model = c("win", "+ bis"),
+                             elpd_diff = c(0.0, 0.0),
+                             se_diff = c(-0.2, 0.5))
+```
+
+
+
+```{r, sacc_vals, echo = FALSE, message = FALSE}
+
+sacc_mods <- tibble(model = c("fx-b+drg_rfx-b+drg", "fx-b x drg_rfx-b+drg", "fx-b+drg_rfx-b", "fx-b x drg_rfx-b", "fx-b_rfx-b", "rfx-b","fx-b"),
+                   elpd_diff = c(0.0, -0.7, -553.8, -554.4, -570.3, -571.3, -868.8),
+                   se_diff = c(0.0, 0.4, 66.3, 66.1, 68.2, 68.2, 91.0))
+
+sacc_w_mind_mods <- tibble(model = c( "+ m", "b + drg", "b x m + m", "drg x m + m", "drg x m + m", "m x b x drg + m"),
+                          elpd_diff = c(0.0, -0.1, -1.1, -1.9, -2.1, -2.5),
+                          se_diff = c(0.0, 1.0, 0.8, 0.4, 0.7, 0.8))
+
+sacc_mind_win_w_bis <- tibble(model = c("win", "+ bis"),
+                             elpd_diff = c(0.0, 0.0),
+                             se_diff = c(0.0, 0.5))
+```
+
+
+```{r, stereo_vals, echo = FALSE, message = FALSE}
+
+stereo_mods <- tibble(model = c("fx-b+drg_rfx-b+drg", "fx-b x drg_rfx-b+drg", "fx-b+drg_rfx-b", "fx-b x drg_rfx-b", "fx-b_rfx-b", "rfx-b", "fx-b"),
+                   elpd_diff = c(0.0, -0.3, -130.1, -130.7, -131.1, -132.5, -205.9),
+                   se_diff = c(0.0, 0.2, 16.9, 16.9, 17.4, 17.4, 19.4))
+
+stereo_w_mind_mods <- tibble(model = c( "drg x m + m", "b x drg x m + m", "b x m + m", "+ m", "fx-b+drg_rfx-b+drg"),
+                          elpd_diff = c(0.0, -0.4, -2.2, -2.3, -133.3),
+                          se_diff = c(0.0, 1.5, 3.1, 3.0, 17.4))
+
+stereo_mind_win_w_bis <- tibble(model = c("win", "+ bis"),
+                             elpd_diff = c(0.0, -0.5),
+                             se_diff = c(0.0, 0.4))
+```
+
+```{r, table_s1, echo = FALSE, results = 'asis'}
+
+kable(acc_mods, caption = "accuracy model comparisons")
+kable(sacc_mods, caption = "setting accuracy model comparisons")
+kable(stereo_mods, caption = "stereotypy model comparisons")
+```
+
+Having identified the best combination of block and drug regressors, we next sought to understand if adding the mindfulness factor improved the fit of the model. The below tables reflect the ways that mindfulness was added to the winning model identified in the preceding stage. m = mindfulness
+
+```{r, table_s2, echo = FALSE, results = 'asis'}
+
+kable(acc_w_mind_mods, caption = "accuracy + mindfulness")
+kable(sacc_w_mind_mods, caption = "setting accuracy + mindfulness")
+kable(stereo_w_mind_mods, caption = "stereotypy + mindulness")
+```
+
+Last we checked whether adding the BIS regressor improved the model. Note that our conclusions would have been the same regardless of whether we had used the winning model from the previous stage, or the one with the addition of the BIS regressor.
+
+```{r, table_s3, echo = FALSE, results = 'asis'}
+
+kable(acc_mind_win_w_bis, caption = "accuracy + bis")
+kable(sacc_mind_win_w_bis, caption = "setting accuracy + bis")
+kable(stereo_mind_win_w_bis, caption = "stereotypy + bis")
+```
+
+
+```{r, setbycondfig, out.width='70%', fig.cap='Group average setting accuracy for each block x setting, broken down by session. mu = mean setting accuracy'}
+
+setfigpth <- '../../images/effect_of_cond_on_sacc.pdf'
+knitr::include_graphics(setfigpth)
+```
+
+
+```{r, stereodistfig, out.width='70%', fig.cap='Distribution of stereotypy scores'}
+
+stereofigpth <- '../../images/var_hist.pdf'
+knitr::include_graphics(stereofigpth)
+```

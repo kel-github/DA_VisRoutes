@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.27)  31 MAR 2023 21:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.27)  5 JUL 2023 15:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -282,34 +282,50 @@ File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
 \Gin@req@height=\dimen167
 \Gin@req@width=\dimen168
 )
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 70.
+\cslhangindent=\skip66
+\csllabelwidth=\skip67
+\cslentryspacingunit=\skip68
+(/home/kelly/.TinyTeX/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count280
+\calc@Bcount=\count281
+\calc@Adimen=\dimen169
+\calc@Bdimen=\dimen170
+\calc@Askip=\skip69
+\calc@Bskip=\skip70
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count282
+\calc@Cskip=\skip71
+)
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 106.
 (/home/kelly/.TinyTeX/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (/home/kelly/.TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count280
+\l__color_backend_stack_int=\count283
 \l__pdf_internal_box=\box52
 ) (./assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines.aux)
 \openout1 = `assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -376,23 +392,23 @@ LaTeX Font Info:    ... okay on input line 70.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 70.
+Package hyperref Info: Link coloring OFF on input line 106.
 (./assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines.out) (./assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines.out)
 \@outlinefile=\write3
 \openout3 = `assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 70.
-Package microtype Info: Applying patch `item' on input line 70.
-Package microtype Info: Applying patch `toc' on input line 70.
-Package microtype Info: Applying patch `eqnum' on input line 70.
-Package microtype Info: Applying patch `footnote' on input line 70.
+LaTeX Info: Redefining \microtypecontext on input line 106.
+Package microtype Info: Applying patch `item' on input line 106.
+Package microtype Info: Applying patch `toc' on input line 106.
+Package microtype Info: Applying patch `eqnum' on input line 106.
+Package microtype Info: Applying patch `footnote' on input line 106.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 70.
+LaTeX Info: Redefining \showhyphens on input line 106.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -410,41 +426,41 @@ Package microtype Info: Character `029' is missing
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/lmr/m/sc/10'.
 (microtype)             Ignoring protrusion settings for this character.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 72.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 108.
 (/home/kelly/.TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 72.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 108.
 (/home/kelly/.TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 72.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 108.
 (/home/kelly/.TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 72.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 108.
 (/home/kelly/.TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 72.
+(Font)              <10> on input line 108.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 72.
+(Font)              <7> on input line 108.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 72.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 72.
+(Font)              <5> on input line 108.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 108.
 (/home/kelly/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/home/kelly/.TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 72.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 108.
 (/home/kelly/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/home/kelly/.TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 72.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 108.
 (/home/kelly/.TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -454,76 +470,77 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
 
 LaTeX Font Warning: Font shape `T1/lmr/bx/sc' undefined
-(Font)              using `T1/lmr/bx/n' instead on input line 74.
+(Font)              using `T1/lmr/bx/n' instead on input line 110.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [1
 
 
-{/home/kelly/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+{/home/kelly/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 174.
+(Font)              <9> on input line 327.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 174.
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 190.
+(Font)              <6> on input line 327.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[3]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 343.
 (/home/kelly/.TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 
-LaTeX Warning: Reference `fig:taskFig' on page 2 undefined on input line 210.
+LaTeX Warning: Reference `fig:taskFig' on page 4 undefined on input line 363.
 
 
-LaTeX Warning: Reference `fig:taskFig' on page 2 undefined on input line 219.
+LaTeX Warning: Reference `fig:taskFig' on page 4 undefined on input line 371.
 
-[2]
+
 
 pdfTeX warning: pdflatex (file ../../images/DA_ExpTask.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<../../images/DA_ExpTask.pdf, id=134, 284.06125pt x 285.065pt>
+<../../images/DA_ExpTask.pdf, id=136, 284.06125pt x 285.065pt>
 File: ../../images/DA_ExpTask.pdf Graphic file (type pdf)
 <use ../../images/DA_ExpTask.pdf>
-Package pdftex.def Info: ../../images/DA_ExpTask.pdf  used on input line 237.
+Package pdftex.def Info: ../../images/DA_ExpTask.pdf  used on input line 388.
 (pdftex.def)             Requested size: 328.82706pt x 330.01881pt.
-[3 <../../images/DA_ExpTask.pdf>]
-Underfull \hbox (badness 2245) in paragraph at lines 302--320
-\T1/lmr/m/n/10 (+20) not in-clude zero. Mod-els were fit us-ing the BRMS (\T1/lmr/bx/n/10 (+20) burknerBrmsPackageBayesian2017?\T1/lmr/m/n/10 (+20) )
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 302--320
-\T1/lmr/m/n/10 (+20) in-ter-face for Stan (\T1/lmr/bx/n/10 (+20) standevelopmentteamStanModelingLanguage?\T1/lmr/m/n/10 (+20) ) and RStan
- []
-
-
-Underfull \hbox (badness 2245) in paragraph at lines 302--320
-\T1/lmr/m/n/10 (+20) (\T1/lmr/bx/n/10 (+20) standevelopmentteamRStanInterfaceStan2023?\T1/lmr/m/n/10 (+20) ). We used the de-fault weakly in-for-ma-tive
- []
-
-[4]
-Underfull \vbox (badness 1776) has occurred while \output is active []
-
-[5]
-<../../images/acc_fig.pdf, id=402, 341.275pt x 341.275pt>
+[4] [5 <../../images/DA_ExpTask.pdf>] [6] [7]
+<../../images/acc_fig.pdf, id=418, 341.275pt x 341.275pt>
 File: ../../images/acc_fig.pdf Graphic file (type pdf)
 <use ../../images/acc_fig.pdf>
-Package pdftex.def Info: ../../images/acc_fig.pdf  used on input line 491.
+Package pdftex.def Info: ../../images/acc_fig.pdf  used on input line 638.
 (pdftex.def)             Requested size: 328.82706pt x 328.84921pt.
-[6]
-<../../images/cacc_fig.pdf, id=417, 341.275pt x 341.275pt>
+
+Underfull \vbox (badness 5446) has occurred while \output is active []
+
+[8 <../../images/acc_fig.pdf>]
+<../../images/cacc_fig.pdf, id=439, 341.275pt x 341.275pt>
 File: ../../images/cacc_fig.pdf Graphic file (type pdf)
 <use ../../images/cacc_fig.pdf>
-Package pdftex.def Info: ../../images/cacc_fig.pdf  used on input line 544.
+Package pdftex.def Info: ../../images/cacc_fig.pdf  used on input line 688.
 (pdftex.def)             Requested size: 328.82706pt x 328.84921pt.
-[7 <../../images/acc_fig.pdf>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[8 <../../images/cacc_fig.pdf>]
-<../../images/s_fig.pdf, id=456, 341.275pt x 341.275pt>
+[9 <../../images/cacc_fig.pdf>]
+<../../images/s_fig.pdf, id=461, 341.275pt x 341.275pt>
 File: ../../images/s_fig.pdf Graphic file (type pdf)
 <use ../../images/s_fig.pdf>
-Package pdftex.def Info: ../../images/s_fig.pdf  used on input line 640.
+Package pdftex.def Info: ../../images/s_fig.pdf  used on input line 778.
 (pdftex.def)             Requested size: 328.82706pt x 328.84921pt.
-[9 <../../images/s_fig.pdf>] [10]
+[10]
+Underfull \vbox (badness 4556) has occurred while \output is active []
+
+[11 <../../images/s_fig.pdf>] [12]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[13]
+Underfull \vbox (badness 7540) has occurred while \output is active []
+
+[14]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[15]
 No file assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines.bbl.
-[11] (./assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines.aux)
+[16] (./assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -531,21 +548,21 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines.out' has not changed.
-(rerunfilecheck)             Checksum: F17C58F8DCE19314DEA6B3614F54BB36;3983.
+(rerunfilecheck)             Checksum: 7470CAFA647DDC127B3DCCD000B4E16C;4092.
  ) 
 Here is how much of TeX's memory you used:
- 11719 strings out of 478025
- 192765 string characters out of 5840221
- 1870305 words of memory out of 5000000
- 31446 multiletter control sequences out of 15000+600000
- 575825 words of font info for 152 fonts, out of 8000000 for 9000
+ 11918 strings out of 478025
+ 197210 string characters out of 5840221
+ 1867305 words of memory out of 5000000
+ 31550 multiletter control sequences out of 15000+600000
+ 581366 words of font info for 163 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,12n,76p,1085b,517s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/home/kelly/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/home/kelly/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/home/kelly/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/home/kelly/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/home/kelly/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/home/kelly/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}</home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
-Output written on assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines.pdf (11 pages, 390449 bytes).
+ 75i,12n,76p,1085b,521s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{/home/kelly/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/home/kelly/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/home/kelly/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/home/kelly/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/home/kelly/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/home/kelly/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}</home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></home/kelly/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
+Output written on assessing-the-role-of-dopamine-on-the-formation-of-contextually-relevant-visual-routines.pdf (16 pages, 421402 bytes).
 PDF statistics:
- 579 PDF objects out of 1000 (max. 8388607)
- 520 compressed objects within 6 object streams
- 73 named destinations out of 1000 (max. 500000)
- 36061 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 711 PDF objects out of 1000 (max. 8388607)
+ 646 compressed objects within 7 object streams
+ 143 named destinations out of 1000 (max. 500000)
+ 38117 words of extra memory for PDF output out of 42996 (max. 10000000)
 
