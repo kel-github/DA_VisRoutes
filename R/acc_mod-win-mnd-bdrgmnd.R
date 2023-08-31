@@ -38,7 +38,7 @@ if (new){
   # define accuracy models
   ###-----------------------------------------------------
 
-  mndbdrg3way <- brm(formula = tt | trials(td) ~ b + drug + m + b:m + drug:m + b:drug:m + (b:drug|sub),
+  mndbdrg3way <- brm(formula = tt | trials(td) ~ b + drug + m + b:m + drug:m + b:drug:m + b:drug + (b:drug|sub),
                    data = acc_dat,
                    warmup = 2000, iter = 10000,
                    family = binomial,

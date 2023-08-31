@@ -55,13 +55,13 @@ load(file=sprintf(ftmplt, 'acc_model-fxbdrgint-brfx', 'acc_model-fxbdrgint-brfx'
 loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg, 
             fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx) #,
 
-# fxbdrg_rfxbdrg           0.0       0.0
-# fxbdrgint_bdrgsubrfx    -0.2       0.5
-# fxbdrg_bsubrfx        -674.1      80.8
-# fxbdrgint_bsubrfx     -674.8      80.5
-# bsubrfx               -677.8      81.3
-# fxb_bsubrfx           -679.3      81.7
-# fxb_subint           -1224.6     118.0
+# fxbdrgint_bdrgsubrfx     0.0       0.0
+# fxbdrg_rfxbdrg          -0.3       0.6
+# fxbdrg_bsubrfx        -958.5     110.8
+# fxbdrgint_bsubrfx     -961.5     110.9
+# bsubrfx               -976.6     112.3
+# fxb_bsubrfx           -977.3     112.3
+# fxb_subint           -1640.1     162.8
 
 acc_comp <- loo_compare(fxb_subint, bsubrfx, fxb_bsubrfx, fxbdrg_bsubrfx, fxbdrg_rfxbdrg, 
                         fxbdrgint_bdrgsubrfx, fxbdrgint_bsubrfx)

@@ -64,7 +64,7 @@ if (new){
                        tt = tt, 
                        td = trials)
     
-    faux_fxdrgmnd_bsubrfx <- brm(formula = tt | trials(td) ~ drug + mnd + (b|sub),
+    faux_fxdrgmnd_bsubrfx <- brm(formula = tt | trials(td) ~ drug + mnd + b:drug + (b|sub),
                                  data = faux_dat,
                                  warmup = 2000, iter = 10000,
                                  family = binomial,
