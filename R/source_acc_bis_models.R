@@ -15,8 +15,8 @@ faux <- FALSE
 # the elements of the two vectors should match up, so position one of each
 # corresponds to the same data and what you want to do with that data
 # this will form the loop that is used to fit the various models
-data_names <- c('cacc') #'cacc')
-msv_fnms <- c('cacc_mindwin_bis') #, 'cacc_mindwin_bis') # save names
+data_names <- c('acc') #'cacc')
+msv_fnms <- c('acc_mindwin_bis') #, 'cacc_mindwin_bis') # save names
 
 # these vectors contain the model files that you want to run, and any appends that
 # should be made to the msv_fnms above (again, make sure that the elements across
