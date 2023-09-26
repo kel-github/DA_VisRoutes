@@ -106,7 +106,7 @@ door_acc_sum <- blocked_dat %>% group_by(sub, sess, drug, cond, b) %>%
                                 oc = length(door[door_type == "oc"]),
                                 n = length(door[door_type == "n"]),
                                 td = length(door),
-                                tt = cc+oc,
+                                tt = cc,
                                 acc = tt/td) %>% # total on a target door
                 ungroup()
 
