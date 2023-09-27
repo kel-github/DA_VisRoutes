@@ -26,8 +26,10 @@ msv_fnms <- c('acc_winplusmind')
 # should be made to the msv_fnms above (again, make sure that the elements across
 # the two vectors correspond. these vectors will
 # be looped over within the data/naming loop above
-rfs <- c("acc_mod-win-mnd.R", "acc_mod-win-mnd-bmnd.R", "acc_mod-win-mnd-drgmnd.R", "acc_mod-win-mnd-bmd-dmnd.R", "acc_mod-win-mnd-bdrgmnd.R")
-app <- c(NA, "_bmnd", "_dmnd", "bmnd_dmnd", "bdmnd")
+# rfs <- c("acc_mod-win-mnd.R", "acc_mod-win-mnd-bmnd.R", "acc_mod-win-mnd-drgmnd.R", "acc_mod-win-mnd-bmd-dmnd.R", "acc_mod-win-mnd-bdrgmnd.R")
+# app <- c(NA, "_bmnd", "_dmnd", "bmnd_dmnd", "bdmnd")
+rfs <- c("acc_mod-win-mnd-bmd-dmnd.R")
+app <- c("bmnd_dmnd")
 
 for (i in 1:length(data_names)){
   
