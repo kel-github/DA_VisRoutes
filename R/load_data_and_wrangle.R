@@ -142,6 +142,17 @@ for (i in subs_l65) door_acc_sum$excl[door_acc_sum$sub == i] <- 1
 ###-------------------------------------------------------
 save(door_acc_sum, file='../data/derivatives/accuracy.Rda')
 
+###-----------------------------------------------------------
+# for modelling
+###-----------------------------------------------------------\
+acc_4_viz <- blocked_dat %>% group_by(sub, sess) %>% filter(b==8) %>%
+  summarise(acc = length(door[door_type == "cc"])/
+              length(door)) 
+
+subs_g8 <- unique(acc_4_excl$sub[acc_4_excl$acc > .8])
+dat_4_model <- blocked_dat %>% filter(sub %in% subs_g8)
+save(dat_4_model, file = '../../modelroutines/data/dat_4_model.RData')
+
 ###-------------------------------------------------------
 ## NOW MAKE SUMMARY FOR MODELLING
 ###-------------------------------------------------------

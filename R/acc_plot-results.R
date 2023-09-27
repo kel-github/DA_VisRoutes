@@ -10,11 +10,11 @@ source('fig_label.R')
 # WHAT ARE YOU PLOTTING?
 ##############################################################
 load('../data/derivatives/acc_dat4_model.Rda')
-load('../data/derivatives/acc_winplusmindbdmnd/acc_winplusmindbdmnd.Rda')
-mod <- mndbdrg3way
-dat_ylim <- c(.45, .75)
-dat_yseq <- seq(.45, .75, .05)
-dat_ylabs <- c(".45","","","","","",".75")
+load('../data/derivatives/acc_winplusmindbmnd_dmnd/acc_winplusmindbmnd_dmnd.Rda')
+mod <- mnddrgb
+dat_ylim <- c(.00, .55)
+dat_yseq <- seq(.00, .55, .05)
+dat_ylabs <- c("0","","","","","","","","","","",".55")
 figinfo = 'acc'
 cor_ylim <- c(-0.3, 0.25)
 cor_yseq <- seq(-0.3, 0.25, .05)
@@ -78,12 +78,11 @@ sum_dat <- rbind(sum_dat %>% filter(drug == "levodopa") %>%
                               `b:m`*m.x*b.x),
                    sum_dat %>% filter(drug == "placebo") %>%
                      mutate(log_odds = Intercept + b.y*b.x +  
-                              drugplacebo + 
+                               drugplacebo + 
                               `b:drugplacebo`*b.x + 
                                m.y*m.x + 
                               `b:m`*m.x*b.x + 
-                              `drugplacebo:m`*m.x +
-                              `b:drugplacebo:m`*b.x*m.x)) %>% 
+                              `drugplacebo:m`*m.x)) %>% 
             mutate(p= 1/(1+exp(-log_odds))) %>%
             mutate(obs = tt/td) %>%
             mutate(resid = obs - p)
@@ -166,7 +165,7 @@ with(mu_bdrug_dat %>% filter(drug == "levodopa"),
                               angle = 90,
                               length = .025,
                               col=dopa_col))
-legend(x=6.5, y=.55, legend = c("DA", "P"),
+legend(x=6.5, y=.15, legend = c("DA", "P"),
        col = c(dopa_col,placebo_col), 
        pch = 19, bty = "n", cex = 1)
 # now add lines from the model
@@ -229,7 +228,7 @@ fig_label("D", cex = 2)
 # posterior_samples is deprecated, use as_draws next time
 fxdrg_draws <- posterior_samples(mod, pars="b_drugplacebo:m")
 plot(density(fxdrg_draws$`b_drugplacebo:m`),
-     col=samples_col,main="", yalb="", xlab="",
+     col=samples_col,main="", ylab ="", xlab="",
      bty="n", xlim=c(-0.2, 0.1), axes=F)
 axis(side=1, at = c(-0.2, 0, 0.1), labels=c("-0.2", "0", ""))
 polygon(density(fxdrg_draws$b_drugplacebo), border=samples_col, col=samples_col)
