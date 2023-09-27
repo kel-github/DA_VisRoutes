@@ -41,7 +41,6 @@ keywords:
 bibliography: DAeyes.bib
 biblio-style: unsrt
 output: rticles::arxiv_article
-output: pdf_document
 ---
 
 ```{r knitr_options, echo=FALSE, message=FALSE}
@@ -50,15 +49,11 @@ library(brms)
 library(tidyverse)
 # rstudio will set the folder where .Rmd file seats as work directory
 # set it back to the folder where .Rproj seats
-opts_knit$set(root.dir = normalizePath("../")) 
+#opts_knit$set(root.dir = normalizePath("../../")) 
 opts_chunk$set(fig.align = 'center', cache = FALSE, warning = FALSE,
   message = TRUE, echo = FALSE)
 options(digits = 3, width = 88, knitr.graphics.auto_pdf = TRUE,
         knitr.kable.NA = '')
-knit_hooks$set(inline = function(x) {
-   x <- sprintf("%1.2f", x)
-   paste(x, collapse = ", ")
-})
 ```
 
 # Introduction
@@ -84,7 +79,7 @@ A total of 40 participants (mean age: 24.5, sd: 5, 30 female, 10 male) were recr
 
 ## Procedure
 
-Participants attended two sessions, spaced approximately 1 week apart. After initial blood pressure and mood assessments [@bondUseAnalogueScales1974], participants received either placebo (vitamin C) or Levodopa (Madopar 125: 100 mg Levodopa and 25 mg Benserazide Hydrochloride), crushed and dispersed in orange juice, now referred to as the 'placebo' and 'dopamine' sessions respectively. The solution was prepared by an experimenter who did not administer the remaining experimental procedures. This protocol was sufficient to achieve double blinding in previous work [@chowdhuryDopamineModulatesEpisodic2012; @chowdhuryDopamineRestoresReward2013]. Participants then completed the Five Facet Mindfulness Questionnaire [@baerUsingSelfReportAssessment2006] and the Barratt Impulsivity Scale [BIS; @pattonFactorStructureBarratt1995], as trait impulsivity scores are associated with midbrain dopamine D2/D3 receptor availability [@buckholtzDopaminergicNetworkDifferences2010]. Around 30 minutes after drug administration, participants completed a second BP and mood rating assessment. Participants then completed the practice stage of the task, so that the experimental stage began approximately 40 minutes after drug ingestion, within the window of peak plasma availability [@continPharmacokineticsLevodopa]. At the end of the session, participants completed the final BP and mood rating assessment and were asked whether they thought they had been given the active or placebo drug.
+Participants attended two sessions, spaced approximately 1 week apart. After initial blood pressure and mood assessments [@bondUseAnalogueScales1974], participants received either placebo (vitamin C) or Levodopa (Madopar 125: 100 mg Levodopa and 25 mg Benserazide Hydrochloride), crushed and dispersed in orange juice, now referred to as the 'placebo' and 'dopamine' sessions respectively. The solution was prepared by an experimenter who did not administer the remaining experimental procedures. This protocol was sufficient to achieve double blinding in previous work [@chowdhuryDopamineModulatesEpisodic2012; @chowdhuryDopamineRestoresReward2013]. Participants then completed the Five Facet Mindfulness Questionnaire [@baerUsingSelfReportAssessment2006] and the Barratt Impulsivity Scale [BIS; @pattonFactorStructureBarratt1995], as trait impulsivity scores are associated with midbrain dopamine D2/D3 receptor availability [@buckholtzDopaminergicNetworkDifferences2010]. Around 30 minutes after drug administration, participants completed a second BP and mood rating assessment. Participants then completed the practice stage of the task, so that the experimental stage began approximately 40 minutes after drug ingestion, within the window of peak plasma availability [@continPharmacokineticsLevodopa2010]. At the end of the session, participants completed the final BP and mood rating assessment and were asked whether they thought they had been given the active or placebo drug.
 
 ## Apparatus
 
@@ -176,8 +171,7 @@ acc_results <- print(mnddrgb, digits = 2)
 
 ### Model selection
 
-First we sought the best model in order to make subsequent inference over the parameters. The model that best accounted for the experimental factors contained main fixed effects of block and drug, and random effects for block and drug. Although this model was only closely preferred to the next most complex model that contained a block x drug interaction (ELPD diff = `r sprintf("%1.2f", acc_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", acc_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"]/acc_comp["fxbdrgint_bdrgsubrfx", "se_diff"])`), it was strongly preferred to all other models (min ELPD diff = `r sprintf("%1.2f", acc_comp["fxbdrg_bsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", acc_comp["fxbdrg_bsubrfx", "elpd_diff"]/acc_comp["fxbdrg_bsubrfx", "se_diff"])`). Adding mindfulness scores improved the predictive accuracy of the model; the winning model contained a 3-way block x drug x mindfulness interaction (and associated two-way interactions and main effect of mindfulness; ELPD diff = `r sprintf("%1.2f", acc_mind_comp["fxbdrg_rfxbdrg", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", acc_mind_comp["fxbdrg_rfxbdrg", "elpd_diff"]/acc_mind_comp["fxbdrg_rfxbdrg", "se_diff"])`). Adding BIS scores did not improve the predictive value of the model (ELPD diff = `r sprintf("%1.2f", acc_mind_bis_comp["acc_mindwin_bis", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", acc_mind_bis_comp["acc_mindwin_bis", "elpd_diff"]/acc_mind_bis_comp["acc_mindwin_bis", "se_diff"])`). Note that although we draw inferences over parameters from the winning model, our inferences are the same as if we had used the more complex model that includes the BIS scores.
-
+First we sought the best model in order to make subsequent inference over the parameters. The model that best accounted for the experimental factors contained main fixed effects of block and drug, and random effects for block and drug. Although this model was only closely preferred to the next most complex model that contained a block x drug interaction (ELPD diff = `r sprintf("%1.2f", acc_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", acc_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"]/acc_comp["fxbdrgint_bdrgsubrfx", "se_diff"])`), it was strongly preferred to all other models (min ELPD diff = `r sprintf("%1.2f", acc_comp["fxbdrg_bsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", acc_comp["fxbdrg_bsubrfx", "elpd_diff"]/acc_comp["fxbdrg_bsubrfx", "se_diff"])`). Adding mindfulness scores improved the predictive accuracy of the model; the winning model contained a 3-way block x drug x mindfulness interaction (and associated two-way interactions and main effect of mindfulness; ELPD diff = `r sprintf("%1.2f", acc_mind_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", acc_mind_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"]/acc_mind_comp["fxbdrgint_bdrgsubrfx", "se_diff"])`). Adding BIS scores did not improve the predictive value of the model (ELPD diff = `r sprintf("%1.2f", acc_mind_bis_comp["acc_mindwin_bis", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", acc_mind_bis_comp["acc_mindwin_bis", "elpd_diff"]/acc_mind_bis_comp["acc_mindwin_bis", "se_diff"])`). Note that although we draw inferences over parameters from the winning model, our inferences are the same as if we had used the more complex model that includes the BIS scores.
 
 ### The effect of dopamine and mindfulness on accuracy
 
