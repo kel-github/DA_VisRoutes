@@ -49,7 +49,6 @@ library(brms)
 library(tidyverse)
 # rstudio will set the folder where .Rmd file seats as work directory
 # set it back to the folder where .Rproj seats
-#opts_knit$set(root.dir = normalizePath("../../")) 
 opts_chunk$set(fig.align = 'center', cache = FALSE, warning = FALSE,
   message = TRUE, echo = FALSE)
 options(digits = 3, width = 88, knitr.graphics.auto_pdf = TRUE,

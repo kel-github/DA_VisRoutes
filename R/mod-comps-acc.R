@@ -16,22 +16,22 @@ library(tidyverse)
 #-----------------------------------------------------------------------------
 # ACCURACY
 # ---------------------------------------------------------------------------
-load('../data/derivatives/acc_model-fxbdrg-bdrgsubrfx/acc_model-fxbdrg-bdrgsubrfx.Rda')
+load('../data/derivatives/acc_model-fxbdrgint-bdrgrfx/acc_model-fxbdrgint-bdrgrfx.Rda')
 load("../data/derivatives/acc_winplusmind/acc_winplusmind.Rda")
 load("../data/derivatives/acc_winplusmind_bmnd/acc_winplusmind_bmnd.Rda")
 load("../data/derivatives/acc_winplusmind_dmnd/acc_winplusmind_dmnd.Rda")
 load("../data/derivatives/acc_winplusmindbmnd_dmnd/acc_winplusmindbmnd_dmnd.Rda")
 load("../data/derivatives/acc_winplusmindbdmnd/acc_winplusmindbdmnd.Rda")
-loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
+loo_compare(fxbdrgint_bdrgsubrfx, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
 #                 elpd_diff se_diff
-# mnddrgb         0.0       0.0   
-# bdrgmdrgmi     -0.4       0.8   
-# mndbdrg3way    -0.4       0.8   
-# mndb           -2.9       4.9   
-# fxbdrg_rfxbdrg -3.8       5.0   
-# mnd            -4.3       5.0 
+# mnddrgb               0.0       0.0   
+# bdrgmdrgmi           -0.4       0.8   
+# mndbdrg3way          -0.4       0.8   
+# mndb                 -2.9       4.9   
+# fxbdrgint_bdrgsubrfx -3.5       5.1   
+# mnd                  -4.3       5.0
 
-acc_mind_comp <- loo_compare(fxbdrg_rfxbdrg, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
+acc_mind_comp <- loo_compare(fxbdrgint_bdrgsubrfx, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
 print(acc_mind_comp, simplify=FALSE, digits = 2)
 save(acc_mind_comp, file="../data/derivatives/acc_mind_loo.Rda")
 
