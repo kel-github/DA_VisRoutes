@@ -25,11 +25,22 @@ load("../data/derivatives/acc_winplusmindbdmnd/acc_winplusmindbdmnd.Rda")
 loo_compare(fxbdrgint_bdrgsubrfx, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
 #                 elpd_diff se_diff
 # mnddrgb               0.0       0.0   
-# bdrgmdrgmi           -0.4       0.8   
-# mndbdrg3way          -0.4       0.8   
-# mndb                 -2.9       4.9   
-# fxbdrgint_bdrgsubrfx -3.5       5.1   
-# mnd                  -4.3       5.0
+# bdrgmdrgmi            0.0       0.7   
+# mndbdrg3way          -0.1       0.8   
+# mndb                 -2.5       5.0   
+# fxbdrgint_bdrgsubrfx -3.1       5.1   
+# mnd                  -4.0       5.0 
+
+# mnddrgb
+# mnddrgb
+# Family: binomial 
+# Links: mu = logit 
+# Formula: tt | trials(td) ~ b + drug + m + b:drug + b:m + drug:m + (b:drug | sub)
+
+# bdrgmdrgmi
+# Family: binomial 
+# Links: mu = logit 
+# Formula: tt | trials(td) ~ b + drug + m + drug:m + b:drug + (b:drug | sub)
 
 acc_mind_comp <- loo_compare(fxbdrgint_bdrgsubrfx, mnd, mndb, mnddrgb, bdrgmdrgmi, mndbdrg3way)
 print(acc_mind_comp, simplify=FALSE, digits = 2)
