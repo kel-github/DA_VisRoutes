@@ -35,13 +35,13 @@ The first set of tables show the outcomes from the first stage of the LOO model 
 
 ```{r, acc_vals, echo = FALSE, message = FALSE}
 
-acc_mods <- tibble(model = c("fx-b+drg_rfx-b+drg", "fx-b x drg_rfx-b+drg", "fx-b+drg_rfx-b", "fx-b x drg_rfx-b", "rfx-b", "fx-b_rfx-b", "fx-b"),
-                   elpd_diff = c(0.0, -0.2, -674.1, -674.8, -677.8, -679.3, -1224.6),
-                   se_diff = c(0.0, 0.5, 80.8, 80.5, 81.3, 81.7, 118.0))
+acc_mods <- tibble(model = c("fx-b x drg_rfx-b+drg", "fx-b + drg_rfx-b+drg", "fx-b+drg_rfx-b", "fx-b x drg_rfx-b", "rfx-b", "fx-b_rfx-b", "fx-b"),
+                   elpd_diff = c(0.0, -0.3, -958.5, -961.5, -976.6, -977.3, -1640.1),
+                   se_diff = c(0.0, 0.6, 110.8, 110.9, 112.3, 112.3, 162.8))
 
 acc_w_mind_mods <- tibble(model = c("m x b x drg + m", "b x m + m", "drg x m + m", "b x m + m", "+ m", "b + drg"),
-                          elpd_diff = c(0.0, 0.0, -0.2, -11.8, -11.9, -12.0),
-                          se_diff = c(0.0, 0.7, 0.8, 6.4, 6.4, 6.4))
+                          elpd_diff = c(0.0, 0.0, -0.1, -2.5, -3.1, -4.0),
+                          se_diff = c(0.0, 0.7, 0.8, 5.0, 5.1, 5.0))
 
 acc_mind_win_w_bis <- tibble(model = c("win", "+ bis"),
                              elpd_diff = c(0.0, 0.0),
