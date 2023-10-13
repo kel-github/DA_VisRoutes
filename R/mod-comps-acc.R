@@ -76,7 +76,7 @@ load("../data/derivatives/acc_mindwin_bis/acc_mindwin_bis.Rda")
 loo_compare(mnddrgb, acc_mindwin_bis)
 # elpd_diff se_diff
 # mnddrgb          0.0       0.0   
-# acc_mindwin_bis -2.0       0.5
+# acc_mindwin_bis -0.6       0.6
 acc_mind_bis_comp <- loo_compare(mnddrgb, acc_mindwin_bis)
 save(acc_mind_bis_comp, file="../data/derivatives/acc_mind_bis_comp.Rda")
 rm(mnddrgb, acc_mindwin_bis)
