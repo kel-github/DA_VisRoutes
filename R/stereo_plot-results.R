@@ -67,6 +67,7 @@ dopa_col <-t_col(dopa_col)
 samples_col <- t_col(samples_col)
 cor_data_col <- t_col(cor_data_col)
 
+
 ###############################################################
 # DATA WRANGLES 
 ###############################################################
@@ -160,7 +161,7 @@ with(mu_bdrug_dat %>% filter(drug == "placebo"),
                                col=placebo_col,
                                bty="n",
                                xlab = "log(b)",
-                               ylab = "log(v)",
+                               ylab = "log(s)",
                                axes =F))
 axis(side=1, at=unique(mu_bdrug_dat$b.x), tick=TRUE, 
                   labels=c("0", "","","","","","","2.1"))
@@ -224,7 +225,6 @@ abline(lm(v ~ m, data = dm), col = "grey17") # is this the best way to show the
 # v across the values of m, take the diff and plot that line.
 # will prob get the same thing though, as these are predicted values?
 fig_label("B", cex = 2)
-
 
 ########################################
 # PANELS 2, 3: DENSITY OF THE PARAMETER ESTIMATES FOR BLOCK, DRUG

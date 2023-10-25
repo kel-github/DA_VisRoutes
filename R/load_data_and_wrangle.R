@@ -152,6 +152,7 @@ acc_4_viz <- blocked_dat %>% group_by(sub, sess) %>% filter(b==8) %>%
 subs_g8 <- unique(acc_4_excl$sub[acc_4_excl$acc > .8])
 dat_4_model <- blocked_dat %>% filter(sub %in% subs_g8)
 save(dat_4_model, file = '../../modelroutines/data/dat_4_model.RData')
+save(blocked_dat, file = '../../modelroutines/data/dat_4_viz.RData')
 
 ###-------------------------------------------------------
 ## NOW MAKE SUMMARY FOR MODELLING

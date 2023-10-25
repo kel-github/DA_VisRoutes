@@ -40,7 +40,7 @@ if (new){
   
   if (data_names[i] == "acc"){
 
-    acc_mindwin_bis <- brm(formula = tt | trials(td) ~ b + drug + m + b:m + drug:m + bis + (b:drug|sub),
+    acc_mindwin_bis <- brm(formula = tt | trials(td) ~ b + drug + m +  b:drug + b:m + drug:m + bis + (b:drug|sub),
                             data = acc_dat,
                             warmup = 2000, iter = 10000,
                             family = binomial,
