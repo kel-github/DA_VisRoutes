@@ -5,8 +5,8 @@ library(gridExtra)
 source('fig_label.R')
 
 figinfo = 's'
-w <- 12 # in cm
-h <- 12 # in cm
+w <- 20 # in cm
+h <- 20 # in cm
 
 #########################################################
 # stuff for the door/routine plots
@@ -84,5 +84,5 @@ tracs <- grid.arrange(all_ps[[1]], all_ps[[2]],
               heights = rep(2.5, nsubs),
               left = "sub",
               top = "trials")
-ggsave("../images/trajectories2subs.pdf", tracs, 
+ggsave("../images/trajectories2subs_4talk.pdf", tracs, 
        width = w+.5, height = (w/6*2)+.5, units="cm")

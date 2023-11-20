@@ -1,0 +1,50 @@
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+{\centering \includegraphics[width=0.7\linewidth]{../../images/DA_ExpTask}
+
+}
+
+\caption{Experimental Task. A) A single trial where participants use their eyes to open doors to locate a target. B) Contexts and sessions: in each session, participants are exposed to two colour contexts each with 4 unique and equiprobable target locations. Colours and target locations were counterbalanced across participants and sessions. In each session, levodopa (DA) or placebo is administered under double blind conditions.}\label{fig:taskfig}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+{\centering \includegraphics[width=0.7\linewidth]{../../images/acc_fig}
+
+}
+
+\caption{The influence of dopamine and mindfulness on accuracy. A) Accuracy (acc) data by block and drug. Circles reflect observed average accuracy, dotted lines reflect the fit of the winning model. B) The association between trait mindfulness (x-axis) and the impact of drug on accuracy [dopamine-placebo]. The bottom row shows posterior densities (in log odds) estimated for C) the main effect of block (b), D) the main effect of dopamine, and E) the drug x mindfulness (m) interaction. DA = dopamine, P = placebo, d = density. Error bars reflect within-subject standard error of the mean [SE].}\label{fig:accfig}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+{\centering \includegraphics[width=0.7\linewidth]{../../images/cacc_fig}
+
+}
+
+\caption{The influence of dopamine and mindfulness on setting accuracy. A) Accuracy (acc) data by block and drug. Circles reflect observed average accuracy, dotted lines show the fit of the winning model. B) Estimated posterior density (in log odds) for the main effect of drug (dopamine vs placebo), D) same as in B, but for the main effect of block. DA = dopamine, P = placebo, b = block, d = density. Error bars reflect within-subject standard error of the mean [SE].}\label{fig:caccfig}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+{\centering \includegraphics[width=0.7\linewidth]{../../images/s_fig}
+
+}
+
+\caption{The influence of dopamine and mindfulness on door selection stereotypy. A) Log stereotypy scores by log block and drug. Circles reflect observed average variance (of the transition matrices), dotted lines show the fit of the winning model. B) The association between trait mindfulness (x-axis) and the impact of drug on variance [DA-P]. The bottom row shows posterior densities (in log odds) estimated for C) the main effect of block (b), D) the main effect of dopamine, and E) the drug x mindfulness (m) interaction. log(s) = log stereotypy scores, log(b) = block, DA = dopamine, P = placebo, b = block, m = mindfulness, DA*m = drug x mindfulness interaction, d = density. Error bars reflect within-subject standard error of the mean [SE].}\label{fig:stereofig}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+{\centering \includegraphics[width=0.7\linewidth]{../../images/trajectories2subs}
+
+}
+
+\caption{Example door selection routines for two participants (rows) over 6 consecutive trials from the last block of the dopamine session. Door selections follow the order indicated by the arrow. Blue circles reflect target doors for that setting, and green doors are target doors for the other setting. Red doors are erroneous doors in that a target was never found there.}\label{fig:trajecfig}
+\end{figure*}
