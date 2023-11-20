@@ -2,7 +2,8 @@
 
 - Kelly Garner  
 - Li-Ann Leow  
-- Aya Uchida  
+- Aya Uchida
+- Christopher Nolan   
 - Ole Jensen  
 - Marta I. Garrido  
 - Paul E. Dux  
