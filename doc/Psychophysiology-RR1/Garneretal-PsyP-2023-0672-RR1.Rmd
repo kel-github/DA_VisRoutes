@@ -1,0 +1,115 @@
+---
+output: 
+  pdf_document:
+    extra_dependencies: ["float"]
+bibliography: ["DAeyes.bib"]
+---
+
+```{r knitr_options, echo=FALSE, message=FALSE}
+library(knitr)
+library(brms)
+library(tidyverse)
+# rstudio will set the folder where .Rmd file seats as work directory
+# set it back to the folder where .Rproj seats
+#opts_knit$set(root.dir = normalizePath("../")) 
+opts_chunk$set(fig.align = 'center', cache = FALSE, warning = FALSE,
+  message = TRUE, echo = FALSE)
+options(digits = 3, width = 88, knitr.graphics.auto_pdf = TRUE,
+        knitr.kable.NA = '')
+opts_chunk$set(fig.pos = "H", out.extra = "")
+# knit_hooks$set(inline = function(x) {
+#   x <- sprintf("%1.2f", x)
+#   paste(x, collapse = ", ")
+# })
+```
+
+
+
+Dear Dr. John McDonald,
+
+We are excited to have the opportunity to submit our revised manuscript "Assessing the influence of dopamine and mindfulness on the formation of routines in visual search". We thank you and the reviewer for the helpful comments, and believe the manuscript to be improved as a result of addressing them.
+
+We have detailed our responses below. All changes to the submitted manuscript are in blue text.
+
+Sincerely,
+Kelly G. Garner, Li-Ann Leow, Aya Uchida, Christopher Nolan, Ole Jensen, Marta I. Garrido, & Paul E. Dux
+
+&nbsp;  
+&nbsp;  
+
+**E1**
+
+**E1.1** *I struggled with one important sentence on page 7 (lines 109-112) because I interpreted "former and latter" to mean previous and current contingencies. I suggest that you revise this sentence to avoid such interpretation, e.g., by using "previous and current" rather than "current and previous".*
+
+Thanks for picking up this unfortunate language! Lines 114-115 now read:
+
+This suggests that increased mindfulness is associated with better differentiation between current and previous contingencies of reinforcement, potentially via improved focus on the \textcolor{blue}{current contingencies}, thereby reducing interference \textcolor{blue}{from previous contingencies}.
+
+**E1.1** *On lines 205 and 206, please spell out "1" (one) and "4" (four).*
+
+&nbsp;  
+&nbsp;  
+
+**R1**
+
+**R1.1** *It seems working memory could be a component that could be a component of the interactions observed. While not the focus of this study, it would be interesting if the authors could speculate on the potential role and/or potential interactions with mindfulness and dopamine. For example, it would seem conceivable that lower working memory capacity could be a component of increased stereotypy.*
+
+We have amended the discussion on lines 668-683 to address the potential role for working memory function in the relationship between mindfulness and stereotypy:
+
+\textcolor{blue}{One possibility that remains unexplored in the current study is that working memory capacity may be a moderating factor in the relationship between mindfulness and stereotypy. Individuals low in mindfulness may also show low working memory capacity} [@ruoccoDelineatingContributionsSustained2013]. \textcolor{blue}{This may result in a reliance on strategies that avoid taxation of working memory, such as adhering to a routine that will lead to the target, despite the potential delay in reward. Indeed, the delay in reward may be less costly than the effort of retaining the relevant target locations in working memory. It has been proposed that dopaminergic projections to the prefrontal cortex (see Cools \& D’Esposito,} [-@coolsInvertedUShapedDopamine2011], \textcolor{blue}{and perhaps beyond} [@froudist-walshDopamineGradientControls2021]\textcolor{blue}{, are critical for the gating of sensory information into working memory} [@gruberDopamineModulationBasal2006; @chathamMultipleGatesWorking2015]\textcolor{blue}{, and such projections may well have been modulated by the levodopa manipulation. Evidence regarding the relationship between mindfulness and working memory is mixed} [@jhaDoesMindfulnessTraining2019; @imDoesMindfulnessbasedIntervention2021]\textcolor{blue}{, and larger, systematic studies are warranted to pin down the nature of this relationship. Future investigations should focus on the potential moderating role of working memory when mindfulness and dopamine interact to influence stereotypy, in order to pin down causal links between these factors.} 
+
+**R1.2**  *The description of the task does not seem to match the figure and was a bit difficult to follow at first. The targets are described as squares and circles are used in the figure. Also, animal images were used as targets – it would be helpful to see examples of them. How similar are they? Did the smiley face play a roll? It may also be helpful to illustrate the timing within each trial – the series of items turning black and then back to another color – if possible.*
+
+We have amended the figure and have updated the caption. The doors are now squares, and we have replaced the smiley face with an example from the set of animal images that were used as targets. (The smiley face was used only in the image to symbolise getting any target, but R1 is correct that this was confusing). We have also added a direct link to the folder of animal targets, that is located within the github repository of custom code written for the task.
+
+```{r taskfig, out.width='70%', fig.cap='Experimental Task. A) A single trial where participants use their eyes to open doors to locate an animal image target. B) Contexts and sessions: in each session, participants are exposed to two colour contexts each with 4 unique and equiprobable target locations. Colours and target locations were counterbalanced across participants and sessions. In each session, levodopa (DA) or placebo is administered under double blind conditions.'}
+
+taskfigpth <- '../../images/DA_ExpTask_RR1.pdf'
+knitr::include_graphics(taskfigpth)
+
+```
+
+
+We opted not to include an illustration of the timing for opening and closing doors in the main figure, as the purpose of this figure is to convey the key behaviours and manipulations used in the experiment. We instead added an extra figure to the Supplemental procedures that provides these details. This supplemental figure is referred to at the relevant point in the method section (line 208).
+
+```{r, expfig, out.width='70%', fig.cap='Participants fixated for 300 ms on a door to open it. After 300 ms of fixation, the door turned black if the target was not behind it. The door returned to its original colour as soon as participants moved their eyes away from the door.'}
+
+tskfigpth <- '../../images/s_task-info.pdf'
+knitr::include_graphics(tskfigpth)
+```
+
+
+**R1.3** *In accuracy, there was a block x mindfulness interaction that there doesn’t seem to be any discussion of beyond that fact. Could the authors comment on how it may or may not fit in with their interpretation of the data (and the effects of dopamine)?*
+
+Although the winning model contained a block x mindfulness interaction term, the posterior evidence suggested sufficient uncertainty regarding the parameter estimate to warrant exclusion of the consideration of its impact on performance, i.e. the 95% confidence intervals included zero (see Methods p. 13, lines 256-259).
+
+We have added the following to the results section on lines 407-409, to make this clear. 
+
+\textcolor{blue}{Although the winning model contained a block x mindfulness interaction, the 95\% CIs included zero} (mean log odds = 0.04, 95% CI[-0.027, 0.11], \textcolor{blue}{so we do not consider this parameter any further.}
+
+&nbsp;  
+
+**R1 Minor Comments**
+
+*Line 494-496 rules out a tradeoff between accuracy and stereotypy. That makes the language on line 555 a bit confusing that says there is a tradeoff. It would be helpful to clarify.*
+
+Thanks for spotting this! To clarify the differences between these statements, we have added the following to lines 507-510:
+
+As accuracy and stereotypy are possibly, but not necessarily related, we next sought to ensure that the observed influences of dopamine and mindfulness on stereotypy was not \textcolor{blue}{solely driven by its correlation with target-accuracy}, using an exploratory analyses.
+
+and the following to lines 572-575:
+
+These results quantify, for the first time, that increasing systemic dopamine availability induces \textcolor{blue}{an increase in stereotypy, that may come at the cost of target-accuracy}, that is modulated by trait-mindfulness, and that increased dopamine availability increases routine confusion. 
+
+
+*The use of ‘accuracy’ and ‘setting accuracy’ as different measures can be a little confusing at times. I suggest using something to the effect of ‘overall accuracy’ and ‘setting accuracy’ to clearly distinguish between the two.*
+
+Done - we used 'target-accuracy'.
+
+*Given the centrality of the mindfulness measure, it would be helpful to include some sample questions for those less familiar with it.*
+
+Done. See lines 173-177.
+
+# References
+
+

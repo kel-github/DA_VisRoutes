@@ -1,0 +1,491 @@
+---
+title: "Assessing the influence of dopamine and mindfulness on the formation of routines in visual search"
+shorttitle : "Dopamine, mindfulness and visual search"
+
+author: 
+  - name          : "*Kelly G. Garner"
+    affiliation   : "1,2"
+    corresponding : yes    # Define only one corresponding author
+    email         : "kelly.grace.garner@unsw.edu.au"
+  - name          : "Li-Ann Leow"
+    affiliation   : "2"
+  - name          : "Aya Uchida"
+    affiliation   : "2"
+  - name          : "Christopher Nolan"
+    affiliation   : "1"
+  - name          : "Ole Jensen"
+    affiliation   : "3"
+  - name          : "Marta I. Garrido"
+    affiliation   : "4"
+  - name          : "Paul E. Dux"
+    affiliation   : "2"
+
+affiliation:
+  - id            : "1"
+    institution   : "School of Psychology, University of New South Wales, Australia"
+  - id            : "2"
+    institution   : "School of Psychology, University of Queensland, Australia"
+  - id            : "3"
+    institution   : "School of Psychology, University of Birmingham, UK"  
+  - id            : "4"
+    institution   : "Melbourne School of Psychological Sciences and Graeme Clark Institute for Biomedical Engineering, University of Melbourne, Australia"  
+  
+authornote: |
+  *denotes corresponding author: kelly.grace.garner@unsw.edu.au
+
+  This project has received funding from the European Union's Horizon 2020 research and innovation programme under the Marie Sklodowska-Curie grant agreement No 796329, awarded to Kelly Garner. MIG was supported by the Centre of Excellence for Integrative Brain Function (CE140100007). PED was supported by a grant from the Australian Research Council (DP210101977). We thank Prof. Fred Westbrook for feedback on an earlier draft and insightful discussions about this work.
+  
+    The data is available at UQ eSpace. Task code and analysis code are available on github. [Note: links will be made available once a version of this manuscript has been accepted for publication].
+
+keywords: "habit, sequence, routine, dopamine, mindfulness, visual search, eye-movements"
+
+wordcount: "8274"
+bibliography: ["DAeyes.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+Data: link to go here on publication
+Task code: as above
+Analysis code: as above
+
+\clearpage
+
+# Abstract
+  Given experience in cluttered but stable visual environments, our eye-movements form stereotyped routines that sample task-relevant locations, while not mixing-up routines between similar task-settings. Both dopamine signalling and mindfulness have been posited as factors that influence the formation of such routines, yet quantification of their impact remains to be tested in healthy humans. Over two sessions, participants searched through grids of doors to find hidden targets, using a gaze-contingent display. Within each session, door scenes appeared in either one of two colours, with each colour signalling a differing set of likely target locations. We derived measures for how well target locations were learned (target-accuracy), how routine were sets of eye-movements (stereotypy), and the extent of interference between the two scenes (setting-accuracy). Participants completed two sessions, where they were administered either levodopa (dopamine precursor) or placebo (vitamin C), under double-blind counterbalanced conditions. Dopamine and trait mindfulness (assessed by questionnaire) interacted to influence both target-accuracy and stereotypy. Increasing dopamine improved accuracy and reduced stereotypy for high mindfulness scorers, but induced the opposite pattern for low mindfulness scorers. Dopamine also disrupted setting-accuracy invariant to mindfulness. Our findings show that mindfulness modulates the impact of dopamine on the target-accuracy and stereotypy of eye-movement routines, whereas increasing dopamine promotes interference between task-settings, regardless of mindfulness. These findings provide a link between non-human and human models regarding the influence of dopamine on the formation of task-relevant eye-movement routines, and provide novel insights into behaviour-trait factors that modulate the use of experience when building adaptive repertoires.
+
+```{r knitr_options, echo=FALSE, message=FALSE}
+library(knitr)
+library(brms)
+library(tidyverse)
+# rstudio will set the folder where .Rmd file seats as work directory
+# set it back to the folder where .Rproj seats
+opts_chunk$set(fig.align = 'center', cache = FALSE, warning = FALSE,
+  message = TRUE, echo = FALSE)
+options(digits = 3, width = 88, knitr.graphics.auto_pdf = TRUE,
+        knitr.kable.NA = '')
+```
+
+\clearpage
+
+# Introduction
+
+\label{sec:Introduction}
+
+Given stable environmental contingencies, it is adaptive for an organism to develop routine ways of performing tasks requiring multiple responses. Dopamine is assumed to play a key role in the neural computations that underlie the formation of task routines. A large body of evidence shows that dopaminergic midbrain neurons encode reward prediction errors between stimulus-outcome associations [e.g. @schultzResponsesMonkeyDopamine1993; @hollermanDopamineNeuronsReport1998; @waeltiDopamineResponsesComply2001], and such errors are assumed to underpin the teaching signal that computes the value of actions [@sutton2018reinforcement]. A comparable signal generated in striatum marks the difference between expected and actual saccadic sequence lengths used by macaques to attain reward during visual search [@desrochersOptimalHabitsCan2010; @desrochersHabitLearningNaive2015]. This signal is assumed to reflect a cost-benefit signal that computes the value of saccadic routines. There also exists a large body of evidence from rodent and macaque models suggesting that increased striatal dopamine availability speeds the transition from goal-directed to habitual control of behaviour [@harmerEnhancedAppetitiveConditioning1998; @nelsonAmphetamineExposureEnhances2006; @nadelOptogeneticStimulationStriatal2021; @nadelOptogeneticStimulationStriatal2021], the latter of which is assumed to underlie performance of routines [@dezfouliHabitsActionSequences2012; @dezfouliHabitsActionSequences2014; @desrochersHabitLearningNaive2015; @graybielStriatumWhereSkills2015; @smithHabitFormation2016]. Although this evidence implicates dopamine in the formation of task-relevant routines, whether dopamine availability modulates the formation of saccadic routines in humans remains an open question. 
+
+One way to address this question is to increase dopamine availability via administration of levodopa, a precursor to dopamine. levodopa administration in humans has been associated with increased striatal activity in response to positive reward prediction errors, assessed using blood-oxygenation-level-dependent BOLD responses [@pessiglioneDopaminedependentPredictionErrors2006], and with reduction of exploratory choices during instrumental learning [@shohamyLdopaImpairsLearning2006; @chakrounDopaminergicModulationExploration2020]. This suggests that levodopa may increase the perceived value of actions by inducing optimistic evaluations of outcomes [@fitzgeraldDopamineRewardLearning2015], possibly by disrupting feedback processing [@shohamyLdopaImpairsLearning2006]. Elevating dopamine availability via levodopa may therefore have a comparable impact on the cost-benefit computations driving the formation of saccadic routines during visual search. Specifically, levodopa may promote an optimistic evaluation of the performed sequence, increasing the probability that it is adopted as a routine.
+
+For task-oriented routines to be adaptive, it is also required that they are not mixed-up between tasks, despite overlap in the situational cues and actions that mark task environments. Here we define mix-ups as the performing behaviours that are relevant for the task that is not currently being performed, and we refer to this as task-interference. More broadly, dopamine is assumed to play a modulatory role in the activation of task-relevant behaviours in response to relevant situational cues [@budzilloDopaminergicModulationBasal2017], as well as promoting the formation of routines. Patients with Parkinson's Disease consistently show deficits switching between simple sensorimotor tasks [@coolsEnhancedImpairedCognitive2001; @wieckiNeurocomputationalModelsMotor2010], as do healthy participants who have been administered D2 antagonists [@mehtaImpairedSetshiftingDissociable2004]. Such findings have been accounted for by assuming that decreased dopamine causes increased uncertainty about the probability of being in a specific task-state [@fristonDopamineAffordanceActive2012]. These assumptions are based on evidence from constrained tasks - i.e. when single correct responses are required for given stimuli. In contrast, saccadic routines are often formed from a self-selected set of many possible eye-movements, and it is unclear whether dopamine modulates switching between such routines. If a modulation is observed, it is unclear whether the effect  of increasing dopamine is opposite to that of depleted dopamine, i.e. does increasing dopamine availability promote segregation of task routines? Or, does increasing dopamine availability make it more difficult to switch between routines, thereby increasing the probability of interference between them? 
+
+A further but less frequently discussed component of the processes underlying task routine learning and deployment, is the brain's execution of task-relevant cues and actions. Presumably, the organism that encodes an accurate representation of cues, actions and outcomes is at an adaptive advantage when forming and executing task-relevant routines. A growing body of empirical evidence suggests that mindfulness may modulate such representations. Mindfulness has been defined as a mental state that emphasises current sensory and internal inputs [@davids1900buddhist; @shapiroMechanismsMindfulness2006], and as such is well-placed to promote accurate task-representations. In support of this, mindfulness practice has been associated with increased error monitoring during cognitively challenging tasks [@andreuBehavioralElectrophysiologicalEvidence2017], and with greater sensitivity to dynamics in operant reinforcement contingencies [@chenEffectBriefMindfulness2023a; @reedFocusedattentionMindfulnessIncreases2023]. This suggests that increased mindfulness is associated with better differentiation between current and previous contingencies of reinforcement, potentially via improved focus on the \textcolor{blue}{current contingencies}, thereby reducing interference \textcolor{blue}{from previous contingencies}. Mindfulness has been shown to vary at the trait level and is assessable using standardized questionnaires (e.g. Baer et al, [-@baerUsingSelfReportAssessment2006]).
+
+What could be the modulatory influence of mindfulness on the formation and deployment of task-relevant routines? The influence of mindfulness on routine learning and task-switching may be opposing to the influence of dopamine: individuals low in trait mindfulness are faster to exploit sequential regularities in stimulus-response tasks [@stillmanDispositionalMindfulnessAssociated2014], and exploitation of such regularities are assumed to support habitual responses [@dezfouliHabitsActionSequences2012; @dezfouliHabitsActionSequences2014]. Mindfulness may also promote task-switching; higher levels of trait mindfulness have been associated with decreased reliance on past behaviours when stimuli are conserved across tasks that carry different cognitive demands [@greenbergMindTrapMindfulness2012; @kuoResetTaskSet2015]. Indeed, both the reinforcement learning (RL) and active inference frameworks have been used to posit that mindfulness and dopamine engage common mechanisms; increased mindfulness attenuates striatal reward prediction errors [@kirkMindfulnessMeditationModulates2015; @kirkShorttermMindfulnessPractice2019], possibly via greater regulation from stronger cortical
+representations of subjective values and internal states [@kirkMindfulnessTrainingModulates2014]. In the active inference framework, both dopamine [@fristonDopamineAffordanceActive2012; @fitzgeraldDopamineRewardLearning2015] and mindfulness [@laukkonenManyOneMeditation2021; @giommiFlexibleSelfPsychopathology2023] are assumed to increase the salience of task relevant cues, by increasing certainty of the estimates of their value. Although increasing dopamine will increase the salience of any cue present, mindfulness prioritises the salience of goal-relevant cues. These theories therefore posit that mindfulness may buffer against the influence of elevated dopamine, either by attenuating elevated reward prediction errors, or by further amplifying the salience of cues according to their goal-relevance. Despite these assumed common mechanisms of influence, it remains to be quantitatively tested whether mindfulness interacts with dopamine during the performance and execution of task-relevant visual routines.
+
+Using a novel protocol designed to test the formation and execution of task-relevant saccadic routines in humans, we sought to test whether administration of levodopa increased suboptimal routine formation, and whether increased dopamine modulated interference between routines. We further sought to test whether higher levels of trait mindfulness provided a buffer against the impacts of increased dopamine availability. To preview the results, levodopa decreased target-accuracy and promoted routine formation in individuals with low trait-mindfulness, whereas high trait-mindfulness was associated with the opposite pattern. Regardless of mindfulness, dopamine increased task-interference.
+
+# Methods
+\label{sec:Methods}
+
+All the data from this study is available at UQ eSpace. Task code^[https://github.com/kel-github/variability-decision-making], analysis code and code to produce the manuscript^[https://github.com/kel-github/DA_VisRoutes/tree/master] are available on github. [Note: a link to the data will be made available once a version of this manuscript has been accepted for publication].
+
+The experiment and analysis plan were [pre-registered](https://osf.io/xn6d2/?view_only=4fc3aea02fa14da79651d892db6888c9) on the Open Science Framework^[(See: https://osf.io/xn6d2/?view_only=4fc3aea02fa14da79651d892db6888c9)].
+
+## Participants
+\label{sec:Participants}
+
+A total of 40 participants (mean age: 24.5, sd: 5, 30 female, 10 male) were recruited using the undergraduate and paid SONA pools administered by the University of Queensland. All procedures were cleared by the University of Queensland Human Research ethics committee [2017/HE000847], and were conducted in accordance with the National Statement on Ethical Conduct in Human Research. Participants were over 18 years old, had no known neurological or psychiatric conditions (assessed by self report), and no contraindications to levodopa, as assessed by the levodopa safety screening questionnaire. Informed consent was obtained at the start of the first session.
+
+## Procedure
+\label{sec:Procedure}
+
+Participants attended two sessions, spaced approximately one week apart. After initial blood pressure (BP) and mood assessments [@bondUseAnalogueScales1974], participants received either placebo (vitamin C) or levodopa (Madopar 125: 100 mg levodopa and 25 mg Benserazide Hydrochloride), crushed and dispersed in orange juice, now referred to as the 'placebo' and 'dopamine' sessions respectively. The solution was prepared by an experimenter who did not administer the remaining experimental procedures. This protocol was sufficient to achieve double blinding in previous work [@chowdhuryDopamineModulatesEpisodic2012; @chowdhuryDopamineRestoresReward2013]. Participants then completed the Five Facet Mindfulness Questionnaire [@baerUsingSelfReportAssessment2006]. \textcolor{blue}{This is a 15 item self-report questionnaire that measures mindfulness with regards to thoughts and experiences in daily life. It includes items such as 'I don't pay attention to what I'm doing because I'm daydreaming, worrying, or otherwise distracted' and 'I do jobs or tasks automatically without being aware of what I'm doing'. Participants also completed} the Barratt Impulsivity Scale [BIS; @pattonFactorStructureBarratt1995], as trait impulsivity scores are associated with midbrain dopamine D2/D3 receptor availability [@buckholtzDopaminergicNetworkDifferences2010]. Around 30 minutes after drug administration, participants completed a second BP and mood rating assessment. Participants then completed the practice stage of the task, so that the experimental stage began approximately 40 minutes after drug ingestion, within the window of peak plasma availability [@continPharmacokineticsLevodopa2010]. At the end of the session, participants completed the final BP and mood rating assessment and were asked whether they thought they had been given the active or placebo drug.
+
+## Apparatus
+\label{sec:Apparatus}
+
+The experimental task was run with custom code^[https://github.com/kel-github/variability-decision-making], written using Matlab 2012b (32 bit) and Psychtoolbox v3.0.14, on a Windows 7 (64-bit) on a Dell Precision T1700 desktop computer, displayed using a ASUS VG248 monitor. Gaze coordinates (x, y) were sampled at 120 Hz using a monitor-mounted iView Red-m infrared eye tracker (SensoMotoric Instruments GmbH, Teltow, Germany). Participants were seated from the monitor at an approximate viewing distance of 57 cm, and positioned on a chin-rest for the duration of the task.
+
+## Experimental Task
+\label{sec:Experimental Task}
+
+Each trial began with a fixation dot presented centrally on a grey screen [RGB: 200 200 200]. Participants were instructed to fixate on the dot to begin a trial. After 1000 ms of continuous correct fixation samples (within 100 pixels of fixation), a square was presented that comprised 18° visual angle along each length. The square could be one of four possible colours [RGBs: 87, 208, 169; 267, 145, 52; 167, 162, 229; 239, 91, 158]. After 1000 ms, a 4 x 4 grid of smaller squares appeared within the larger square, in a darker version of the background colour ([RGB]-50). Each square comprised 2.6°. Participants were instructed that the 4 x 4 grid represented doors, and that they were to use their eyes to open the doors to find where the target was hiding. Participants were instructed that they were to fixate on a single door to open it (see Fig \ref{fig:taskfig}A). When participants had fixated on a door for over 300 ms, the door either turned black [RGB: 50, 50, 50], to denote the absence of a target, or the target was displayed and the trial was terminated. If the door had turned black, it returned to its previous colour as soon as it was detected that the participant had moved their eyes from the door \textcolor{blue}{[see Supplemental Figure 1, for a visual depiction]}. Targets were animal images drawn randomly on each trial from a pool of 100 images taken from the internet^[The folder of target images can be downloaded from [here](https://github.com/kel-github/variability-decision-making/blob/master/iforage_DA_task_code_redSMI/tgt0-100.zip)]. The time at which the target was available to be found varied from trial to trial, with the onset being drawn from a uniform distribution between 500-2000 ms. Once the target was available and the correct door selected, the target was displayed for 750 ms. Upon termination of the trial, the grey screen and white fixation cross were presented.
+
+In each session, participants saw the display in two possible colours. Participants were instructed that each colour represented a world, and that the animals had different places they preferred to hide, depending on the world they were in. There were four possible target locations within each world, or from here on, each setting. For each setting, one door from each quadrant was selected as one of the four possible target locations (see Fig \ref{fig:taskfig}B), with the constraint that target locations could not overlap between settings. Thus each colour reflected a setting in which participants could establish a set of task-relevant eye-movements, i.e. towards the 4 possible target locations. Note that within each setting, the target was equally likely to appear behind any one of the 4 target doors (p=.25) and would never appear behind the remaining doors (p=0). Colour-target location mappings were counterbalanced across participants, as was the assignment of colours to sessions. Participants completed 80 trials in each setting. Eye-movement calibration and validation was performed every 20 trials. Participants were also shown the standard QWERTY keyboard and were instructed that they could press ‘x’ at any time to perform a new calibration and validation if they felt that their eye-movements were no longer being registered accurately.
+
+```{r taskfig, out.width='70%', fig.cap='Experimental Task. A) A single trial where participants use their eyes to open doors to locate an animal image target. B) Contexts and sessions: in each session, participants are exposed to two colour contexts each with 4 unique and equiprobable target locations. Colours and target locations were counterbalanced across participants and sessions. In each session, levodopa (DA) or placebo is administered under double blind conditions.'}
+
+taskfigpth <- '../../images/DA_ExpTask_RR1.pdf'
+knitr::include_graphics(taskfigpth)
+
+```
+
+
+## Statistical Approach
+\label{sec:Statistical Approach}
+
+The analysis was designed to assess how well participants learned the target locations, the extent to which participants formed a routine for door selections (how stereotypical they became in their order of door-selections), and how well they disambiguated between settings. We modelled how these elements of performance were modulated by the dopamine and mindfulness factors. All custom analysis code is available online^[https://github.com/kel-github/DA_VisRoutes]. The analysis was performed using R and RStudio v2022.07.2 [@rstudiocitation], and can be reproduced in the Neurodesk container environment [@rentonNeurodeskAccessibleFlexible2022].
+
+### Data cleaning
+\label{sec:Data cleaning}
+
+```{r, echo=FALSE, warning=FALSE}
+# get the number of participants who would have been excluded if we'd gone with the original criteria
+load('../../data/derivatives/accuracy.Rda')
+n_potential_exclude <- length(unique(door_acc_sum$sub[door_acc_sum$excl == 1]))
+
+```
+
+We asserted that a door could not be selected twice consecutively, thus any consecutive selections were classified as a single selection. As the final door selection of every trial was fixed (i.e. finding the target location ends the trial), we removed the final selection from each trial for the stereotypy (routine) analysis defined below. We excluded data from one participant whose total number of door selections was greater than 3 standard deviations from the mean across both sessions. The remaining 39 datasets were retained for all of the analyses. Note that this is more inclusive than our pre-registered plan for data exclusions^[https://osf.io/2y6pk]. Based on pilot data, we had planned to exclude participants who scored < 65% accuracy over the course of a session. Analysis of the final sample suggested that this was too stringent, as this resulted in the exclusion of `r sprintf("%d", n_potential_exclude)` of 40 participants. We have not analysed the data with the exclusion of these participants, owing to the large drop in statistical power for the individual differences component of the analysis.
+
+## Target-Accuracy
+\label{sec:Target-Accuracy}
+
+We first sought to determine the extent to which levodopa and mindfulness influenced the learning of target locations (target-accuracy). Data was grouped into blocks of 10 trials per setting, and grouped across settings, resulting in 8 blocks of 20 trials. We computed for each block the proportion of door selections that were target relevant (TR) given the current setting (i.e. the setting presented on trial t). We assessed the influence of block, drug and mindfulness on target-accuracy using Bayesian mixed-model logistic regression. Target-accuracy was assumed to be drawn from a binomial distribution (1=target door, 0=non-target door). We then estimated the probability of drawing a target-door from the total number of door selections, using a logit link function to convert probabilities to log-odds. Thus the resulting regression parameter values reflect changes to the log-odds of accurate door selections.
+
+For this and following analyses, we identified the model that best fit the data, and made inference over the resulting parameters. We report the 95% confidence intervals (CIs) of the parameter posteriors, and assume a reliable effect when the 95% CIs do not include zero. Models were fit using the BRMS [@burknerBrmsPackageBayesian2017] interface for Stan [@standevelopmentteamStanModelingLanguage] and RStan [@standevelopmentteamRStanInterfaceStan2023]. We used the default weakly informative priors as specified in Burkner [-@burknerBrmsPackageBayesian2017]. Specifically, fixed and random effect $\beta$ coefficients were given a flat prior, intercept and standard deviations were assumed to be drawn from a student's $t$ distribution (df=1, location=0, scale=2.5), and the LKJ-correlation prior with parameter $\zeta$ > 0 was used for the parameter covariance matrix. For each model, we checked for parameter recovery using simulated data. Once fitted, we checked that the residuals showed no signs of systematic error, that the chains had converged, and that $\hat{R}$ values were less than 1.01, as this suggests that the model has converged.
+
+To eschew an overly large model space, and in line with our pre-registration, we first fit models that contained each possible combination of the block and drug regressors (and associated random effects), and found the best model using leave-one-out (LOO) cross validation, as implemented in Vehtari et al., [-@vehtariPracticalBayesianModel2017]. Rather than re-fitting the model for every sub-sample, which is computationally expensive, this algorithm instead computes analytically how the predictions made by the model are influenced by each data point. The relationship between this influence and the change in the posterior that would occur as a consequence of holding out each data point can be used to compute the expected log-pointwise predictive density (ELPD). This quantifies the error that would occur in the prediction of each data point, when that data point is withheld from the model fitting procedure. The resulting ELPDs are then compared between models. We report the ELPD difference between the winning model and the next best models (a negative value indicates preference for the winning model). As the ELPD is computed using each observed data point, it is possible to estimate the standard error (SE) of the difference between models (Vehtari et al, [-@vehtariPracticalBayesianModel2017]). We therefore also report the ratio of the ELPD difference to the SE, as this provides a proxy for statistical significant differences between models. (Note that in the pre-registration document we had proposed to compare models using the deviance information criterion (DIC). As LOO is more robust than DIC to influential observations, and is readily implemented for use with BRMS model objects, we opted to use LOO instead of DIC).
+
+Upon identifying the best model, we then added the mindfulness regressor, fitting all possible combinations, and once again selected the best model. Last we controlled for trait impulsivity by adding BIS scores as a main effect to the winning model. Note that in no cases did adding BIS scores improve the model. The full set of model comparisons are presented in the supplementary materials.
+
+## Setting-Accuracy
+\label{sec:Setting-Accuracy}
+
+We next sought to model the impact of levodopa and mindfulness on task interference. To measure the extent of task interference, we computed a measure of setting-accuracy. This measure indexes the total number of door selections (n) that were appropriate for the colour setting displayed on trial t (current setting, CS), relative to the number of door selections that were appropriate for the setting not displayed on trial t (i.e. the other-setting from that session, OS):
+
+$$
+setting\mathrm{-}acc = \frac{\sum{CS_{n}}}{\sum{(CS_{n}, OS_{n})}}
+$$
+
+We modelled the influence of levodopa and mindfulness on setting-accuracy using the Bayesian mixed-effects logistic regression approach described above (Note that in the pre-registration document we had suggested to include a regressor for context. Visual inspection of the data showed that setting-accuracy was highly comparable across contexts [see Supplemental Figure 3]. We therefore opted to simplify the model space and collapse over this factor).
+
+## Stereotypical door selections
+\label{sec:Stereotypical door selections}
+
+Next, we determined the extent to which door-selections became routine over the course of the task - specifically, how much the order of door selections increased in stereotypy, and whether dopamine and mindfulness modulates the extent of stereotypy. Here we use stereotypy as a proxy for routine formation, and we define stereotypy as the tendency to choose doors in the same order, over trials [e.g. @desrochersHabitLearningNaive2015].
+
+In order to index stereotypy, we reasoned that stereotypy should result in an increase in the probability of a subset of door transitions. This stands in contrast to when making door selections in an exploratory, or non-stereotyped way, where there should be an even representation of door transition probabilities. Therefore, the transition probability matrices of individuals engaged in more stereotypical door selections should show higher variance than those who are not engaging in stereotypical door selections. We computed trial level transition probability matrices, and calculated the variance of each matrix. Variances were then collapsed across settings and trials to form a stereotypy score for each participant, session and block.^[Note that we opted to index stereotypy using variance over transition probabilities as this measure captures consistent behaviours without over-penalizing slight variations between sequences. For example, the sequences x=[1,2,3,4,5], and y=[1,2,4,3,5] share commonalities that are captured in a transition probability matrix that would not be captured by linear measures, such as comparing triplets between trials.]
+
+```{r, check_priors_var_model, echo=FALSE, warning=FALSE}
+
+load('../../data/derivatives/stereo_winplusmind_dmindint/stereo_winplusmind_dmindint.Rda')
+rm(mndbd_dm)
+```
+
+The resulting stereotypy scores were subject to a comparable Bayesian mixture modelling approach as described above with a few key differences; the stereotypy scores were assumed to be drawn from a skewed normal distribution $\mathcal{N}(\mu, \sigma, \alpha)$ whose mean ($\mu$) was defined by the regression parameters (the distribution of stereotypy scores are presented in Supplemental Figure 4). $\sigma$ was assumed to be drawn from a Student's t distribution (df=3, location=0, scale=2.5), the skew parameter ($\alpha$) was assumed to be drawn from a normal distribution $\mathcal{N}(0,4)$. The remaining priors for the intercept, beta-coefficients and parameter covariance matrix were defined in the same manner as for the accuracy data models. As the log-log plot of variances vs block suggested a power function, analysis was performed on the logged data. This ensured that the relationship between block and variance values was best described by a straight line. Identification of the winning model proceeded as described for the accuracy data above.
+
+## Blinding analyses
+\label{sec:Blinding analyses}
+
+To determine whether awareness of the dopamine intervention could have contributed to the findings, the probability of participant ratings were compared to the expected values assuming chance guessing, using a Chi Square test. BP and mood ratings were each subject to a session (dopamine vs placebo) x timepoint (pre-drug, pre-experiment, post-experiment) Bayesian repeated measures ANOVA, implemented using the BayesFactor package for R [@moreyBayesFactorComputationBayes2023] using the default priors [@rouderDefaultBayesFactors2012].
+
+# Results
+\label{sec:Results}
+
+We investigated the impact of levodopa administration and trait mindfulness on the learning of task-relevant behaviour sets, and on the routine nature of their deployment. Participants opened doors to search for targets in a gaze-contingent display. The colour of the display signalled likely target locations, making some locations relevant for only that colour. We assessed how well participants learned target locations (target-accuracy), how routine was the order of door selections
+across trials (stereotypy), and how well participants learned to segregate task-routines (setting-accuracy). Overall, mindfulness and dopamine interacted to influence the measures of target-accuracy and stereotypy; dopamine increased target-accuracy and reduced stereotypy for high mindfulness scorers, whereas dopamine decreased target-accuracy and increased stereotypy for low mindfulness scorers. Dopamine decreased setting-accuracy independent to mindfulness scores.
+
+## Target-Accuracy
+\label{sec:Target-Accuracy Results}
+
+```{r, load_acc_mod_comps, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+
+load('../../data/derivatives/acc_loo.Rda')
+load('../../data/derivatives/acc_mind_loo.Rda')
+load('../../data/derivatives/acc_mind_bis_comp.Rda')
+load('../../data/derivatives/acc_winplusmindbmnd_dmnd/acc_winplusmindbmnd_dmnd.Rda')
+acc_results <- print(mnddrgb, digits = 2)
+# note: filename of winning da + block model = acc_model-fxbdrgint-brgrfx
+
+```
+
+### Model selection
+
+First we sought the best model in order to make subsequent inference over the parameters. In the first stage of model selection, the experimental factors of block (10 successive trials from each context, averaged across contexts), and drug (dopamine vs placebo) were used in a logistic regression to model the probability of a target door selection. We sought the combination of fixed and random effect factors that best accounted for the data. The winning model contained fixed main effects of block and drug. Although this model was only closely preferred to the next most complex model that contained a block x drug interaction (ELPD diff = `r sprintf("%1.2f", acc_comp["fxbdrg_rfxbdrg", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", acc_comp["fxbdrg_rfxbdrg", "elpd_diff"]/acc_comp["fxbdrg_rfxbdrg", "se_diff"])`), it was strongly preferred to all other models (min ELPD diff = `r sprintf("%1.2f", acc_comp["fxbdrg_bsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", acc_comp["fxbdrg_bsubrfx", "elpd_diff"]/acc_comp["fxbdrg_bsubrfx", "se_diff"])`). 
+
+We next sought to determine whether adding mindfulness scores improved the predictive accuracy of the model; the winning model contained an additional main effect of mindfulness, as well as block x mindfulness and drug x mindfulness interactions (ELPD diff to best model without mindfulness = `r sprintf("%1.2f", acc_mind_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", acc_mind_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"]/acc_mind_comp["fxbdrgint_bdrgsubrfx", "se_diff"])`). Therefore the winning model to account for the data was:
+
+$\mathrm{\hat{y}} = \mathrm{block} + \mathrm{drug} + \mathrm{mind} + \mathrm{block*mind} + \mathrm{drug*mind} + \mathrm{(block:drug|sub)}$
+
+Adding BIS scores did not improve the predictive value of the model (ELPD diff = `r sprintf("%1.2f", acc_mind_bis_comp["acc_mindwin_bis", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", acc_mind_bis_comp["acc_mindwin_bis", "elpd_diff"]/acc_mind_bis_comp["acc_mindwin_bis", "se_diff"])`). Note that although we draw inferences over parameters from the winning model, our inferences are the same as if we had used the more complex model that includes the BIS scores.
+
+### The effect of dopamine and mindfulness on target-accuracy
+
+```{r, acc_descriptives, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+## Here I grab the summary stats saved in the plotting file
+load("../../data/derivatives/acc_descriptives.Rda")
+
+overall_acc_by_drug <- mu_bdrug_pred %>% group_by(drug) %>%
+                          summarise(mu = mean(p), ci=mean(ci)) %>%
+                          mutate(lower = mu-ci,
+                                 upper = mu+ci)
+
+# summarise mindfulness interaction
+qs <- with(mnddrgi, quantile(m.x, c(0.25, 0.75)))
+sum_dat$qs <- 0
+sum_dat$qs[sum_dat$m.x < qs[1]] <- 1
+sum_dat$qs[sum_dat$m.x > qs[2]] <- 2
+sum_dat$qs <- as.factor(sum_dat$qs)
+
+qs_sum <- Rmisc::summarySEwithin(data=sum_dat, measurevar="p",
+                                          withinvars=c("drug", "qs"),
+                                          idvar="sub")
+qs_sum <- qs_sum %>% mutate(lower=p-ci, upper=p+ci)
+
+# summarise block 1 vs block 8
+b_dat <- Rmisc::summarySEwithin(data=sum_dat, measurevar = "p",
+                                withinvars="b.x",
+                                idvar="sub")
+b_dat <- b_dat %>% mutate(upper=p+ci, lower=p-ci)
+
+acc_dat_4_correlation_w_stereo <- sum_dat %>% group_by(sub) %>% summarise(mu_acc = mean(obs))
+tmp <- sum_dat %>% group_by(sub, drug) %>% summarise(mu_acc = mean(obs)) %>%
+                          group_by(sub) %>% summarise(delta = mu_acc[drug == "levodopa"] -
+                                                              mu_acc[drug == "placebo"])
+acc_dat_4_correlation_w_stereo <- inner_join(acc_dat_4_correlation_w_stereo, tmp)
+```
+
+Having established the best model to account for the data, we next determined the influence of dopamine and mindfulness on target-accuracy by making inference over the resulting parameters. Target-accuracy data plotted by block x drug (dopamine vs placebo) are shown in Fig \ref{fig:accfig}A. Target-accuracy improved over blocks, and there was a small main effect of drug. These effects are described further below. However, critically, mindfulness and dopamine interacted to influence target-accuracy. The drug x mindfulness parameter differed reliably from zero (mean log odds = `r sprintf("%1.2f", acc_results$fixed["drugplacebo:m","Estimate"])`, 95% CI[`r sprintf("%1.2f", acc_results$fixed["drugplacebo:m","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["drugplacebo:m","u-95% CI"])`], see Fig \ref{fig:accfig}E). 
+
+To investigate this interaction, we computed mean target-accuracy change due to the drug session ($\mu$ acc[dopamine - placebo]) for each participant. Note that a positive score indicates that performance was better in the dopamine session relative to placebo. Next we examined the relationship between dopamine-induced target-accuracy changes and mindfulness scores. As can be seen in Fig \ref{fig:accfig}B, there was a positive relationship between mindfulness and the influence of drug on target-accuracy. As mindfulness increased, so too did target-accuracy for the dopamine relative to the placebo session. For a numeric example, those scoring in the highest quartile showed mean target-accuracy scores of `r sprintf("%1.2f", qs_sum$p[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])` (95%CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])`]) during the dopamine session, relative to mean target-accuracy scores of `r sprintf("%1.2f", qs_sum$p[qs_sum$drug == "placebo" & qs_sum$qs == "2"])` (95% CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "placebo" & qs_sum$qs == "2"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "placebo" & qs_sum$qs == "2"])`]) during the placebo session. Individuals scoring low on mindfulness numerically showed the opposite pattern (dopamine mean target-accuracy = `r sprintf("%1.2f", qs_sum$p[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`, 95% CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`], placebo mean target-accuracy = `r sprintf("%1.2f", qs_sum$p[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`, 95%CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`]), note that Fig \ref{fig:accfig}B shows the difference between these scores). Thus the impact of dopamine on the establishment of task-relevant eye-movements is dependent on the mindfulness state of the individual.
+
+Participants learned the target door locations over the course of the sessions, target-accuracy reliably increased over blocks. Mean target-accuracy in block 1 was `r sprintf("%1.2f", b_dat$p[b_dat$b.x == "0"])` (95% CI[`r sprintf("%1.2f", b_dat$lower[b_dat$b.x == "0"])`, `r sprintf("%1.2f", b_dat$upper[b_dat$b.x == "0"])`]), relative to a block 8 mean of `r sprintf("%1.2f", b_dat$p[b_dat$b.x == "7"])` (95% CI[`r sprintf("%1.2f", b_dat$lower[b_dat$b.x == "7"])`, `r sprintf("%1.2f", b_dat$upper[b_dat$b.x == "7"])`]). The model showed that the log-odds of a target door selection increased over blocks by an average of = `r sprintf("%1.2f", acc_results$fixed["b","Estimate"])`, (95% CI[`r sprintf("%1.2f", acc_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["b","u-95% CI"])`, Fig \ref{fig:accfig}C, note that the model parameters are defined in log-odds because we used logistic regression). There was also the suggestion of a main effect of dopamine (mean log odds = `r sprintf("%1.2f", acc_results$fixed["drugplacebo","Estimate"])`, 95% CI[`r sprintf("%1.3f", acc_results$fixed["drugplacebo","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["drugplacebo","u-95% CI"])`, Fig \ref{fig:accfig}D), however, the impact of dopamine on target-accuracy is better explained by the drug x mindfulness interaction Fig \ref{fig:accfig}E).  \textcolor{blue}{Although the winning model contained a block x mindfulness interaction, the 95\% CIs included zero} (mean log odds = `r sprintf("%1.2f", acc_results$fixed["b:m","Estimate"])`, 95% CI[`r sprintf("%1.3f", acc_results$fixed["b:m","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["b:m","u-95% CI"])`], \textcolor{blue}{so we do not consider this parameter any further.}
+
+```{r, accfig, out.width='70%', fig.cap='The influence of dopamine and mindfulness on accuracy. A) Target-accuracy (t-acc) data by block and drug. Circles reflect observed average target-accuracy, dotted lines reflect the fit of the winning model. B) The association between trait mindfulness (x-axis) and the impact of drug on accuracy [dopamine-placebo]. The bottom row shows posterior densities (in log odds) estimated for C) the main effect of block (b), D) the main effect of dopamine, and E) the drug x mindfulness (m) interaction. DA = dopamine, P = placebo, d = density. Error bars reflect within-subject standard error of the mean [SE].'}
+
+accfigpth <- '../../images/acc_fig.pdf'
+knitr::include_graphics(accfigpth)
+```
+
+## Setting-Accuracy
+\label{sec:Setting-Accuracy Results}
+
+```{r, load_cacc_mod_comps, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+
+load('../../data/derivatives/cacc_loo.Rda')
+load('../../data/derivatives/cacc_mind_loo.Rda')
+load('../../data/derivatives/cacc_mind_bis_comp.Rda')
+load('../../data/derivatives/cacc_winplusmind/cacc_winplusmind.Rda')
+cacc_results <- print(mnd, digits = 2)
+
+```
+
+### Model selection
+
+We first identified the model that best accounted for the influence of the experimental conditions on setting-accuracy. Comparable to the target-accuracy data, the best model contained fixed effects of block and drug, with no interactions. Although this model was only closely preferred to the next most complex model that contained a block x drug interaction (ELPD diff = `r sprintf("%1.2f", cacc_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", cacc_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"]/cacc_comp["fxbdrgint_bdrgsubrfx", "se_diff"])`), it was strongly preferred to all other models (min ELPD diff = `r sprintf("%1.2f", cacc_comp["fxbdrg_bsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", cacc_comp["fxbdrg_bsubrfx", "elpd_diff"]/cacc_comp["fxbdrg_bsubrfx", "se_diff"])`). 
+
+Adding mindfulness scores improved the predictive accuracy of the model; the winning model contained an additional main effect of mindfulness (ELPD diff = `r sprintf("%1.2f", cacc_mind_comp["fxbdrg_rfxbdrg", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", cacc_mind_comp["fxbdrg_rfxbdrg", "elpd_diff"]/cacc_mind_comp["fxbdrg_rfxbdrg", "se_diff"])`). Thus the winning model was:
+
+$\mathrm{\hat{y}} = \mathrm{block} + \mathrm{drug} + \mathrm{mind} + \mathrm{(block:drug|sub)}$
+
+Adding BIS scores did not improve the predictive value of the model (ELPD diff = `r sprintf("%1.2f", cacc_mind_bis_comp["acc_mindwin_bis", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", cacc_mind_bis_comp["acc_mindwin_bis", "elpd_diff"]/cacc_mind_bis_comp["acc_mindwin_bis", "se_diff"])`). Note that although we draw inferences over parameters from the winning model, our inferences are the same as if we had used the more complex model that includes the BIS scores.
+
+### Drug, and not mindfulness, impacts setting-accuracy
+
+```{r, cacc_descriptives, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+## Here I grab the summary stats saved in the plotting file
+load("../../data/derivatives/cacc_descriptives.Rda")
+
+overall_acc_by_drug <- Rmisc::summarySEwithin(data=sum_dat, measurevar="p",
+                                              withinvars = "drug",
+                                              idvar = "sub")
+overall_acc_by_drug <- overall_acc_by_drug %>% mutate(lower = p-ci, upper = p+ci)
+
+# summarise block 1 vs block 8
+b_dat <- Rmisc::summarySEwithin(data=sum_dat, measurevar = "p",
+                                withinvars="b.x",
+                                idvar="sub")
+b_dat <- b_dat %>% mutate(upper=p+ci, lower=p-ci)
+```
+
+We next determined the influence of dopamine and mindfulness on setting-accuracy by making inference over the resulting model parameters. Dopamine reduced setting-accuracy; setting-accuracy was on average `r sprintf("%1.2f", overall_acc_by_drug$p[overall_acc_by_drug$drug == "levodopa"])` (95% CI [`r sprintf("%1.2f", overall_acc_by_drug$lower[overall_acc_by_drug$drug == "levodopa"])`, `r sprintf("%1.2f", overall_acc_by_drug$upper[overall_acc_by_drug$drug == "levodopa"])`]) for the dopamine session, and `r sprintf("%1.2f", overall_acc_by_drug$p[overall_acc_by_drug$drug == "placebo"])` (95% CI [`r sprintf("%1.2f", overall_acc_by_drug$lower[overall_acc_by_drug$drug == "placebo"])`, `r sprintf("%1.2f", overall_acc_by_drug$upper[overall_acc_by_drug$drug == "placebo"])`]) for the placebo session (see Fig \ref{fig:caccfig}A). The log-odds of selecting a setting-accurate target door increased by a mean of `r sprintf("%1.2f", cacc_results$fixed["drugplacebo","Estimate"])` (95% CI[`r sprintf("%1.2f", cacc_results$fixed["drugplacebo","l-95% CI"])`, `r sprintf("%1.2f", cacc_results$fixed["drugplacebo","u-95% CI"])`, Fig \ref{fig:caccfig}B) for the placebo session, relative to the dopamine session. This suggests that dopamine caused interference between settings.
+
+Setting-accuracy improved over blocks; mean accuracy in block 1 was `r sprintf("%1.2f", b_dat$p[b_dat$b.x == "0"])` (95% CI[`r sprintf("%1.2f", b_dat$lower[b_dat$b.x == "0"])`, `r sprintf("%1.2f", b_dat$upper[b_dat$b.x == "0"])`]), relative to block 8 (mean: `r sprintf("%1.2f", b_dat$p[b_dat$b.x == "7"])`, 95% CI[`r sprintf("%1.2f", b_dat$lower[b_dat$b.x == "7"])`, `r sprintf("%1.2f", b_dat$upper[b_dat$b.x == "7"])`]). The model showed that the probability of selecting a setting relevant target door increased by a mean log odds of `r sprintf("%1.2f", cacc_results$fixed["b","Estimate"])` (95% CI[`r sprintf("%1.2f", cacc_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", cacc_results$fixed["b","u-95% CI"])`) per block (Fig \ref{fig:caccfig}C). In contrast to the target-accuracy data, the main effect of mindfulness was not a sufficiently reliable predictor of setting-accuracy (mean log odds = `r sprintf("%1.2f", cacc_results$fixed["m","Estimate"])`, 95% CI[`r sprintf("%1.2f", cacc_results$fixed["m","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["m","u-95% CI"])`]).
+
+```{r, caccfig, out.width='70%', fig.cap='The influence of dopamine and mindfulness on setting accuracy. A) Setting-Accuracy (s-acc) data by block and drug. Circles reflect observed average setting accuracy, dotted lines show the fit of the winning model. B) Estimated posterior density (in log odds) for the main effect of drug (dopamine vs placebo), D) same as in B, but for the main effect of block. DA = dopamine, P = placebo, b = block, d = density. Error bars reflect within-subject standard error of the mean [SE].'}
+
+caccfigpth <- '../../images/cacc_fig.pdf'
+knitr::include_graphics(caccfigpth)
+```
+
+#### Setting-accuracy control analysis
+
+```{r, cacc_control, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+
+load('../../data/derivatives/sanity_check_contextual.Rda')
+
+```
+
+Dopamine influences setting-accuracy, which indexes the likelihood of door selections that are relevant for the current-setting, relative to door selections that are relevant for the other-setting. As we exclude door selections for locations that are never target relevant from the computation of setting-accuracy, it is important to verify that setting-accuracy scores do indeed reflect interference between settings, rather than a general task learning deficit. To address this in an exploratory analysis, we reasoned that if setting-accuracy scores reflected a general deficit, then 'error' door selections should be drawn randomly from not-target doors (other-setting = 4 & neither = 8). A general deficit interpretation suggests that other-setting selections should be drawn from the total set (other-setting + neither) with $p$ = $\overline{.333}$. If setting-accuracy scores do reflect the presence of task-interference, then it would be likely that this error would be more common than a random door selection, therefore other-setting selections should occur at levels higher than chance. To test this, we computed for each participant the probability of other-setting selections, given the set of other-setting and neither door selections ($p_{os}$), and performed a one-sided t-test, against a null value of $p$ = .333. (Note that we opted to use an NHST approach as we had a point null hypothesis). The $p_{os}$ data was unlikely under the null hypothesis (mean = `r sprintf("%1.2f", desc_stats_err$mu)`, 95% CI[`r sprintf("%1.2f", desc_stats_err$lower)`, `r sprintf("%1.2f", desc_stats_err$upper)`], $t$(`r sprintf("%.0f", tt$parameter)`) = `r sprintf("%1.2f", tt$statistic)`, $p$ = `r sprintf("%1.4f", tt$p.value)`. Therefore, we reject the hypothesis that the the dopamine induced drop in setting-accuracy reflects a general learning deficit.
+
+## Stereotypy of door selections (routine)
+\label{sec:Stereotypy Results}
+
+```{r, load_stereo_mod_comps, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+
+load('../../data/derivatives/stereo_loo.Rda')
+load('../../data/derivatives/stereo_mind_loo.Rda')
+load('../../data/derivatives/stereo_mind_bis_loo.Rda')
+load('../../data/derivatives/stereo_winplusmind_dmindint/stereo_winplusmind_dmindint.Rda')
+stereo_results <- print(mndbd_dm, digits = 2)
+
+```
+
+### Model selection
+
+We first sought the model that best explained the stereotypy data using the experimental predictors of block and drug. Note that we indexed stereotypy using the variance of transition probability matrices, where higher values indicates fewer likely transitions, and therefore higher stereotypy. The winning model contained main fixed effects of block and drug, and random effects for block x drug. Although this model was only closely preferred to the next most complex model that contained a block x drug interaction (ELPD diff = `r sprintf("%1.2f", stereo_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", stereo_comp["fxbdrgint_bdrgsubrfx", "elpd_diff"]/stereo_comp["fxbdrgint_bdrgsubrfx", "se_diff"])`), it was strongly preferred to all other models (min ELPD diff = `r sprintf("%1.2f", stereo_comp["fxbdrg_bsubrfx", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", stereo_comp["fxbdrg_bsubrfx", "elpd_diff"]/stereo_comp["fxbdrg_bsubrfx", "se_diff"])`). 
+
+Adding mindfulness scores improved the ability of the model to account for the stereotypy data. The winning model contained an additional main effect of mindfulness and a drug x mindfulness interaction (ELPD diff = `r sprintf("%1.2f", stereo_mind_loo["fxbdrg_rfxbdrg", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", stereo_mind_loo["fxbdrg_rfxbdrg", "elpd_diff"]/stereo_mind_loo["fxbdrg_rfxbdrg", "se_diff"])`). The winning model was:
+
+$\mathrm{\hat{y}} = \mathrm{block} + \mathrm{drug} + \mathrm{mind} + \mathrm{drug*mind} + \mathrm{(block:drug|sub)}$
+
+Adding BIS scores did not improve the predictive accuracy of the model (ELPD diff = `r sprintf("%1.2f", stereo_mind_bis_loo["mndbdbis_bm", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", stereo_mind_bis_loo["mndbdbis_bm", "elpd_diff"]/stereo_mind_bis_loo["mndbdbis_bm", "se_diff"])`). Note that although we draw inferences over parameters from the winning model, our inferences are the same as if we had used the more complex model that includes the BIS scores.
+
+### The impact of drug and mindfulness on stereotypy
+
+```{r, stereo_descriptives, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+## Here I grab the summary stats saved in the plotting file
+load("../../data/derivatives/stereo_descriptives.Rda")
+
+# summarise mindfulness interaction
+qs <- with(dm, quantile(m, c(0.25, 0.75)))
+sum_dat$qs <- 0
+sum_dat$qs[sum_dat$m.x < qs[1]] <- 1
+sum_dat$qs[sum_dat$m.x > qs[2]] <- 2
+sum_dat$qs <- as.factor(sum_dat$qs)
+
+qs_sum <- Rmisc::summarySEwithin(data=sum_dat, measurevar="pred_v",
+                                          withinvars=c("drug", "qs"),
+                                          idvar="sub")
+qs_sum <- qs_sum %>% mutate(lower=pred_v-ci, upper=pred_v+ci)
+
+# summarise block 1 vs block 8
+#b_dat <- Rmisc::summarySEwithin(data=sum_dat, measurevar = "p",
+#                                withinvars="b.x",
+#                                idvar="sub")
+#b_dat <- b_dat %>% mutate(upper=p+ci, lower=p-ci)
+stereo_dat_4_correlation_w_acc <- sum_dat %>% group_by(sub) %>% summarise(mu_v = mean(v), m = m.x[1], qs = qs[1])
+tmp <- sum_dat %>% group_by(sub, drug) %>% summarise(mu_v = mean(v)) %>%
+                     group_by(sub) %>% summarise(delta_v = mu_v[drug == "levodopa"] -
+                                                           mu_v[drug == "placebo"])
+stereo_dat_4_correlation_w_acc <- inner_join(stereo_dat_4_correlation_w_acc, tmp)
+```
+
+Stereotypy scores increased over blocks Fig \ref{fig:stereofig}A. Note that this increase is also in part due to increases in target-accuracy; as fewer doors are selected in error, the variance of the transition probability matrices increases. We first discuss the key results, and in the next section demonstrate their relationship to target-accuracy. Critically, mindfulness and dopamine interacted to impact stereotypy; we observed a reliable drug x mindfulness interaction (mean $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","u-95% CI"])`, Fig \ref{fig:stereofig}E). Mindfulness scores modulated the impact of dopamine on stereotypy. As a numerical example, those scoring in the highest quartile showed mean stereotypy scores of `r sprintf("%1.2f", qs_sum$pred_v[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])` (95%CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "levodopa" & qs_sum$qs == "2"])`]) during the dopamine session, relative to mean stereotypy scores of `r sprintf("%1.2f", qs_sum$pred_v[qs_sum$drug == "placebo" & qs_sum$qs == "2"])` (95% CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "placebo" & qs_sum$qs == "2"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "placebo" & qs_sum$qs == "2"])`]) during the placebo session. Individuals scoring low on mindfulness (lowest quartile) showed the opposite pattern (dopamine mean stereotypy = `r sprintf("%1.2f", qs_sum$pred_v[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`, 95% CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "levodopa" & qs_sum$qs == "1"])`], placebo mean stereotypy = `r sprintf("%1.2f", qs_sum$p[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`, 95%CI[`r sprintf("%1.2f", qs_sum$lower[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`, `r sprintf("%1.2f", qs_sum$upper[qs_sum$drug == "placebo" & qs_sum$qs == "1"])`]). 
+
+To visualise this interaction, we computed a mean variance change score between drug sessions for each participant ($\mu$ stereotypy[dopamine - placebo]). Note that a positive score indicates that performance was more stereotyped in the dopamine session relative to placebo. As can be seen in Fig \ref{fig:stereofig}B, there was a negative relationship between drug-induced stereotypy changes and mindfulness. Specifically, higher mindfulness scorers showed lower stereotypy in the dopamine session compared to the placebo session. Low mindfulness scorers showed higher sterotypy in the dopamine session compared to the placebo session. Thus the impact of dopamine on the formation of eye-movement routines is dependent on the mindfulness state of the individual.
+
+Participants developed more stereotypical routines over the course of the experiment, there was a clear main effect of block (mean increase per block: $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["b","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["b","u-95% CI"])`, Fig \ref{fig:stereofig}C). In line with the interaction of drug x mindfulness reported above, the main effect of mindfulness suggested a negative relationship with stereotypy (mindfulness mean $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["m","Estimate"])`, 95% CI[`r sprintf("%1.2f", stereo_results$fixed["m","l-95% CI"])`, `r sprintf("%1.2f", stereo_results$fixed["m","u-95% CI"])`, Fig \ref{fig:stereofig}D). Overall, higher mindfulness scores predicted less stereotypy in door-selection patterns relative to low mindfulness scores.
+
+```{r, stereofig, out.width='70%', fig.cap='The influence of dopamine and mindfulness on door selection stereotypy. A) Log stereotypy scores by log block and drug. Circles reflect observed average variance (of the transition matrices), dotted lines show the fit of the winning model. B) The association between trait mindfulness (x-axis) and the impact of drug on variance [DA-P]. The bottom row shows posterior densities (in log odds) estimated for C) the main effect of block (b), D) the main effect of dopamine, and E) the drug x mindfulness (m) interaction. log(s) = log stereotypy scores, log(b) = block, DA = dopamine, P = placebo, b = block, m = mindfulness, DA*m = drug x mindfulness interaction, d = density. Error bars reflect within-subject standard error of the mean [SE].'}
+
+stereofigpth <- '../../images/s_fig.pdf'
+knitr::include_graphics(stereofigpth)
+```
+
+```{r, corvarwithacc, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+# use this code chunk to correlate variance with overall accuracy
+
+df <- inner_join(acc_dat_4_correlation_w_stereo, stereo_dat_4_correlation_w_acc, by = "sub")
+cor_results <- with(df, cor.test(mu_acc, mu_v))
+cor_df <- cor_results$parameter
+cor_cor <- cor_results$estimate
+cor_p <- cor_results$p.value
+load('../../data/derivatives/stereo_winplusmindplusacc_dmindint/stereo_winplusmindplusacc_dmindint.Rda')
+stereo_w_acc_mod_comp <- loo_compare(mndbd_dm, mndbdacc_dm)
+stereo_update_results <-  print(mndbdacc_dm, digits = 2)
+
+# Note to self: should code some DAGs so I can work out some potential underlying causal structures
+```
+
+#### On the relationship between target-accuracy and stereotypy
+
+Accuracy and stereotypy showed opposing relationships with mindfulness and dopamine. Higher mindfulness scores were associated with dopamine-induced target-accuracy increases, and stereotypy decreases, relative to placebo. Individuals scoring low on mindfulness showed a deleterious influence of dopamine on target-accuracy, coupled with increased stereotypy, relative to placebo. As target-accuracy and stereotypy are possibly, but not necessarily related, we next sought to ensure that the observed influences of dopamine and mindfulness on stereotypy was not driven \textcolor{blue}{solely driven by its correlation with target-accuracy}, using an exploratory analyses. We reasoned that such a pattern of results could be observed if the measures of target-accuracy and stereotypy reflected a direct trade off; i.e. as target-accuracy goes up, stereotypy goes down. A correlation analysis ruled out this possibility. We computed mean target-accuracy and stereotypy scores for each participant, collapsing across all experimental factors, and found that target-accuracy and stereotypy were positively related ($r$(`r sprintf("%d", cor_df)`) = `r sprintf("%.2f", cor_cor)`, $p$ = `r sprintf("%1.2e", cor_p)`).
+
+Next, to rule out the contribution of target-accuracy to the stereotypy results, we added mean target-accuracy, computed for each block and drug condition, as a regressor to the winning model. Adding target-accuracy as a regressor both clearly improved the predictive accuracy of the model (ELPD diff = `r sprintf("%1.2f", stereo_w_acc_mod_comp["mndbd_dm", "elpd_diff"])`, ELPD:SE = `r sprintf("%1.2f", stereo_w_acc_mod_comp["mndbd_dm", "elpd_diff"]/stereo_w_acc_mod_comp["mndbd_dm","se_diff"])`), and served to increase certainty in the interactive influence of mindfulness and drug on stereotypy scores. Specifically, the estimated influence of the interaction increased from $\beta$ = `r sprintf("%1.2f", stereo_results$fixed["drugplacebo:m","Estimate"])` to $\beta$ = `r sprintf("%1.2f", stereo_update_results$fixed["drugplacebo:m","Estimate"])` (95% CI[`r sprintf("%1.2f", stereo_update_results$fixed["drugplacebo:m","l-95% CI"])`, `r sprintf("%1.2f", stereo_update_results$fixed["drugplacebo:m","u-95% CI"])`]). Note that the pattern of remaining results were also consistent between the two models. Therefore, the data support the notion that mindfulness and dopamine interact to differently influence target-accuracy and stereotypy when participants perform task-relevant saccadic routines. Indeed, this data suggest that mindfulness and dopamine interacted to produce more erroneous routines. To visualise this, Fig \ref{fig:trajecfig} shows example door selections from two participants, one randomly selected from the lowest quartile of mindfulness scorers (top row), and one selected from the highest quartile of mindfulness scorers (bottom row). As can be seen, the low mindfulness scorer had adopted a routine that resulted in more erroneous door selections than the high mindfulness scorer. The low mindfulness scorer appears to have developed a suboptimal task strategy of trying all doors, regardless of task context.
+
+```{r, trajecfig, out.width='70%', fig.cap='Example door selection routines for two participants (rows) over 6 consecutive trials from the last block of the dopamine session. Door selections follow the order indicated by the arrow. Blue circles reflect target doors for that setting, and green doors are target doors for the other setting. Red doors are erroneous doors in that a target was never found there.'}
+
+trajecfigpth <- '../../images/trajectories2subs.pdf'
+knitr::include_graphics(trajecfigpth)
+```
+
+
+
+## Blinding check
+\label{sec:Blinding Results}
+
+```{r, blind_check, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+
+load("../../data/derivatives/manip_checks.Rda")
+mood_win <- mood[1]/mood[3]
+
+```
+
+Next we checked if participants knew whether they had received levodopa or placebo across the two sessions. Participants were asked to report at the end of each session whether they thought they had received levodopa or placebo. Participant responses were coded as either correct for both sessions (cc: observed N = `r sprintf("%.0f", counts["cc"])`), correct for one session and incorrect for the other (ci: N = `r sprintf("%.0f", counts["ic"])`), or incorrect for both sessions (ii: N = `r sprintf("%.0f", counts["ii"])`). The probability of the observed guesses was not statistically unlikely given the null distribution of chance performance (the null hypothesis specified $p$= .25, .5, .25 for cc, ci, ii respectively,  $\chi^2$(`r length(counts)-1`, `r n`) = `r sprintf("%1.2f", test_statistic)`, $p$ =`r sprintf("%.2f", p_value)`). Note that we were unable to include all the participants in this analysis owing to missing data. Specifically, due to a miscommunication in the research team, the blinding check questions contained 'Don't know' as a possible response, for which we are unable to generate a null hypothesis. We therefore only include participants who made a guess using the levodopa and placebo options across both sessions.
+
+## Mood and blood pressure
+
+We also sought to determine whether dopamine influenced physiological factors such as mood and blood pressure. For mood, the winning model contained a main effect of time-point and no other fixed effects. This model was preferred relative to next best model, which contained an additional main effect of drug (BF = 3.76, ±2.14%) and was substantially preferred over the null random intercept model (BF = 514549 ±1.23%).
+
+Mean blood pressure was computed using the formula: Mean blood volume pulse (BVP) = diastolic blood pressure (DBP) + 1/3 [systolic blood pressure (SBP) – DBP]. For mean BVP, the winning model contained main effects of both time-point and drug. This model was barely preferred to the next best model which contained a time-point x drug interaction (BF = 1.7 ±5.69%), but was strongly preferred to the random intercept model (BF = 5011975 ±3.76%). Overall, mean BVP was lower in the levodopa session (mean = `r sprintf("2.1%f", bvp_drug$bvp[bvp_drug$drug == "levodopa"])`, 95% CI[`r sprintf("%2.1f", bvp_drug$lower[bvp_drug$drug == "levodopa"])`, `r sprintf("%2.1f", bvp_drug$upper[bvp_drug$drug == "levodopa"])`]), relative to placebo (mean = `r sprintf("%2.1f", bvp_drug$bvp[bvp_drug$drug == "placebo"])`, 95% CI[`r sprintf("%2.1f", bvp_drug$lower[bvp_drug$drug == "placebo"])`, `r sprintf("2.1%f", bvp_drug$upper[bvp_drug$drug == "placebo"])`]).
+
+```{r, correlation_m_and_bis, echo = FALSE, warning = FALSE, message=FALSE, results = FALSE}
+
+  load(sprintf('../../data/derivatives/%s_dat4_model.Rda', data_names[i]))
+  load('../../data/derivatives/mind_scores.Rda')
+  mind_sum$sub <- as.factor(mind_sum$sub)
+  acc_dat <- inner_join(acc_dat, mind_sum, by="sub")
+  load('../../data/derivatives/bis_scores.Rda')
+  bis_sum$sub <- as.factor(bis_sum$sub)
+  acc_dat <- inner_join(acc_dat, bis_sum, by="sub")
+  cor_mbis_dat <- acc_dat %>% group_by(sub) %>%
+                     summarise(m = m[1],
+                               bis = bis[1])
+  r <- cor.test(cor_mbis_dat$m, cor_mbis_dat$bis) # -0.23 and not significant
+
+```
+
+# Discussion
+\label{sec:Discussion}
+
+We investigated the impact of levodopa administration and trait mindfulness on the learning of task-relevant behaviour sets, and on the routine nature of their deployment. Participants opened doors to search for targets in a gaze-contingent display. The colour of the display signalled likely target locations, making some locations relevant for only that colour. We assessed how well participants learned target locations (target-accuracy), how routine was the order of door selections across trials (stereotypy), and how well participants learned to segregate task-routines (setting-accuracy). levodopa impacted target-accuracy, stereotypy and setting-accuracy, but in the case of the former two, this impact was modulated by trait mindfulness. High trait mindfulness corresponded to increased target-accuracy and decreased stereotypy, for levodopa relative to placebo, whereas low trait mindfulness was associated with decreased target-accuracy and increased stereotypy (for levodopa relative to placebo). These results quantify, for the first time, that increasing systemic dopamine availability induces \textcolor{blue}{an increase in stereotypy, that may come at the cost of target-accuracy}, that is modulated by trait-mindfulness, and that increased dopamine availability increases routine confusion. These findings carry implications for our theoretical understanding of how the brain establishes and switches between task-relevant behavioural routines, which we outline below.
+
+The current findings offer insight into the relationship between dopamine and mindfulness. Dopamine and mindfulness have been indirectly related in both the reinforcement learning (RL) [@kirkMindfulnessTrainingModulates2014; @kirkShorttermMindfulnessPractice2019] and active inference frameworks [@fristonDopamineAffordanceActive2012; @fitzgeraldDopamineRewardLearning2015; @laukkonenManyOneMeditation2021; @giommiFlexibleSelfPsychopathology2023], yet there exists no other study to-date that assesses their joint impact on behaviour. Here we find that levodopa and mindfulness jointly modulate learning and stereotypy, with levodopa yielding conditions of decreased target-accuracy and increased stereotypy in low trait mindfulness scorers. We hypothesise that low mindfulness results in poorer sensory-action representations which renders the individual more susceptible to error when estimating the reward value of actions, which is compounded by over-optimistic estimations induced by elevated dopamine availability. The result is a failure to differentiate between the actions that do and do not lead to reward, and an increased probability of reliance on past behaviours. This could be manifest via impoverished top-down, cortical regulation of positive prediction errors in striatum [@kirkMindfulnessTrainingModulates2014], as has been predicted within an RL framework. The same result could also be accounted for by a decrease in certainty regarding sensory prediction errors occurring with low mindfulness [@laukkonenManyOneMeditation2021; @giommiFlexibleSelfPsychopathology2023], in tandem with dopamine inducing inflated certainty regarding reward outcomes [@fitzgeraldDopamineRewardLearning2015], as has been suggested via the active inference framework.
+
+Note that the two accounts predict comparable outcomes so we are unable to differentiate between them with the current data. However, the current findings do constrain these accounts regarding the extent of overlap between the actions of dopamine availability and mindfulness. Increased dopamine availability increased routine confusion, regardless of trait mindfulness. Therefore, there are limitations to the modulatory influence of mindfulness on the actions of dopamine. The establishment and maintenance of a task-set is assumed to reflect a superordinate representation of a goal and the set of actions required to attain that goal [@schumacherHierarchicalTaskRepresentation2016; @desrochersMonitoringControlTask2016; @sutton2018reinforcement; @vaidyaNeuralRepresentationAbstract2021; @leeInterferenceIntegrationHierarchical2022]. The current data suggest that while dopamine and trait mindfulness can jointly modulate the learning and execution of subordinate representations, i.e. the set of actions used, mindfulness does not modulate the impact of dopamine on superordinate task representations, at least under the current task conditions. Future work should determine whether these observed limits in the modulatory influence of mindfulness are due to a limited locus of effect, or are due to increased vulnerability to the impacts of dopamine at superordinate levels of representation.
+
+The finding that levodopa increased interference between settings extends previous work showing that dopamine impacts switching between simple sensorimotor tasks that require only one response [@coolsEnhancedImpairedCognitive2001; @mehtaImpairedSetshiftingDissociable2004; @wieckiNeurocomputationalModelsMotor2010]. Collectively, these findings point to a U-shaped function linking dopamine levels and task-switching impairments, in that depleted and inflated levels of dopamine result in poorer task switching. This observation informs theoretical accounts of the relationship between dopamine and an agent's ability to infer the current task state, which have previously only considered the impacts of depleted dopamine [@fristonDopamineAffordanceActive2012]. These findings do support previously postulated hypotheses that there should be a U shaped relationship between dopamine levels and task-performance, that is in part dependent on task demands [@coolsInvertedUShapedDopamine2011]. As the currently studied behaviours are more complex than the constrained sensorimotor tasks that are typically used in task-switching studies, future work should verify whether levodopa administration comparably impacts task-switching in simple sensorimotor tasks, and whether depleted dopamine impacts switching between tasks requiring multiple responses. This will determine whether the relationship between dopamine and task-switching is comparable across tasks or depends upon task demands.
+
+To minimise task interference, an agent must maintain a representation of the actions required to achieve the task goal, and must associate this representation to the correct task cues. We found that levodopa increased the probability that actions from a non-relevant task-set would be selected during current task performance invariant to mindfulness, whereas the probability that an erroneous action was selected varied across individuals according to their trait mindfulness. Therefore, the most consistent locus of task-set confusion is between actions that have been credited as successful in either task-context. What remains to be determined is whether levodopa caused task-interference, or attenuated the ability to associate successful actions with the appropriate situational cues. If the latter is true, then levodopa would have caused individuals to learn one task, that did not incorporate the colour cue as a relevant disambiguating signal. We seek to arbitrate between these possibilities in future work.
+
+In contrast to expectations, levodopa led to an overall reduction in stereotypy in door selections, suggesting that increased dopamine availability reduces the probability of forming a routine when performing multiple responses. This is in contrast to previous findings showing that increased dopamine speeds the transition to habit formation [@harmerEnhancedAppetitiveConditioning1998; @nelsonAmphetamineExposureEnhances2006; @nadelOptogeneticStimulationStriatal2021; @nadelOptogeneticStimulationStriatal2021]. As with task-switching studies, such findings are largely based on rodent models using tasks comprising one or two stimulus-response associations. Our findings show that in the case of sets of task-relevant saccades, increasing dopamine does not necessarily lead to increased habit formation. Moreover, levodopa did not improve target-accuracy overall, suggesting that our results cannot be solely attributed to levodopa increasing model-based control [@wunderlichDopamineEnhancesModelBased2012a; @kroemerLDOPAReducesModelfree2019; @desernoDopamineEnhancesModelfree2021a], or adjusting the balance between exploitation and exploration [@kayserDopamineLocusControl2015; @chakrounDopaminergicModulationExploration2020].
+
+What then is the influence of dopamine on the cost/benefit computations that drive routine formation? In accordance with previous work with non-human primates [@desrochersOptimalHabitsCan2010; @desrochersHabitLearningNaive2015], the current data suggest that dopamine is a modulator of the computations that drive routines in humans. However, the current data also show that the modulatory influence of dopamine is dependent on the behaviour-trait state of the individual. Specifically, increased dopamine appears to drive individuals low in mindfulness towards a stereotypical solution that is suboptimal in terms of target-accuracy, suggesting a poor evaluation of sequence costs relative to benefits. In contrast, individuals high in trait mindfulness show increased target-accuracy but reduced stereotypy, suggesting an appropriate crediting of successful actions, but also suggesting either some volatility in their execution, or better learning that the probability of a target was uniform across target-relevant locations. While the current data demonstrate the applicability of dopamine signalling to the computations that underlie the formation of routines, the data also show further work is required to determine the internal state variables that determine whether increased dopamine availability will have a positive or negative impact on performance.
+
+\textcolor{blue}{One possibility that remains unexplored in the current study is that working memory capacity may be a moderating factor in the relationship between mindfulness and stereotypy. Individuals low in mindfulness may also show low working memory capacity} [@ruoccoDelineatingContributionsSustained2013]. \textcolor{blue}{This may result in a reliance on strategies that avoid taxation of working memory, such as adhering to a routine that will lead to the target, despite the potential delay in reward. Indeed, the delay in reward may be less costly than the effort of retaining the relevant target locations in working memory. It has been proposed that dopaminergic projections to the prefrontal cortex (see Cools \& D’Esposito,} [-@coolsInvertedUShapedDopamine2011], \textcolor{blue}{and perhaps beyond} [@froudist-walshDopamineGradientControls2021]\textcolor{blue}{, are critical for the gating of sensory information into working memory} [@gruberDopamineModulationBasal2006; @chathamMultipleGatesWorking2015]\textcolor{blue}{, and such projections may well have been modulated by the levodopa manipulation. Evidence regarding the relationship between mindfulness and working memory is mixed} [@jhaDoesMindfulnessTraining2019; @imDoesMindfulnessbasedIntervention2021]\textcolor{blue}{, and larger, systematic studies are warranted to pin down the nature of this relationship. Future investigations should focus on the potential moderating role of working memory when mindfulness and dopamine interact to influence stereotypy, in order to pin down causal links between these factors.}
+
+The current work is not without limitations. A difference was found in mean BVP between the levodopa and placebo sessions, suggesting more general physiological differences between the sessions. However, the effect of levodopa on blood-pressure is well characterised, and depends partly on the effective dose (dose per kilogram, Goldberg et al [@goldbergCardiovascularEffectsLevodopa1971]). It is unlikely that low and high mindfulness individuals differed systematically in terms of effective dose. Participants were also not able to detect whether they had received levodopa or placebo above what would be expected by chance. Therefore, the physiological changes appeared to not be subjectively detectable, lowering the likelihood that discernible subjective differences impacted the results. Note that although the power of our blinding test was lowered owing to missing data, the remaining N was comparable to sample sizes from previous investigations into the impact of dopaminergic pharmacological intervention on decision-making, that employed comparable blinding tests [@leowDopamineIncreasesAccuracy2023a; @pineDopamineTimeImpulsivity2010; @wunderlichDopamineEnhancesModelBased2012a; @voLevodopaImpairsProbabilistic2016; @voIndependentEffectsAge2018].
+
+Although target-accuracy and stereotypy theoretically need not be correlated, we did find a moderate positive correlation between the two measures. Critically, the modulatory influence of mindfulness and dopamine on stereotypy was found to be larger after accounting for target-accuracy. Furthermore, target-accuracy and stereotypy were at antithesis to each other with regard to the demonstrated impacts of mindfulness and levodopa. Nonetheless, further work should be done to confirm the dissociable impact of dopamine and mindfulness on these two aspects of performance. We shall seek to achieve this in future studies by controlling task parameters to maintain target-accuracy, while examining modulations to stereotypy.
+
+It could also be anticipated that participants who received levodopa administration in the first session may show carry-over effects to the subsequent session, e.g. levodopa may modulate the extent to which the individual learns that there are two settings, and this may affect how they approach the task in the second placebo session. Our double-blind, counter balanced design renders it unlikely that the current findings are due to session order effects, and our statistical power is such that we are not well placed to detect them in the current data. However, it would be very interesting to determine how levodopa influences carryover of task formation and routine execution to new situations. Future work should include conditions that allow us to tease out order effects, for example by including DA-DA and placebo-placebo conditions.
+
+We sought to determine the modulatory influence of dopamine availability and trait-mindfulness on the formation and deployment of task-relevant saccadic routines. We found evidence for theoretical assertions that dopamine and mindfulness share overlap in their locus of influence, but also demonstrated boundaries in that overlap. Mindfulness modulated the impact of dopamine on task-learning and routine development, with levodopa administration resulting in low mindfulness individuals being more likely to show impaired learning and increased stereotypy. Invariant to trait-mindfulness, levodopa increased the likelihood of task-interference between settings, suggesting that dopamine either hampers the binding of actions to situational cues, or promotes confusion between task-states. Collectively, these data suggest that the fidelity of situational representations interact with reinforcement learning systems to drive the formation of behavioural routines.
+
+
+# References
+
+

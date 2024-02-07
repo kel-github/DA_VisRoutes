@@ -21,6 +21,14 @@ options(digits = 3, width = 88, knitr.graphics.auto_pdf = TRUE,
 # })
 ```
 
+# Door opening procedure
+
+```{r, expfig, out.width='70%', fig.cap='Participants fixated for 300 ms on a door to open it. After 300 ms of fixation, the door turned black if the target was not behind it. The door returned to its original colour as soon as participants moved their eyes away from the door.'}
+
+tskfigpth <- '../../images/s_task-info.pdf'
+knitr::include_graphics(tskfigpth)
+```
+
 # Response types by drug session
 
 ```{r, respfig, out.width='70%', fig.cap='Group average probability (p) for each response type for each session. Circles reflect observed average accuracy, error bars reflect within-subject standard error of the mean [SE]. DA = dopamine, P = placebo, cs = current setting, n = none, os = other setting'}
