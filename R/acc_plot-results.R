@@ -138,7 +138,7 @@ with(mu_bdrug_dat %>% filter(drug == "placebo"),
                                col=placebo_col,
                                bty="n",
                                xlab = "block",
-                               ylab = "acc",
+                               ylab = "t-acc",
                                axes =F))
 axis(side=1, at=1:8, tick=TRUE, labels=c("1", "","","","","","","8"))
 axis(side=2, at=dat_yseq, tick=TRUE, labels=dat_ylabs, las=2) #, labels=c())
@@ -192,7 +192,7 @@ with(mnddrgi,
           col=cor_data_col,
           bty="n",
           xlab = "m",
-          ylab = "acc (DA - P)",
+          ylab = "t-acc (DA - P)",
           axes =F))
 axis(side=1, at=cor_xseq, tick=TRUE, labels=cor_xlabs)
 axis(side=2, at=cor_yseq, tick=TRUE, labels=cor_ylabs, las=2) #, labels=c())
