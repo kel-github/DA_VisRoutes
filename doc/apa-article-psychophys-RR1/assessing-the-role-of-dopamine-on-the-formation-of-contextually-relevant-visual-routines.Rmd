@@ -35,7 +35,7 @@ authornote: |
 
   This project has received funding from the European Union's Horizon 2020 research and innovation programme under the Marie Sklodowska-Curie grant agreement No 796329, awarded to Kelly Garner. MIG was supported by the Centre of Excellence for Integrative Brain Function (CE140100007). PED was supported by a grant from the Australian Research Council (DP210101977). We thank Prof. Fred Westbrook for feedback on an earlier draft and insightful discussions about this work.
   
-    The data is available at UQ eSpace. Task code and analysis code are available on github. [Note: links will be made available once a version of this manuscript has been accepted for publication].
+    The data is available at UQ eSpace ([10.48610/a6a65c7](https://doi.org/10.48610/a6a65c7)). Task code ([10.5281/zenodo.10637597](https://zenodo.org/doi/10.5281/zenodo.10637596)) and analysis code ([10.5281/zenodo.10637593](https://zenodo.org/doi/10.5281/zenodo.10637592)), including the code required to produce this manuscript, are available on github.
 
 keywords: "habit, sequence, routine, dopamine, mindfulness, visual search, eye-movements"
 
