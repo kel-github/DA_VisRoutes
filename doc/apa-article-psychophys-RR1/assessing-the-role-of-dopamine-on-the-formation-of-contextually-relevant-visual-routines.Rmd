@@ -55,9 +55,9 @@ classoption       : "man"
 output            : papaja::apa6_pdf
 ---
 
-Data: link to go here on publication
-Task code: as above
-Analysis code: as above
+Data: [10.48610/a6a65c7](https://doi.org/10.48610/a6a65c7)  
+Task code: [10.5281/zenodo.10637597](https://zenodo.org/doi/10.5281/zenodo.10637596)  
+Analysis code: [10.5281/zenodo.10637593](https://zenodo.org/doi/10.5281/zenodo.10637592)  
 
 \clearpage
 
@@ -98,9 +98,9 @@ Using a novel protocol designed to test the formation and execution of task-rele
 # Methods
 \label{sec:Methods}
 
-All the data from this study is available at UQ eSpace. Task code^[https://github.com/kel-github/variability-decision-making], analysis code and code to produce the manuscript^[https://github.com/kel-github/DA_VisRoutes/tree/master] are available on github. [Note: a link to the data will be made available once a version of this manuscript has been accepted for publication].
+All the data from this study is available at UQ eSpace^[DOI: 10.48610/a6a65c7]. Task code^[DOI: 10.5281/zenodo.10637597], analysis code and code to produce the manuscript^[DOI: 10.5281/zenodo.10637593] are available on github.
 
-The experiment and analysis plan were [pre-registered](https://osf.io/xn6d2/?view_only=4fc3aea02fa14da79651d892db6888c9) on the Open Science Framework^[(See: https://osf.io/xn6d2/?view_only=4fc3aea02fa14da79651d892db6888c9)].
+The experiment and analysis plan were [pre-registered](DOI: 10.17605/OSF.IO/XN6D2) on the Open Science Framework^[DOI: 10.17605/OSF.IO/XN6D2].
 
 ## Participants
 \label{sec:Participants}
@@ -115,7 +115,7 @@ Participants attended two sessions, spaced approximately one week apart. After i
 ## Apparatus
 \label{sec:Apparatus}
 
-The experimental task was run with custom code^[https://github.com/kel-github/variability-decision-making], written using Matlab 2012b (32 bit) and Psychtoolbox v3.0.14, on a Windows 7 (64-bit) on a Dell Precision T1700 desktop computer, displayed using a ASUS VG248 monitor. Gaze coordinates (x, y) were sampled at 120 Hz using a monitor-mounted iView Red-m infrared eye tracker (SensoMotoric Instruments GmbH, Teltow, Germany). Participants were seated from the monitor at an approximate viewing distance of 57 cm, and positioned on a chin-rest for the duration of the task.
+The experimental task was run with custom code, written using Matlab 2012b (32 bit) and Psychtoolbox v3.0.14, on a Windows 7 (64-bit) on a Dell Precision T1700 desktop computer, displayed using a ASUS VG248 monitor. Gaze coordinates (x, y) were sampled at 120 Hz using a monitor-mounted iView Red-m infrared eye tracker (SensoMotoric Instruments GmbH, Teltow, Germany). Participants were seated from the monitor at an approximate viewing distance of 57 cm, and positioned on a chin-rest for the duration of the task.
 
 ## Experimental Task
 \label{sec:Experimental Task}
@@ -135,7 +135,7 @@ knitr::include_graphics(taskfigpth)
 ## Statistical Approach
 \label{sec:Statistical Approach}
 
-The analysis was designed to assess how well participants learned the target locations, the extent to which participants formed a routine for door selections (how stereotypical they became in their order of door-selections), and how well they disambiguated between settings. We modelled how these elements of performance were modulated by the dopamine and mindfulness factors. All custom analysis code is available online^[https://github.com/kel-github/DA_VisRoutes]. The analysis was performed using R and RStudio v2022.07.2 [@rstudiocitation], and can be reproduced in the Neurodesk container environment [@rentonNeurodeskAccessibleFlexible2022].
+The analysis was designed to assess how well participants learned the target locations, the extent to which participants formed a routine for door selections (how stereotypical they became in their order of door-selections), and how well they disambiguated between settings. We modelled how these elements of performance were modulated by the dopamine and mindfulness factors. All custom analysis code is available online. The analysis was performed using R and RStudio v2022.07.2 [@rstudiocitation], and can be reproduced in the Neurodesk container environment [@rentonNeurodeskAccessibleFlexible2022].
 
 ### Data cleaning
 \label{sec:Data cleaning}
@@ -147,7 +147,7 @@ n_potential_exclude <- length(unique(door_acc_sum$sub[door_acc_sum$excl == 1]))
 
 ```
 
-We asserted that a door could not be selected twice consecutively, thus any consecutive selections were classified as a single selection. As the final door selection of every trial was fixed (i.e. finding the target location ends the trial), we removed the final selection from each trial for the stereotypy (routine) analysis defined below. We excluded data from one participant whose total number of door selections was greater than 3 standard deviations from the mean across both sessions. The remaining 39 datasets were retained for all of the analyses. Note that this is more inclusive than our pre-registered plan for data exclusions^[https://osf.io/2y6pk]. Based on pilot data, we had planned to exclude participants who scored < 65% accuracy over the course of a session. Analysis of the final sample suggested that this was too stringent, as this resulted in the exclusion of `r sprintf("%d", n_potential_exclude)` of 40 participants. We have not analysed the data with the exclusion of these participants, owing to the large drop in statistical power for the individual differences component of the analysis.
+We asserted that a door could not be selected twice consecutively, thus any consecutive selections were classified as a single selection. As the final door selection of every trial was fixed (i.e. finding the target location ends the trial), we removed the final selection from each trial for the stereotypy (routine) analysis defined below. We excluded data from one participant whose total number of door selections was greater than 3 standard deviations from the mean across both sessions. The remaining 39 datasets were retained for all of the analyses. Note that this is more inclusive than our pre-registered plan for data exclusions. Based on pilot data, we had planned to exclude participants who scored < 65% accuracy over the course of a session. Analysis of the final sample suggested that this was too stringent, as this resulted in the exclusion of `r sprintf("%d", n_potential_exclude)` of 40 participants. We have not analysed the data with the exclusion of these participants, owing to the large drop in statistical power for the individual differences component of the analysis.
 
 ## Target-Accuracy
 \label{sec:Target-Accuracy}
@@ -263,7 +263,7 @@ To investigate this interaction, we computed mean target-accuracy change due to 
 
 Participants learned the target door locations over the course of the sessions, target-accuracy reliably increased over blocks. Mean target-accuracy in block 1 was `r sprintf("%1.2f", b_dat$p[b_dat$b.x == "0"])` (95% CI[`r sprintf("%1.2f", b_dat$lower[b_dat$b.x == "0"])`, `r sprintf("%1.2f", b_dat$upper[b_dat$b.x == "0"])`]), relative to a block 8 mean of `r sprintf("%1.2f", b_dat$p[b_dat$b.x == "7"])` (95% CI[`r sprintf("%1.2f", b_dat$lower[b_dat$b.x == "7"])`, `r sprintf("%1.2f", b_dat$upper[b_dat$b.x == "7"])`]). The model showed that the log-odds of a target door selection increased over blocks by an average of = `r sprintf("%1.2f", acc_results$fixed["b","Estimate"])`, (95% CI[`r sprintf("%1.2f", acc_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["b","u-95% CI"])`, Fig \ref{fig:accfig}C, note that the model parameters are defined in log-odds because we used logistic regression). There was also the suggestion of a main effect of dopamine (mean log odds = `r sprintf("%1.2f", acc_results$fixed["drugplacebo","Estimate"])`, 95% CI[`r sprintf("%1.3f", acc_results$fixed["drugplacebo","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["drugplacebo","u-95% CI"])`, Fig \ref{fig:accfig}D), however, the impact of dopamine on target-accuracy is better explained by the drug x mindfulness interaction Fig \ref{fig:accfig}E).  \textcolor{blue}{Although the winning model contained a block x mindfulness interaction, the 95\% CIs included zero} (mean log odds = `r sprintf("%1.2f", acc_results$fixed["b:m","Estimate"])`, 95% CI[`r sprintf("%1.3f", acc_results$fixed["b:m","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["b:m","u-95% CI"])`], \textcolor{blue}{so we do not consider this parameter any further.}
 
-```{r, accfig, out.width='70%', fig.cap='The influence of dopamine and mindfulness on accuracy. A) Target-accuracy (t-acc) data by block and drug. Circles reflect observed average target-accuracy, dotted lines reflect the fit of the winning model. B) The association between trait mindfulness (x-axis) and the impact of drug on accuracy [dopamine-placebo]. The bottom row shows posterior densities (in log odds) estimated for C) the main effect of block (b), D) the main effect of dopamine, and E) the drug x mindfulness (m) interaction. DA = dopamine, P = placebo, d = density. Error bars reflect within-subject standard error of the mean [SE].'}
+```{r, accfig, out.width='70%', fig.cap='The influence of dopamine and mindfulness on target-accuracy. A) Target-accuracy (t-acc) data by block and drug. Circles reflect observed average target-accuracy, dotted lines reflect the fit of the winning model. B) The association between trait mindfulness (x-axis) and the impact of drug on accuracy [dopamine-placebo]. The bottom row shows posterior densities (in log odds) estimated for C) the main effect of block (b), D) the main effect of dopamine, and E) the drug x mindfulness (m) interaction. DA = dopamine, P = placebo, d = density. Error bars reflect within-subject standard error of the mean [SE].'}
 
 accfigpth <- '../../images/acc_fig.pdf'
 knitr::include_graphics(accfigpth)
@@ -314,7 +314,7 @@ We next determined the influence of dopamine and mindfulness on setting-accuracy
 
 Setting-accuracy improved over blocks; mean accuracy in block 1 was `r sprintf("%1.2f", b_dat$p[b_dat$b.x == "0"])` (95% CI[`r sprintf("%1.2f", b_dat$lower[b_dat$b.x == "0"])`, `r sprintf("%1.2f", b_dat$upper[b_dat$b.x == "0"])`]), relative to block 8 (mean: `r sprintf("%1.2f", b_dat$p[b_dat$b.x == "7"])`, 95% CI[`r sprintf("%1.2f", b_dat$lower[b_dat$b.x == "7"])`, `r sprintf("%1.2f", b_dat$upper[b_dat$b.x == "7"])`]). The model showed that the probability of selecting a setting relevant target door increased by a mean log odds of `r sprintf("%1.2f", cacc_results$fixed["b","Estimate"])` (95% CI[`r sprintf("%1.2f", cacc_results$fixed["b","l-95% CI"])`, `r sprintf("%1.2f", cacc_results$fixed["b","u-95% CI"])`) per block (Fig \ref{fig:caccfig}C). In contrast to the target-accuracy data, the main effect of mindfulness was not a sufficiently reliable predictor of setting-accuracy (mean log odds = `r sprintf("%1.2f", cacc_results$fixed["m","Estimate"])`, 95% CI[`r sprintf("%1.2f", cacc_results$fixed["m","l-95% CI"])`, `r sprintf("%1.2f", acc_results$fixed["m","u-95% CI"])`]).
 
-```{r, caccfig, out.width='70%', fig.cap='The influence of dopamine and mindfulness on setting accuracy. A) Setting-Accuracy (s-acc) data by block and drug. Circles reflect observed average setting accuracy, dotted lines show the fit of the winning model. B) Estimated posterior density (in log odds) for the main effect of drug (dopamine vs placebo), D) same as in B, but for the main effect of block. DA = dopamine, P = placebo, b = block, d = density. Error bars reflect within-subject standard error of the mean [SE].'}
+```{r, caccfig, out.width='70%', fig.cap='The influence of dopamine and mindfulness on setting-accuracy. A) Setting-Accuracy (s-acc) data by block and drug. Circles reflect observed average setting accuracy, dotted lines show the fit of the winning model. B) Estimated posterior density (in log odds) for the main effect of drug (dopamine vs placebo), D) same as in B, but for the main effect of block. DA = dopamine, P = placebo, b = block, d = density. Error bars reflect within-subject standard error of the mean [SE].'}
 
 caccfigpth <- '../../images/cacc_fig.pdf'
 knitr::include_graphics(caccfigpth)

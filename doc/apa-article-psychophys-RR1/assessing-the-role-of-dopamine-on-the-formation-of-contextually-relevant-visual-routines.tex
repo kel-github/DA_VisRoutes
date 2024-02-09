@@ -135,13 +135,13 @@
   {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
 \makeatother
 
-% \usepackage{etoolbox}
 \makeatletter
-\patchcmd{\HyOrg@maketitle}
+\usepackage{etoolbox}
+\patchcmd{\maketitle}
   {\section{\normalfont\normalsize\abstractname}}
   {\section*{\normalfont\normalsize\abstractname}}
   {}{\typeout{Failed to patch abstract.}}
-\patchcmd{\HyOrg@maketitle}
+\patchcmd{\maketitle}
   {\section{\protect\normalfont{\@title}}}
   {\section*{\protect\normalfont{\@title}}}
   {}{\typeout{Failed to patch title.}}
@@ -155,7 +155,7 @@
     {}{\InnerPatchFailed}%
   }
 {}{\PatchFailed}
-\keywords{habit, sequence, routine, dopamine, mindfulness, visual search, eye-movements\newline\indent Word count: 8189}
+\keywords{habit, sequence, routine, dopamine, mindfulness, visual search, eye-movements\newline\indent Word count: 8274}
 \DeclareDelayedFloatFlavor{ThreePartTable}{table}
 \DeclareDelayedFloatFlavor{lltable}{table}
 \DeclareDelayedFloatFlavor*{longtable}{table}
@@ -204,9 +204,9 @@ Correspondence concerning this article should be addressed to *Kelly G. Garner. 
 \begin{document}
 \maketitle
 
-Data: link to go here on publication
-Task code: as above
-Analysis code: as above
+Data: \href{https://doi.org/10.48610/a6a65c7}{10.48610/a6a65c7}\\
+Task code: \href{https://zenodo.org/doi/10.5281/zenodo.10637596}{10.5281/zenodo.10637597}\\
+Analysis code: \href{https://zenodo.org/doi/10.5281/zenodo.10637592}{10.5281/zenodo.10637593}
 
 \clearpage
 
@@ -240,9 +240,9 @@ Using a novel protocol designed to test the formation and execution of task-rele
 
 \label{sec:Methods}
 
-All the data from this study is available at UQ eSpace. Task code\footnote{\url{https://github.com/kel-github/variability-decision-making}}, analysis code and code to produce the manuscript\footnote{\url{https://github.com/kel-github/DA_VisRoutes/tree/master}} are available on github. {[}Note: a link to the data will be made available once a version of this manuscript has been accepted for publication{]}.
+All the data from this study is available at UQ eSpace\footnote{DOI: 10.48610/a6a65c7}. Task code\footnote{DOI: 10.5281/zenodo.10637597}, analysis code and code to produce the manuscript\footnote{DOI: 10.5281/zenodo.10637593} are available on github.
 
-The experiment and analysis plan were \href{https://osf.io/xn6d2/?view_only=4fc3aea02fa14da79651d892db6888c9}{pre-registered} on the Open Science Framework\footnote{(See: \url{https://osf.io/xn6d2/?view_only=4fc3aea02fa14da79651d892db6888c9})}.
+The experiment and analysis plan were \href{DOI:\%2010.17605/OSF.IO/XN6D2}{pre-registered} on the Open Science Framework\footnote{DOI: 10.17605/OSF.IO/XN6D2}.
 
 \hypertarget{participants}{%
 \subsection{Participants}\label{participants}}
@@ -263,7 +263,7 @@ Participants attended two sessions, spaced approximately one week apart. After i
 
 \label{sec:Apparatus}
 
-The experimental task was run with custom code\footnote{\url{https://github.com/kel-github/variability-decision-making}}, written using Matlab 2012b (32 bit) and Psychtoolbox v3.0.14, on a Windows 7 (64-bit) on a Dell Precision T1700 desktop computer, displayed using a ASUS VG248 monitor. Gaze coordinates (x, y) were sampled at 120 Hz using a monitor-mounted iView Red-m infrared eye tracker (SensoMotoric Instruments GmbH, Teltow, Germany). Participants were seated from the monitor at an approximate viewing distance of 57 cm, and positioned on a chin-rest for the duration of the task.
+The experimental task was run with custom code, written using Matlab 2012b (32 bit) and Psychtoolbox v3.0.14, on a Windows 7 (64-bit) on a Dell Precision T1700 desktop computer, displayed using a ASUS VG248 monitor. Gaze coordinates (x, y) were sampled at 120 Hz using a monitor-mounted iView Red-m infrared eye tracker (SensoMotoric Instruments GmbH, Teltow, Germany). Participants were seated from the monitor at an approximate viewing distance of 57 cm, and positioned on a chin-rest for the duration of the task.
 
 \hypertarget{experimental-task}{%
 \subsection{Experimental Task}\label{experimental-task}}
@@ -288,14 +288,14 @@ In each session, participants saw the display in two possible colours. Participa
 
 \label{sec:Statistical Approach}
 
-The analysis was designed to assess how well participants learned the target locations, the extent to which participants formed a routine for door selections (how stereotypical they became in their order of door-selections), and how well they disambiguated between settings. We modelled how these elements of performance were modulated by the dopamine and mindfulness factors. All custom analysis code is available online\footnote{\url{https://github.com/kel-github/DA_VisRoutes}}. The analysis was performed using R and RStudio v2022.07.2 (RStudio Team, 2020), and can be reproduced in the Neurodesk container environment (Renton et al., 2022).
+The analysis was designed to assess how well participants learned the target locations, the extent to which participants formed a routine for door selections (how stereotypical they became in their order of door-selections), and how well they disambiguated between settings. We modelled how these elements of performance were modulated by the dopamine and mindfulness factors. All custom analysis code is available online. The analysis was performed using R and RStudio v2022.07.2 (RStudio Team, 2020), and can be reproduced in the Neurodesk container environment (Renton et al., 2022).
 
 \hypertarget{data-cleaning}{%
 \subsubsection{Data cleaning}\label{data-cleaning}}
 
 \label{sec:Data cleaning}
 
-We asserted that a door could not be selected twice consecutively, thus any consecutive selections were classified as a single selection. As the final door selection of every trial was fixed (i.e.~finding the target location ends the trial), we removed the final selection from each trial for the stereotypy (routine) analysis defined below. We excluded data from one participant whose total number of door selections was greater than 3 standard deviations from the mean across both sessions. The remaining 39 datasets were retained for all of the analyses. Note that this is more inclusive than our pre-registered plan for data exclusions\footnote{\url{https://osf.io/2y6pk}}. Based on pilot data, we had planned to exclude participants who scored \textless{} 65\% accuracy over the course of a session. Analysis of the final sample suggested that this was too stringent, as this resulted in the exclusion of 14 of 40 participants. We have not analysed the data with the exclusion of these participants, owing to the large drop in statistical power for the individual differences component of the analysis.
+We asserted that a door could not be selected twice consecutively, thus any consecutive selections were classified as a single selection. As the final door selection of every trial was fixed (i.e.~finding the target location ends the trial), we removed the final selection from each trial for the stereotypy (routine) analysis defined below. We excluded data from one participant whose total number of door selections was greater than 3 standard deviations from the mean across both sessions. The remaining 39 datasets were retained for all of the analyses. Note that this is more inclusive than our pre-registered plan for data exclusions\footnote{DOI: 10.17605/OSF.IO/XN6D2}. Based on pilot data, we had planned to exclude participants who scored \textless{} 65\% accuracy over the course of a session. Analysis of the final sample suggested that this was too stringent, as this resulted in the exclusion of 14 of 40 participants. We have not analysed the data with the exclusion of these participants, owing to the large drop in statistical power for the individual differences component of the analysis.
 
 \hypertarget{target-accuracy}{%
 \subsection{Target-Accuracy}\label{target-accuracy}}
@@ -368,11 +368,11 @@ Adding BIS scores did not improve the predictive value of the model (ELPD diff =
 \hypertarget{the-effect-of-dopamine-and-mindfulness-on-target-accuracy}{%
 \subsubsection{The effect of dopamine and mindfulness on target-accuracy}\label{the-effect-of-dopamine-and-mindfulness-on-target-accuracy}}
 
-Having established the best model to account for the data, we next determined the influence of dopamine and mindfulness on target-accuracy by making inference over the resulting parameters. Target-accuracy data plotted by block x drug (dopamine vs placebo) are shown in Fig \ref{fig:accfig}A. Target-accuracy improved over blocks, and there was a small main effect of drug. These effects are described further below. However, critically, mindfulness and dopamine interacted to influence target-accuracy. The drug x mindfulness parameter differed reliably from zero (mean log odds = -0.12, 95\% CI{[}-0.16, -0.07{]}, see Fig \ref{fig:accfig}E).
+Having established the best model to account for the data, we next determined the influence of dopamine and mindfulness on target-accuracy by making inference over the resulting parameters. Target-accuracy data plotted by block x drug (dopamine vs placebo) are shown in Fig \ref{fig:accfig}A. Target-accuracy improved over blocks, and there was a small main effect of drug. These effects are described further below. However, critically, mindfulness and dopamine interacted to influence target-accuracy. The drug x mindfulness parameter differed reliably from zero (mean log odds = -0.08, 95\% CI{[}-0.12, -0.03{]}, see Fig \ref{fig:accfig}E).
 
-To investigate this interaction, we computed mean target-accuracy change due to the drug session (\(\mu\) acc{[}dopamine - placebo{]}) for each participant. Note that a positive score indicates that performance was better in the dopamine session relative to placebo. Next we examined the relationship between dopamine-induced target-accuracy changes and mindfulness scores. As can be seen in Fig \ref{fig:accfig}B, there was a positive relationship between mindfulness and the influence of drug on target-accuracy. As mindfulness increased, so too did target-accuracy for the dopamine relative to the placebo session. For a numeric example, those scoring in the highest quartile showed mean target-accuracy scores of 0.67 (95\%CI{[}0.65, 0.70{]}) during the dopamine session, relative to mean target-accuracy scores of 0.62 (95\% CI{[}0.60, 0.63{]}) during the placebo session. Individuals scoring low on mindfulness numerically showed the opposite pattern (dopamine mean target-accuracy = 0.62, 95\% CI{[}0.60, 0.63{]}, placebo mean target-accuracy = 0.68, 95\%CI{[}0.66, 0.69{]}), note that Fig \ref{fig:accfig}B shows the difference between these scores). Thus the impact of dopamine on the establishment of task-relevant eye-movements is dependent on the mindfulness state of the individual.
+To investigate this interaction, we computed mean target-accuracy change due to the drug session (\(\mu\) acc{[}dopamine - placebo{]}) for each participant. Note that a positive score indicates that performance was better in the dopamine session relative to placebo. Next we examined the relationship between dopamine-induced target-accuracy changes and mindfulness scores. As can be seen in Fig \ref{fig:accfig}B, there was a positive relationship between mindfulness and the influence of drug on target-accuracy. As mindfulness increased, so too did target-accuracy for the dopamine relative to the placebo session. For a numeric example, those scoring in the highest quartile showed mean target-accuracy scores of 0.47 (95\%CI{[}0.44, 0.50{]}) during the dopamine session, relative to mean target-accuracy scores of 0.41 (95\% CI{[}0.38, 0.43{]}) during the placebo session. Individuals scoring low on mindfulness numerically showed the opposite pattern (dopamine mean target-accuracy = 0.43, 95\% CI{[}0.41, 0.45{]}, placebo mean target-accuracy = 0.44, 95\%CI{[}0.43, 0.46{]}), note that Fig \ref{fig:accfig}B shows the difference between these scores). Thus the impact of dopamine on the establishment of task-relevant eye-movements is dependent on the mindfulness state of the individual.
 
-Participants learned the target door locations over the course of the sessions, target-accuracy reliably increased over blocks. Mean target-accuracy in block 1 was 0.57 (95\% CI{[}0.55, 0.59{]}), relative to a block 8 mean of 0.70 (95\% CI{[}0.68, 0.72{]}). The model showed that the log-odds of a target door selection increased over blocks by an average of = 0.15, (95\% CI{[}0.09, 0.22, Fig \ref{fig:accfig}C, note that the model parameters are defined in log-odds because we used logistic regression). There was also the suggestion of a main effect of dopamine (mean log odds = 0.04, 95\% CI{[}-0.002, 0.09, Fig \ref{fig:accfig}D), however, the impact of dopamine on target-accuracy is better explained by the drug x mindfulness interaction Fig \ref{fig:accfig}E). \textcolor{blue}{Although the winning model contained a block x mindfulness interaction, the 95\% CIs included zero} (mean log odds = 0.04, 95\% CI{[}-0.027, 0.11{]}, \textcolor{blue}{so we do not consider this parameter any further.}
+Participants learned the target door locations over the course of the sessions, target-accuracy reliably increased over blocks. Mean target-accuracy in block 1 was 0.34 (95\% CI{[}0.32, 0.37{]}), relative to a block 8 mean of 0.51 (95\% CI{[}0.48, 0.53{]}). The model showed that the log-odds of a target door selection increased over blocks by an average of = 0.15, (95\% CI{[}0.08, 0.22, Fig \ref{fig:accfig}C, note that the model parameters are defined in log-odds because we used logistic regression). There was also the suggestion of a main effect of dopamine (mean log odds = 0.08, 95\% CI{[}0.035, 0.13, Fig \ref{fig:accfig}D), however, the impact of dopamine on target-accuracy is better explained by the drug x mindfulness interaction Fig \ref{fig:accfig}E). \textcolor{blue}{Although the winning model contained a block x mindfulness interaction, the 95\% CIs included zero} (mean log odds = 0.05, 95\% CI{[}-0.016, 0.12{]}, \textcolor{blue}{so we do not consider this parameter any further.}
 
 \begin{figure}
 
@@ -380,7 +380,7 @@ Participants learned the target door locations over the course of the sessions, 
 
 }
 
-\caption{The influence of dopamine and mindfulness on accuracy. A) Target-accuracy (t-acc) data by block and drug. Circles reflect observed average target-accuracy, dotted lines reflect the fit of the winning model. B) The association between trait mindfulness (x-axis) and the impact of drug on accuracy [dopamine-placebo]. The bottom row shows posterior densities (in log odds) estimated for C) the main effect of block (b), D) the main effect of dopamine, and E) the drug x mindfulness (m) interaction. DA = dopamine, P = placebo, d = density. Error bars reflect within-subject standard error of the mean [SE].}\label{fig:accfig}
+\caption{The influence of dopamine and mindfulness on target-accuracy. A) Target-accuracy (t-acc) data by block and drug. Circles reflect observed average target-accuracy, dotted lines reflect the fit of the winning model. B) The association between trait mindfulness (x-axis) and the impact of drug on accuracy [dopamine-placebo]. The bottom row shows posterior densities (in log odds) estimated for C) the main effect of block (b), D) the main effect of dopamine, and E) the drug x mindfulness (m) interaction. DA = dopamine, P = placebo, d = density. Error bars reflect within-subject standard error of the mean [SE].}\label{fig:accfig}
 \end{figure}
 
 \hypertarget{setting-accuracy-1}{%
@@ -404,7 +404,7 @@ Adding BIS scores did not improve the predictive value of the model (ELPD diff =
 
 We next determined the influence of dopamine and mindfulness on setting-accuracy by making inference over the resulting model parameters. Dopamine reduced setting-accuracy; setting-accuracy was on average 0.64 (95\% CI {[}0.63, 0.65{]}) for the dopamine session, and 0.66 (95\% CI {[}0.65, 0.68{]}) for the placebo session (see Fig \ref{fig:caccfig}A). The log-odds of selecting a setting-accurate target door increased by a mean of 0.07 (95\% CI{[}0.01, 0.13, Fig \ref{fig:caccfig}B) for the placebo session, relative to the dopamine session. This suggests that dopamine caused interference between settings.
 
-Setting-accuracy improved over blocks; mean accuracy in block 1 was 0.59 (95\% CI{[}0.58, 0.61{]}), relative to block 8 (mean: 0.69, 95\% CI{[}0.67, 0.71{]}). The model showed that the probability of selecting a setting relevant target door increased by a mean log odds of 0.13 (95\% CI{[}0.07, 0.19) per block (Fig \ref{fig:caccfig}C). In contrast to the target-accuracy data, the main effect of mindfulness was not a sufficiently reliable predictor of setting-accuracy (mean log odds = 0.04, 95\% CI{[}-0.04, 0.13{]}).
+Setting-accuracy improved over blocks; mean accuracy in block 1 was 0.59 (95\% CI{[}0.58, 0.61{]}), relative to block 8 (mean: 0.69, 95\% CI{[}0.67, 0.71{]}). The model showed that the probability of selecting a setting relevant target door increased by a mean log odds of 0.13 (95\% CI{[}0.07, 0.19) per block (Fig \ref{fig:caccfig}C). In contrast to the target-accuracy data, the main effect of mindfulness was not a sufficiently reliable predictor of setting-accuracy (mean log odds = 0.04, 95\% CI{[}-0.04, 0.18{]}).
 
 \begin{figure}
 
@@ -412,7 +412,7 @@ Setting-accuracy improved over blocks; mean accuracy in block 1 was 0.59 (95\% C
 
 }
 
-\caption{The influence of dopamine and mindfulness on setting accuracy. A) Setting-Accuracy (s-acc) data by block and drug. Circles reflect observed average setting accuracy, dotted lines show the fit of the winning model. B) Estimated posterior density (in log odds) for the main effect of drug (dopamine vs placebo), D) same as in B, but for the main effect of block. DA = dopamine, P = placebo, b = block, d = density. Error bars reflect within-subject standard error of the mean [SE].}\label{fig:caccfig}
+\caption{The influence of dopamine and mindfulness on setting-accuracy. A) Setting-Accuracy (s-acc) data by block and drug. Circles reflect observed average setting accuracy, dotted lines show the fit of the winning model. B) Estimated posterior density (in log odds) for the main effect of drug (dopamine vs placebo), D) same as in B, but for the main effect of block. DA = dopamine, P = placebo, b = block, d = density. Error bars reflect within-subject standard error of the mean [SE].}\label{fig:caccfig}
 \end{figure}
 
 \hypertarget{setting-accuracy-control-analysis}{%
@@ -457,7 +457,7 @@ Participants developed more stereotypical routines over the course of the experi
 \hypertarget{on-the-relationship-between-target-accuracy-and-stereotypy}{%
 \paragraph{On the relationship between target-accuracy and stereotypy}\label{on-the-relationship-between-target-accuracy-and-stereotypy}}
 
-Accuracy and stereotypy showed opposing relationships with mindfulness and dopamine. Higher mindfulness scores were associated with dopamine-induced target-accuracy increases, and stereotypy decreases, relative to placebo. Individuals scoring low on mindfulness showed a deleterious influence of dopamine on target-accuracy, coupled with increased stereotypy, relative to placebo. As target-accuracy and stereotypy are possibly, but not necessarily related, we next sought to ensure that the observed influences of dopamine and mindfulness on stereotypy was not driven \textcolor{blue}{solely driven by its correlation with target-accuracy}, using an exploratory analyses. We reasoned that such a pattern of results could be observed if the measures of target-accuracy and stereotypy reflected a direct trade off; i.e.~as target-accuracy goes up, stereotypy goes down. A correlation analysis ruled out this possibility. We computed mean target-accuracy and stereotypy scores for each participant, collapsing across all experimental factors, and found that target-accuracy and stereotypy were positively related (\(r\)(37) = 0.72, \(p\) = 2.45e-07).
+Accuracy and stereotypy showed opposing relationships with mindfulness and dopamine. Higher mindfulness scores were associated with dopamine-induced target-accuracy increases, and stereotypy decreases, relative to placebo. Individuals scoring low on mindfulness showed a deleterious influence of dopamine on target-accuracy, coupled with increased stereotypy, relative to placebo. As target-accuracy and stereotypy are possibly, but not necessarily related, we next sought to ensure that the observed influences of dopamine and mindfulness on stereotypy was not driven \textcolor{blue}{solely driven by its correlation with target-accuracy}, using an exploratory analyses. We reasoned that such a pattern of results could be observed if the measures of target-accuracy and stereotypy reflected a direct trade off; i.e.~as target-accuracy goes up, stereotypy goes down. A correlation analysis ruled out this possibility. We computed mean target-accuracy and stereotypy scores for each participant, collapsing across all experimental factors, and found that target-accuracy and stereotypy were positively related (\(r\)(37) = 0.81, \(p\) = 3.51e-10).
 
 Next, to rule out the contribution of target-accuracy to the stereotypy results, we added mean target-accuracy, computed for each block and drug condition, as a regressor to the winning model. Adding target-accuracy as a regressor both clearly improved the predictive accuracy of the model (ELPD diff = -110.26, ELPD:SE = -6.12), and served to increase certainty in the interactive influence of mindfulness and drug on stereotypy scores. Specifically, the estimated influence of the interaction increased from \(\beta\) = 0.11 to \(\beta\) = 0.22 (95\% CI{[}0.14, 0.29{]}). Note that the pattern of remaining results were also consistent between the two models. Therefore, the data support the notion that mindfulness and dopamine interact to differently influence target-accuracy and stereotypy when participants perform task-relevant saccadic routines. Indeed, this data suggest that mindfulness and dopamine interacted to produce more erroneous routines. To visualise this, Fig \ref{fig:trajecfig} shows example door selections from two participants, one randomly selected from the lowest quartile of mindfulness scorers (top row), and one selected from the highest quartile of mindfulness scorers (bottom row). As can be seen, the low mindfulness scorer had adopted a routine that resulted in more erroneous door selections than the high mindfulness scorer. The low mindfulness scorer appears to have developed a suboptimal task strategy of trying all doors, regardless of task context.
 
